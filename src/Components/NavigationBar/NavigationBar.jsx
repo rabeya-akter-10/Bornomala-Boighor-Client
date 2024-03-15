@@ -4,30 +4,12 @@ import { Vortex } from "react-loader-spinner";
 import "./NavigationBar.css";
 import { AuthContext } from "../../Providers/AuthProviders";
 import logo from "../../assets/logo.png";
+import CustomLoader from "../CustomLoader/CustomLoader";
 
 const NavigationBar = () => {
     const { user, loading, logout } = useContext(AuthContext);
     if (loading) {
-        return (
-            <div className="w-full min-h-screen flex justify-center items-center bg-white">
-                <Vortex
-                    visible={true}
-                    height="80"
-                    width="80"
-                    ariaLabel="vortex-loading"
-                    wrapperStyle={{}}
-                    wrapperClass="vortex-wrapper"
-                    colors={[
-                        "red",
-                        "green",
-                        "blue",
-                        "yellow",
-                        "orange",
-                        "purple",
-                    ]}
-                />
-            </div>
-        );
+        return <CustomLoader></CustomLoader>;
     }
     const handleLogout = () => {
         logout()
