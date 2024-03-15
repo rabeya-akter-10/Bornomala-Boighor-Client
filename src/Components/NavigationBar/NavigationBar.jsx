@@ -56,6 +56,12 @@ const NavigationBar = () => {
                             >
                                 Add A Book
                             </NavLink>
+                            <NavLink
+                                className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
+                                to={"/manage-books"}
+                            >
+                                Manage Stocks
+                            </NavLink>
                         </div>
                     </div>
                     <Link to={"/"} className="flex items-center">

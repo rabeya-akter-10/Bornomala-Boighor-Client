@@ -5,6 +5,7 @@ import Register from "../Pages/Login&Register/Register";
 import AddBook from "../Pages/Dashboard/AdminPage/AddBook";
 import Home from "../Pages/Home/Home";
 import BookDetails from "../Pages/BookDetails/BookDetails";
+import ManageBook from "../Pages/Dashboard/AdminPage/ManageBook/ManageBook";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
                     fetch(
                         `https://bornomala-boighor-server.vercel.app/books/${params?.id}`
                     ),
+            },
+            {
+                path: "/manage-books",
+                element: <ManageBook></ManageBook>,
             },
         ],
     },
