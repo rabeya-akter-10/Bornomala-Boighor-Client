@@ -1,9 +1,10 @@
 import React from "react";
+import BookByCategory from "./BookByCategory/BookByCategory";
 
 const Home = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <BookByCategory></BookByCategory>
         </div>
     );
 };

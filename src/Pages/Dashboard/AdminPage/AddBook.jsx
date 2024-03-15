@@ -2,45 +2,40 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../../Hooks/UseAuth";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const AddBook = () => {
     const { user } = useAuth();
 
-    const [categories, setCategories] = useState([]);
-    const [newCategory, setNewCategory] = useState("");
     const [loading, setLoading] = useState(true);
-    const [showModal, setShowModal] = useState(false);
+    const [showModal1, setShowModal1] = useState(false);
+    const [showModal2, setShowModal2] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
+    const [showDropdown, setShowDropdown] = useState(false);
 
-    useEffect(() => {
-        fetch("http://localhost:5000/categories")
-            .then((response) => response.json())
-            .then((data) => {
-                setCategories(data);
-                setLoading(false);
-            })
-            .catch((error) =>
-                console.error("Error fetching categories:", error)
-            );
-    }, []);
+    const [axiosSecure] = UseAxiosSecure();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
+    // get catagories
+    const { data: cats = [], refetch: catagoriesRefetch } = useQuery({
+        queryKey: ["categories"],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/categories`);
+            setLoading(false);
+            return res.data;
+        },
+    });
 
-    const onSubmit = (data) => {
-        const {
-            bookName,
-            category,
-            writerName,
-            publications,
-            price,
-            discounts,
-            image,
-        } = data;
-        console.log(data);
-    };
+    // get publications
+    const { data: publications = [], refetch: publicationsRefetch } = useQuery({
+        queryKey: ["publications"],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/publications`);
+            setLoading(false);
+            return res.data;
+        },
+    });
 
     const handleAddNewCategory = (event) => {
         event.preventDefault();
@@ -55,9 +50,105 @@ const AddBook = () => {
             body: JSON.stringify({ cat: newCategoryValue }), // Corrected the object key here
         });
 
+        catagoriesRefetch();
         toast.success("Successfully Added");
 
-        setShowModal(false); // Close modal after adding category
+        setShowModal1(false); // Close modal after adding category
+    };
+
+    const handleAddNewPublication = (event) => {
+        event.preventDefault();
+
+        const newPublicatonValue = event.target.newPublication.value;
+
+        fetch("http://localhost:5000/publications", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ pub: newPublicatonValue }), // Corrected the object key here
+        });
+
+        publicationsRefetch();
+        toast.success("Successfully Added");
+        setShowModal2(false); // Close modal after adding category
+    };
+
+    const handlePublicationSearch = (event) => {
+        const query = event.target.value
+            ? event.target.value.toLowerCase()
+            : "";
+        const filteredPublications = publications.filter(
+            (pub) => pub && pub.pub && pub.pub.toLowerCase().includes(query)
+        );
+        setSearchResults(filteredPublications);
+        setShowDropdown(true);
+    };
+    const {
+        register,
+        reset,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm();
+
+    const handleDropdownItemClick = (publication) => {
+        setValue("publications", publication, { shouldValidate: true });
+
+        setShowDropdown(false);
+    };
+
+    const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
+        import.meta.env.VITE_IMAGE_HOSTING_KEY
+    }`;
+
+    const onSubmit = (data) => {
+        const formData = new FormData();
+        formData.append("image", data.image[0]);
+        fetch(imageHostingUrl, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((imgResponse) => {
+                if (imgResponse.success) {
+                    const imgUrl = imgResponse.data.display_url;
+                    const {
+                        bookName,
+                        category,
+                        writerName,
+                        publications,
+                        price,
+                        discounts,
+                        quantity,
+                    } = data;
+                    const addedBook = {
+                        bookName,
+                        price: parseInt(price),
+                        quantity: parseInt(quantity),
+                        image: imgUrl,
+                        discounts,
+                        addedBy: user.displayName,
+                        sold: 0,
+                        category,
+                        writerName,
+                        publications,
+                    };
+
+                    axiosSecure.post("/books", addedBook).then((data) => {
+                        if (data.data.acknowledged) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Class Added Successfully",
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
+                            // navigate("/dashboard/myclasses");
+                            reset();
+                        }
+                    });
+                }
+            });
     };
 
     // Scroll to top
@@ -109,14 +200,14 @@ const AddBook = () => {
                                     className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
                                 >
                                     <option>Select a category</option>
-                                    {categories.map((c) => (
+                                    {cats.map((c) => (
                                         <option key={c._id} value={c.cat}>
                                             {c.cat}
                                         </option>
                                     ))}
                                 </select>
                                 <button
-                                    onClick={() => setShowModal(true)}
+                                    onClick={() => setShowModal1(true)}
                                     className="absolute inset-y-0 right-0 px-4 py-1  bg-blue-500 text-white "
                                 >
                                     New
@@ -135,7 +226,7 @@ const AddBook = () => {
                     <div className="form-control">
                         <label className="label">
                             <span className="text-xs text-[#757575] font-medium ">
-                                Book name
+                                Writer name
                             </span>
                         </label>
                         <input
@@ -146,18 +237,51 @@ const AddBook = () => {
                         />
                     </div>
 
-                    <div className="form-control">
+                    <div className="form-control ">
                         <label className="label">
                             <span className="text-xs text-[#757575] font-medium ">
                                 Publications Name
                             </span>
                         </label>
-                        <input
-                            type="text"
-                            placeholder="publication name"
-                            {...register("publications", { required: true })}
-                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
-                        />
+                        <div className="relative">
+                            <input
+                                type="text"
+                                placeholder="Search publication name"
+                                {...register("publications", {
+                                    required: true,
+                                })}
+                                className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
+                                onChange={handlePublicationSearch}
+                            />
+                            <button
+                                onClick={() => setShowModal2(true)}
+                                className="absolute inset-y-0 right-0 px-4 py-1  bg-blue-500 text-white "
+                            >
+                                New
+                            </button>
+                        </div>
+
+                        {showDropdown && (
+                            <span>
+                                {searchResults.length > 0 && (
+                                    <div className="absolute z-10  lg:w-[350px] w-[300px] bg-white border border-gray-200 rounded-sm shadow-md">
+                                        {searchResults.map((result) => (
+                                            <div
+                                                key={result._id}
+                                                className="p-2 hover:bg-gray-100 cursor-pointer"
+                                                onClick={() =>
+                                                    handleDropdownItemClick(
+                                                        result.pub
+                                                    )
+                                                }
+                                            >
+                                                {result.pub}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </span>
+                        )}
                     </div>
                 </div>
 
@@ -216,6 +340,19 @@ const AddBook = () => {
                         />
                     </div>
                 </div>
+                <div className="form-control">
+                    <label className="label">
+                        <span className="text-xs text-[#757575] font-medium ">
+                            Quantity
+                        </span>
+                    </label>
+                    <input
+                        type="number"
+                        placeholder="quantity"
+                        {...register("quantity", { required: true })}
+                        className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
+                    />
+                </div>
 
                 <input
                     type="submit"
@@ -225,10 +362,10 @@ const AddBook = () => {
             </form>
 
             {/* Modal */}
-            {showModal && (
+            {showModal1 && (
                 <form
                     onSubmit={handleAddNewCategory}
-                    className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
+                    className="fixed z-30 inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
                 >
                     <div className="bg-white p-4 rounded-md flex gap-3 flex-col items-center justify-center">
                         <h2 className="text-xl font-semibold mb-2">
@@ -248,7 +385,40 @@ const AddBook = () => {
                                 Add
                             </button>
                             <button
-                                onClick={() => setShowModal(false)}
+                                onClick={() => setShowModal1(false)}
+                                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md ml-2"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            )}
+
+            {showModal2 && (
+                <form
+                    onSubmit={handleAddNewPublication}
+                    className="fixed z-30 inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
+                >
+                    <div className="bg-white p-4 rounded-md flex gap-3 flex-col items-center justify-center">
+                        <h2 className="text-xl font-semibold mb-2">
+                            Add New Publication
+                        </h2>
+                        <input
+                            type="text"
+                            name="newPublication"
+                            className="border border-gray-300 rounded-md p-2 mb-2  w-72"
+                            placeholder="Enter publicaton name"
+                        />
+                        <div>
+                            <button
+                                type="submit"
+                                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                            >
+                                Add
+                            </button>
+                            <button
+                                onClick={() => setShowModal2(false)}
                                 className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md ml-2"
                             >
                                 Cancel
