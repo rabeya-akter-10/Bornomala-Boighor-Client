@@ -70,7 +70,7 @@ const NavigationBar = () => {
                             </NavLink>
                             <NavLink
                                 className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
-                                to={"/addBook"}
+                                to={"/add-book"}
                             >
                                 Add A Book
                             </NavLink>
@@ -80,19 +80,19 @@ const NavigationBar = () => {
                         <img className="h-10" src={logo} alt="" />
                     </Link>
                 </div>
-                <span className="lg:hidden navbar-center">
+                <span className="md:hidden navbar-center">
                     <input
                         type="text"
                         placeholder="Search by book name"
-                        className="px-4 py-2 focus:outline-none text-center rounded-3xl input input-bordered input-success ml-3 w-36"
+                        className="px-2 py-1 text-[13px] focus:outline-none text-center rounded-3xl input input-bordered input-success ml-3 w-36"
                     />
                 </span>
-                <div className="navbar-center hidden lg:flex">
+                <div className="navbar-center hidden md:flex">
                     <ul className="menu menu-horizontal px-1">
                         <input
                             type="text"
                             placeholder="Search by book name"
-                            className="px-4 py-2 text-center focus:outline-none input rounded-3xl input-bordered input-success w-80 "
+                            className="px-4 py-2 text-center text-sm focus:outline-none input rounded-3xl input-bordered input-success w-80 "
                         />
                     </ul>
                 </div>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
 import useAuth from "../../Hooks/UseAuth";
+import GoogleLogin from "../../Components/GoogleLogin/GoogleLogin";
 
 const Login = () => {
     const [error, setError] = useState("");
@@ -27,19 +28,7 @@ const Login = () => {
                 setError(error.message);
             });
     };
-    const hangleGoogle = () => {
-        loginWithGoogle()
-            .then((result) => {
-                const loggedUser = result.user;
-                console.log(loggedUser);
-                toast.success("Successfully Login!");
-                setError("");
-            })
-            .catch((error) => {
-                console.log(error.message);
-                setError(error.message);
-            });
-    };
+
     return (
         <div className="w-full flex items-center justify-center min-h-[91vh]">
             <form
@@ -80,15 +69,7 @@ const Login = () => {
                     value="Login"
                 />
                 <div className="divider">OR</div>
-                <div className="w-full flex justify-center">
-                    <span onClick={hangleGoogle}>
-                        <img
-                            className="w-10 p-[6px] border rounded-full hover:saturate-0 bg-slate-200 cursor-pointer"
-                            src="https://i.ibb.co/HX7Z8g9/google-logo-png-suite-everything-you-need-know-about-google-newest-0-removebg-preview.png"
-                            alt=""
-                        />
-                    </span>
-                </div>
+                <GoogleLogin></GoogleLogin>
                 <span className="flex w-full justify-center mt-3">
                     <small className="text-center">
                         Dont’t Have An Account?{" "}

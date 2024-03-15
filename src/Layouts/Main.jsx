@@ -5,11 +5,13 @@ import Footer from "../Components/Footer/Footer";
 import { Outlet } from "react-router-dom";
 const Main = () => {
     return (
-        <div className="max-w-7xl mx-auto">
-            <div className="w-full z-20">
+        <div className="max-w-7xl mx-auto w-full">
+            <div className="z-20 fixed w-full max-w-7xl">
                 <NavigationBar></NavigationBar>
             </div>
-            <Outlet></Outlet>
+            <div className="pt-20 min-h-[100vh]">
+                <Outlet></Outlet>
+            </div>
             <Footer></Footer>
         </div>
     );

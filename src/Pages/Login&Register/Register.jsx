@@ -1,54 +1,99 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import useAuth from "../../Hooks/UseAuth";
+import GoogleLogin from "../../Components/GoogleLogin/GoogleLogin";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const Register = () => {
     const [error, setError] = useState("");
-    const { user, createUser, updateUser, loginWithGoogle } = useAuth();
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const email = form.email.value;
-        const password = form.password.value;
-        const name = form.name.value;
-        const photo = form.photo.value;
-        console.log(email, password, photo, name);
-        createUser(email, password)
-            .then((result) => {
-                const loggedUser = result.user;
-                updateUser(name, photo)
-                    .then((result) => {
-                        console.log("Succesfully upadateUser");
-                    })
-                    .catch((error) => {});
-                setError("");
-                toast.success("Successfully Login!");
-                event.target.reset();
-            })
-            .catch((error) => {
-                console.log(error.message);
-                setError(error.message);
+    const { createUser, updateUser, logout } = useAuth();
+    const navigate = useNavigate();
+    const [show, setShow] = useState(false);
+    const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
+        import.meta.env.VITE_IMAGE_HOSTING_KEY
+    }`;
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+    const onSubmit = (data) => {
+        const { name, email, password, gender, phone } = data;
+
+        const formData = new FormData();
+        formData.append("image", data.image[0]);
+        fetch(imageHostingUrl, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((imgResponse) => {
+                if (imgResponse.success) {
+                    const imgUrl = imgResponse.data.display_url;
+                    const savedUser = {
+                        name,
+                        email,
+                        photoURL: imgUrl,
+                        gender,
+                        phone,
+                        role: "buyer",
+                    };
+
+                    createUser(email, password)
+                        .then((result) => {
+                            const loggedUser = result.user;
+                            updateUser(name, imgUrl)
+                                .then((result) => {
+                                    fetch(
+                                        "https://bornomala-boighor-server.vercel.app/users",
+                                        {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type":
+                                                    "application/json",
+                                            },
+                                            body: JSON.stringify(savedUser),
+                                        }
+                                    );
+
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "User Created Successfully Please Login to continue",
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                    });
+
+                                    logout()
+                                        .then((result) => {
+                                            navigate("/login");
+                                        })
+                                        .catch((error) => {});
+                                })
+                                .catch((error) => {
+                                    console.log(error.message);
+                                });
+                            console.log(loggedUser);
+                        })
+                        .catch((error) => {
+                            console.log(error.message);
+                        });
+                }
             });
     };
-    // Google Login
-    const hangleGoogle = () => {
-        loginWithGoogle()
-            .then((result) => {
-                const loggedUser = result.user;
-                console.log(loggedUser);
-                toast.success("Successfully Login!");
-                setError("");
-            })
-            .catch((error) => {
-                console.log(error.message);
-                setError(error.message);
-            });
-    };
+
+    // Scroll to top
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+    });
+
     return (
         <div className="w-full flex items-center justify-center min-h-[91vh]">
             <form
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 className="border shadow-xl rounded-2xl my-5 py-10 px-8"
             >
                 <h1 className="text-3xl text-center font-medium mb-5">
@@ -61,20 +106,9 @@ const Register = () => {
                     <input
                         type="text"
                         placeholder="name"
-                        name="name"
+                        {...register("name", { required: true })}
                         required
-                        className="input rounded-lg py-[6px] input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
-                    />
-                </div>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Image</span>
-                    </label>
-                    <input
-                        type="file"
-                        placeholder="photoUrl"
-                        name="photo"
-                        className="input rounded-lg py-[6px] input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
+                        className="input rounded-lg  input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
                     />
                 </div>
                 <div className="form-control">
@@ -84,11 +118,22 @@ const Register = () => {
                     <input
                         type="email"
                         placeholder="email"
-                        name="email"
+                        {...register("email", { required: true })}
                         required
-                        className="input rounded-lg py-[6px] input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
+                        className="input rounded-lg  input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
                     />
                 </div>
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text">Photo</span>
+                    </label>
+                    <input
+                        type="file"
+                        {...register("image", { required: true })}
+                        className="file-input file-input-bordered file-input-success max-w-xs rounded-lg  focus:outline-none lg:w-[350px] w-[300px]"
+                    />
+                </div>
+
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Password</span>
@@ -96,29 +141,48 @@ const Register = () => {
                     <input
                         type="password"
                         placeholder="password"
-                        name="password"
+                        {...register("password", { required: true })}
                         required
-                        className="input rounded-lg py-[6px] input-bordered input-success  focus:outline-none  lg:w-[350px] w-[300px]"
+                        className="input rounded-lg  input-bordered input-success  focus:outline-none  lg:w-[350px] w-[300px]"
                     />
                 </div>
+                <div className="form-control w-full">
+                    <label className="label">
+                        <span className="label-text">Phone Number</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="phone number (optional)"
+                        {...register("phone")}
+                        className="input rounded-lg  input-bordered input-success  focus:outline-none  lg:w-[350px] w-[300px]"
+                    />
+                </div>
+                <div className="form-control w-full">
+                    <label className="label">
+                        <span className="label-text">Gender</span>
+                    </label>
+                    <select
+                        {...register("gender", {
+                            required: true,
+                        })}
+                        className="select rounded-lg  input-bordered select-success  focus:outline-none  lg:w-[350px] w-[300px]"
+                    >
+                        <option value={""}>Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+
                 <span className="w-full flex justify-center mt-4">
                     <small className="text-red-600">{error}</small>
                 </span>
                 <input
                     className="bg-[#149352] cursor-pointer text-white py-[10px] rounded-3xl mt-4 hover:bg-transparent hover:text-[#149352] hover:outline outline-[#149352] font-medium w-full"
                     type="submit"
-                    value="Sign Up"
+                    value={"Register"}
                 />
                 <div className="divider">OR</div>
-                <div className="w-full flex justify-center">
-                    <span onClick={hangleGoogle}>
-                        <img
-                            className="w-10 p-[6px] border rounded-full hover:saturate-0 bg-slate-200 cursor-pointer"
-                            src="https://i.ibb.co/HX7Z8g9/google-logo-png-suite-everything-you-need-know-about-google-newest-0-removebg-preview.png"
-                            alt=""
-                        />
-                    </span>
-                </div>
+                <GoogleLogin></GoogleLogin>
                 <span className="flex w-full justify-center mt-3">
                     <small className="text-center">
                         Already Have An Account?{" "}
