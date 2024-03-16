@@ -15,6 +15,7 @@ const AddBook = () => {
     const [showModal3, setShowModal3] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [showDropdown1, setShowDropdown1] = useState(false);
 
     const [axiosSecure] = UseAxiosSecure();
 
@@ -128,7 +129,7 @@ const AddBook = () => {
                 writer.writerName.toLowerCase().includes(query)
         );
         setSearchResults(filteredWriter);
-        setShowDropdown(true);
+        setShowDropdown1(true);
     };
 
     // Handle Form input
@@ -150,7 +151,7 @@ const AddBook = () => {
     const handleWriterDropdown = (writer) => {
         setValue("writerName", writer, { shouldValidate: true });
 
-        setShowDropdown(false);
+        setShowDropdown1(false);
     };
 
     const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
@@ -176,6 +177,7 @@ const AddBook = () => {
                         price,
                         discounts,
                         quantity,
+                        descriptions,
                     } = data;
                     const addedBook = {
                         bookName,
@@ -188,13 +190,14 @@ const AddBook = () => {
                         category,
                         writerName,
                         publications,
+                        descriptions,
                     };
 
                     axiosSecure.post("/books", addedBook).then((data) => {
                         if (data.data.acknowledged) {
                             Swal.fire({
                                 icon: "success",
-                                title: "Class Added Successfully",
+                                title: "Book Added Successfully",
                                 showConfirmButton: false,
                                 timer: 1500,
                             });
@@ -300,7 +303,7 @@ const AddBook = () => {
                             </button>
                         </div>
 
-                        {showDropdown && (
+                        {showDropdown1 && (
                             <span>
                                 {searchResults.length > 0 && (
                                     <div className="absolute z-10  lg:w-[350px] w-[300px] bg-white border border-gray-200 rounded-sm shadow-md">
@@ -379,7 +382,7 @@ const AddBook = () => {
                         <input
                             type="number"
                             placeholder="price"
-                            {...register("price", { required: true })}
+                            {...register("price")}
                             className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
                         />
                     </div>

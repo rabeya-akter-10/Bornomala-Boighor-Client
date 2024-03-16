@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import UseAxiosSecure from "../../../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import EditBook from "../../../../Components/CustomLoader/EditBook/EditBook";
 
 const ManageBook = () => {
     const [axiosSecure] = UseAxiosSecure();
+    const [showModal, setShowModal] = useState(false);
+    const [modalID, setModalID] = useState(null);
+
     // get all Books
     const { data: books = [], refetch: booksRefetch } = useQuery({
         queryKey: ["books"],
@@ -35,7 +39,6 @@ const ManageBook = () => {
                 await booksRefetch();
                 // Show success message
                 Swal.fire("Deleted!", "Your book has been deleted.", "success");
-                booksRefetch();
             } catch (error) {
                 console.error("Error deleting book:", error);
                 // Show error message
@@ -44,12 +47,16 @@ const ManageBook = () => {
         }
     };
 
+    const handleOpenModal = (_id) => {
+        setModalID(_id);
+        setShowModal(true);
+    };
+
     return (
         <div className="p-4">
             <h1 className="text-center font-medium text-lg underline text-green-900">
                 All books : {books?.length}
             </h1>
-
             <div>
                 <div className="overflow-x-auto py-8">
                     <table className="table">
@@ -86,7 +93,7 @@ const ManageBook = () => {
                                                 <div className=" w-10 h-12 rounded-sm hover:scale-[3] hover:z-20">
                                                     <img
                                                         src={b?.image}
-                                                        alt="b.bookName"
+                                                        alt={b?.bookName}
                                                     />
                                                 </div>
                                             </div>
@@ -136,7 +143,12 @@ const ManageBook = () => {
                                             >
                                                 Delete
                                             </button>
-                                            <button className="cursor-pointer bg-sky-500 text-xs font-medium rounded hover:bg-sky-700 text-white">
+                                            <button
+                                                onClick={() => {
+                                                    handleOpenModal(b._id);
+                                                }}
+                                                className="cursor-pointer bg-sky-500 text-xs font-medium rounded hover:bg-sky-700 text-white"
+                                            >
                                                 Edit
                                             </button>
                                         </div>
@@ -147,6 +159,27 @@ const ManageBook = () => {
                     </table>
                 </div>
             </div>
+            {showModal && (
+                <div className="fixed z-30 inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                    <div className="modal-box ">
+                        <form method="dialog">
+                            {/* Close button */}
+                            <button
+                                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                                onClick={() => setShowModal(false)}
+                            >
+                                ✕
+                            </button>
+                        </form>
+                        {/* EditBook component */}
+                        <EditBook
+                            id={modalID}
+                            setShowModal={setShowModal}
+                            booksRefetch={booksRefetch}
+                        ></EditBook>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
