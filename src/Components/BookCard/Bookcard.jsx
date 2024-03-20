@@ -7,17 +7,21 @@ const Bookcard = ({ book }) => {
     const roundPrice = Math.ceil(discountPrice);
 
     return (
-        <div className="relative">
+        <div className="relative w-fit">
             <Link
                 to={`/books/${_id}`}
-                className="flex flex-col justify-center items-center h-72 w-48 border border-b-green-600 border-r-green-600  hover:shadow-xl shadow-sm rounded-sm "
+                className="flex flex-col justify-center items-center h-72 w-48 border border-b-green-600 border-r-green-600  hover:shadow-xl shadow-sm rounded-sm p-2"
             >
-                <img className="w-[120px] h-44" src={image} alt={bookName} />
+                <img
+                    className="w-[120px] h-44 mb-2"
+                    src={image}
+                    alt={bookName}
+                />
                 <h1 className="text-sm font-bold">{bookName}</h1>
                 <p className="text-xs">{writerName}</p>
                 <div className="flex gap-2 text-xs font-medium">
                     {discounts > 0 && (
-                        <p className="line-through text-red-500">TK.{price}$</p>
+                        <p className="line-through text-red-500">TK.{price}</p>
                     )}
                     <p className="text-green-500">TK.{roundPrice}</p>
                 </div>

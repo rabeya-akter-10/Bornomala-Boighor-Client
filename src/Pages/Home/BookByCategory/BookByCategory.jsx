@@ -5,6 +5,7 @@ import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Bookcard from "../../../Components/BookCard/Bookcard";
 import CustomLoader from "../../../Components/CustomLoader/CustomLoader";
+import UseBooks from "../../../Hooks/UseBooks";
 
 const BookByCategory = () => {
     const [axiosSecure] = UseAxiosSecure();
@@ -74,7 +75,7 @@ const BookByCategory = () => {
                 <CustomLoader></CustomLoader>
             ) : (
                 <Tabs className={"text-center"}>
-                    <TabList>
+                    <TabList className={"text-xs "}>
                         {cats.map((c, index) => (
                             <Tab
                                 key={c._id}
@@ -88,14 +89,18 @@ const BookByCategory = () => {
                         ))}
                     </TabList>
 
+                    <hr />
+
                     {cats.map((c) => (
                         <TabPanel
                             className={
-                                "flex items-center justify-center w-full"
+                                "flex items-center justify-center w-full "
                             }
                             key={c._id}
                         >
-                            <h2>Books in {c.cat}</h2>
+                            <h2 className="underline text-sm font-medium text-green-600 py-4">
+                                {c.cat}
+                            </h2>
                             <div className="grid md:grid-cols-4 lg:grid-cols-6 grid-cols-2 md:gap-6 gap-4 py-6 mx-auto w-fit">
                                 {filteredBooks.map((book) => (
                                     <Bookcard

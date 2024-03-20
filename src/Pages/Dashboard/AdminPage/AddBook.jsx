@@ -52,16 +52,20 @@ const AddBook = () => {
     const handleAddNewWriter = (event) => {
         event.preventDefault();
         const newWriterValue = event.target.newWriter.value;
-        fetch("http://localhost:5000/writers", {
+        fetch("https://bornomala-boighor-server.vercel.app/writers", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ writerName: newWriterValue }), // Corrected the object key here
-        });
-
-        writersRefetch();
-        toast.success("Successfully Added");
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.acknowledged) {
+                    writersRefetch();
+                    toast.success("Successfully Added");
+                }
+            });
 
         setShowModal3(false); // Close modal after adding category
     };
@@ -72,16 +76,20 @@ const AddBook = () => {
 
         const newCategoryValue = event.target.newCategory.value;
 
-        fetch("http://localhost:5000/categories", {
+        fetch("https://bornomala-boighor-server.vercel.app/categories", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ cat: newCategoryValue }), // Corrected the object key here
-        });
-
-        catagoriesRefetch();
-        toast.success("Successfully Added");
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.acknowledged) {
+                    catagoriesRefetch();
+                    toast.success("Successfully Added");
+                }
+            });
 
         setShowModal1(false); // Close modal after adding category
     };
@@ -92,16 +100,21 @@ const AddBook = () => {
 
         const newPublicatonValue = event.target.newPublication.value;
 
-        fetch("http://localhost:5000/publications", {
+        fetch("https://bornomala-boighor-server.vercel.app/publications", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ pub: newPublicatonValue }), // Corrected the object key here
-        });
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.acknowledged) {
+                    toast.success("Successfully Added");
+                    publicationsRefetch();
+                }
+            });
 
-        publicationsRefetch();
-        toast.success("Successfully Added");
         setShowModal2(false); // Close modal after adding category
     };
 
@@ -291,7 +304,7 @@ const AddBook = () => {
                             <input
                                 type="text"
                                 placeholder="Search Writer name"
-                                {...register("writerName")}
+                                {...register("writerName", { required: true })}
                                 className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
                                 onChange={handleWriterSearch}
                             />
