@@ -62,6 +62,12 @@ const NavigationBar = () => {
                             >
                                 Manage Stocks
                             </NavLink>
+                            <NavLink
+                                className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
+                                to={"/books"}
+                            >
+                                All Books
+                            </NavLink>
                         </div>
                     </div>
                     <Link to={"/"} className="flex items-center">
@@ -109,12 +115,15 @@ const NavigationBar = () => {
                         </label>
                     </div>
                     {!user && (
-                        <NavLink
-                            className=" font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success "
-                            to={"/login"}
-                        >
-                            Login
-                        </NavLink>
+                        <span>
+                            {" "}
+                            <NavLink
+                                className=" font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success "
+                                to={"/login"}
+                            >
+                                Login
+                            </NavLink>
+                        </span>
                     )}
                     {user && (
                         <div className="dropdown dropdown-end">

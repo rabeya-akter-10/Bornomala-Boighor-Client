@@ -11,7 +11,6 @@ const UseBooks = () => {
             return res.data;
         },
     });
-    console.log(books);
     return { booksRefetch, books };
 };
 

@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Bookcard = ({ book }) => {
+    const [show, setShow] = useState(false);
     const { bookName, image, sold, writerName, price, discounts, _id } = book;
     const discountPrice = price - price * (discounts / 100);
     const roundPrice = Math.ceil(discountPrice);
 
     return (
-        <div className="relative w-fit">
-            <Link
-                to={`/books/${_id}`}
-                className="flex flex-col justify-center items-center h-72 w-48 border border-b-green-600 border-r-green-600  hover:shadow-xl shadow-sm rounded-sm p-2"
-            >
+        <div
+            onMouseEnter={() => {
+                setShow(true);
+            }}
+            onMouseLeave={() => {
+                // Corrected from handleMouseLeave to onMouseLeave
+                setShow(false);
+            }}
+            className="relative w-fit"
+        >
+            <div className="flex flex-col justify-center items-center h-72 w-48 border border-b-green-600 border-r-green-600  hover:shadow-xl shadow-sm rounded-sm p-2">
                 <img
                     className="w-[120px] h-44 mb-2"
                     src={image}
@@ -42,7 +49,24 @@ const Bookcard = ({ book }) => {
                         </p>
                     </div>
                 )}
-            </Link>
+            </div>
+
+            {show && (
+                <div className="absolute bottom-0 bg-gray-200 bg-opacity-80  z-30 w-full h-full ">
+                    <div className="flex items-center justify-center w-full h-full flex-col">
+                        <button className="w-fit px-4 py-1 bg-green-600 hover:bg-green-700 z-40 text-white opacity-100 rounded-sm">
+                            Add to cart
+                        </button>
+
+                        <Link
+                            to={`/books/${_id}`}
+                            className="absolute bottom-0 py-2 bg-blue-500 w-full text-center hover:bg-blue-700 text-white font-medium"
+                        >
+                            View Details
+                        </Link>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

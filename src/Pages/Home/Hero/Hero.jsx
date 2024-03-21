@@ -41,28 +41,31 @@ const Hero = () => {
     );
 
     return (
-        <div className="wrapper py-20 mt-10 px-2">
+        <div className="wrapper my-20 w-[85%] md:mx-auto pt-8 ">
             <div className="scene">
-                <div className="carousel keen-slider" ref={sliderRef}>
-                    <div className="carousel__cell number-slide1">
+                <div
+                    className="carousel keen-slider w-[85%] mx-auto"
+                    ref={sliderRef}
+                >
+                    <div className="carousel__cell w-[85%] number-slide1">
                         <img src={Hero1} alt="" />
                     </div>
-                    <div className="carousel__cell number-slide2">
+                    <div className="carousel__cell w-[85%] number-slide2">
                         <img src={Hero2} alt="" />
                     </div>
-                    <div className="carousel__cell number-slide3">
+                    <div className="carousel__cell w-[85%] number-slide3">
                         <img src={Hero3} alt="" />
                     </div>
-                    <div className="carousel__cell number-slide4">
+                    <div className="carousel__cell w-[85%] number-slide4">
                         <img src={Hero4} alt="" />
                     </div>
-                    <div className="carousel__cell number-slide5">
+                    <div className="carousel__cell w-[85%] number-slide5">
                         <img src={Hero5} alt="" />
                     </div>
-                    <div className="carousel__cell number-slide6">
+                    <div className="carousel__cell w-[85%] number-slide6">
                         <img src={Hero6} alt="" />
                     </div>
-                    <div className="carousel__cell number-slide5">
+                    <div className="carousel__cell w-[85%] number-slide5">
                         <img src={Hero7} alt="" />
                     </div>
                 </div>
