@@ -41,7 +41,7 @@ const Hero = () => {
     );
 
     return (
-        <div className="wrapper my-20 w-[85%] md:mx-auto pt-8 ">
+        <div className="wrapper my-20 w-[50%] md:w-full md:mx-auto pt-8 ">
             <div className="scene">
                 <div
                     className="carousel keen-slider w-[85%] mx-auto"

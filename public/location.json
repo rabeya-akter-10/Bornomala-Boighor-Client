@@ -1,0 +1,237 @@
+{
+    "divisions": [
+        {
+            "label": "Dhaka",
+            "districts": [
+                {
+                    "label": "Dhaka",
+                    "upazilas": [
+                        "Dhaka",
+                        "Narayanganj",
+                        "Gazipur",
+                        "Tangail"
+                    ]
+                },
+                {
+                    "label": "Faridpur",
+                    "upazilas": [
+                        "Faridpur",
+                        "Gopalganj",
+                        "Madaripur",
+                        "Rajbari"
+                    ]
+                },
+                {
+                    "label": "Gopalganj",
+                    "upazilas": [
+                        "Gopalganj"
+                    ]
+                },
+                {
+                    "label": "Jamalpur",
+                    "upazilas": [
+                        "Jamalpur",
+                        "Mymensingh",
+                        "Netrokona"
+                    ]
+                },
+                {
+                    "label": "Kishoreganj",
+                    "upazilas": [
+                        "Kishoreganj"
+                    ]
+                },
+                {
+                    "label": "Madaripur",
+                    "upazilas": [
+                        "Madaripur"
+                    ]
+                },
+                {
+                    "label": "Manikganj",
+                    "upazilas": [
+                        "Manikganj"
+                    ]
+                },
+                {
+                    "label": "Munshiganj",
+                    "upazilas": [
+                        "Munshiganj"
+                    ]
+                },
+                {
+                    "label": "Mymensingh",
+                    "upazilas": [
+                        "Mymensingh"
+                    ]
+                },
+                {
+                    "label": "Narayanganj",
+                    "upazilas": [
+                        "Narayanganj"
+                    ]
+                },
+                {
+                    "label": "Narsingdi",
+                    "upazilas": [
+                        "Narsingdi"
+                    ]
+                },
+                {
+                    "label": "Netrokona",
+                    "upazilas": [
+                        "Netrokona"
+                    ]
+                },
+                {
+                    "label": "Rajbari",
+                    "upazilas": [
+                        "Rajbari"
+                    ]
+                },
+                {
+                    "label": "Shariatpur",
+                    "upazilas": [
+                        "Shariatpur"
+                    ]
+                },
+                {
+                    "label": "Sherpur",
+                    "upazilas": [
+                        "Sherpur"
+                    ]
+                },
+                {
+                    "label": "Tangail",
+                    "upazilas": [
+                        "Tangail"
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Chittagong",
+            "districts": [
+                {
+                    "label": "Chittagong",
+                    "upazilas": [
+                        "Chittagong",
+                        "Comilla",
+                        "Feni",
+                        "Noakhali"
+                    ]
+                },
+                {
+                    "label": "Cox's Bazar",
+                    "upazilas": [
+                        "Cox's Bazar",
+                        "Bandarban",
+                        "Khagrachari",
+                        "Rangamati"
+                    ]
+                },
+                {
+                    "label": "Feni",
+                    "upazilas": [
+                        "Feni"
+                    ]
+                },
+                {
+                    "label": "Khagrachari",
+                    "upazilas": [
+                        "Khagrachari"
+                    ]
+                },
+                {
+                    "label": "Lakshmipur",
+                    "upazilas": [
+                        "Lakshmipur"
+                    ]
+                },
+                {
+                    "label": "Noakhali",
+                    "upazilas": [
+                        "Noakhali"
+                    ]
+                },
+                {
+                    "label": "Rangamati",
+                    "upazilas": [
+                        "Rangamati"
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Rajshahi",
+            "districts": [
+                {
+                    "label": "Rajshahi",
+                    "upazilas": [
+                        "Rajshahi",
+                        "Bogra",
+                        "Pabna",
+                        "Sirajganj"
+                    ]
+                },
+                {
+                    "label": "Natore",
+                    "upazilas": [
+                        "Natore",
+                        "Naogaon",
+                        "Joypurhat",
+                        "Chapainawabganj"
+                    ]
+                },
+                {
+                    "label": "Chapainawabganj",
+                    "upazilas": [
+                        "Chapainawabganj",
+                        "Nachole",
+                        "Bholahat"
+                    ]
+                },
+                {
+                    "label": "Joypurhat",
+                    "upazilas": [
+                        "Joypurhat",
+                        "Kalai",
+                        "Khetlal"
+                    ]
+                },
+                {
+                    "label": "Naogaon",
+                    "upazilas": [
+                        "Naogaon",
+                        "Atrai",
+                        "Badalgachhi"
+                    ]
+                },
+                {
+                    "label": "Bogra",
+                    "upazilas": [
+                        "Bogra",
+                        "Adamdighi",
+                        "Sherpur"
+                    ]
+                },
+                {
+                    "label": "Pabna",
+                    "upazilas": [
+                        "Pabna",
+                        "Ishwardi",
+                        "Chatmohar"
+                    ]
+                },
+                {
+                    "label": "Sirajganj",
+                    "upazilas": [
+                        "Sirajganj",
+                        "Belkuchi",
+                        "Shahjadpur"
+                    ]
+                }
+            ]
+        }
+    ]
+}

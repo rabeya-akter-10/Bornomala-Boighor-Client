@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 const Main = () => {
     return (
         <div className="max-w-7xl mx-auto w-full">
-            <div className="z-20 fixed w-full max-w-7xl">
+            <div className="z-40 fixed w-full max-w-7xl">
                 <NavigationBar></NavigationBar>
             </div>
             <div className="pt-20 min-h-[100vh]">

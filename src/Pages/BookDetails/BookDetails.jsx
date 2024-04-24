@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { useLoaderData, useParams } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 import CustomLoader from "../../Components/CustomLoader/CustomLoader";
 import Bookcard from "../../Components/BookCard/Bookcard";
 
@@ -89,15 +89,30 @@ const BookDetails = () => {
                     </p>
                     <p>
                         By:{" "}
-                        <span className="text-blue-500 cursor-pointer hover:underline">
+                        <Link
+                            to={`/writers/${book?.writerName}`}
+                            className="text-blue-500 cursor-pointer hover:underline"
+                        >
                             {book?.writerName}
-                        </span>
+                        </Link>
+                    </p>
+                    <p>
+                        Publication:{" "}
+                        <Link
+                            to={`/publications/${book.publications}`}
+                            className="cursor-pointer hover:underline text-xl text-green-700"
+                        >
+                            {book?.publications}
+                        </Link>
                     </p>
                     <p>
                         Category:{" "}
-                        <span className="cursor-pointer hover:underline">
+                        <Link
+                            to={`/categories/${book.category}`}
+                            className="cursor-pointer hover:underline"
+                        >
                             {book?.category}
-                        </span>
+                        </Link>
                     </p>
                     <div className="flex gap-2 text-xl font-medium items-center">
                         {book?.discounts > 0 && (

@@ -18,7 +18,7 @@ const Bookcard = ({ book }) => {
             }}
             className="relative w-fit"
         >
-            <div className="flex flex-col justify-center items-center h-72 w-48 border border-b-green-600 border-r-green-600  hover:shadow-xl shadow-sm rounded-sm p-2">
+            <div className="flex flex-col justify-center items-center h-72 w-44 border border-b-green-600 border-r-green-600  hover:shadow-xl shadow-sm rounded-sm p-2">
                 <img
                     className="w-[120px] h-44 mb-2"
                     src={image}

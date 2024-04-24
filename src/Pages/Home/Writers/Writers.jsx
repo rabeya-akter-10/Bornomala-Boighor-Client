@@ -60,16 +60,14 @@ const Writers = () => {
                 className="mySwiper"
             >
                 {writers.map((p) => (
-                    <div key={p._id}>
-                        <SwiperSlide>
-                            <Link
-                                to={`/writers/${p._id}`}
-                                className="h-28 w-fit"
-                            >
-                                <h1>{p.writerName}</h1>
-                            </Link>
-                        </SwiperSlide>
-                    </div>
+                    <SwiperSlide key={p._id} className="w-full px-4">
+                        <Link
+                            to={`/writers/${p.writerName}`}
+                            className="h-36 rounded-md shadow-lg shadow-green-400 mb-16 flex items-center  w-full justify-center"
+                        >
+                            <h1 className="text-sm">{p.writerName}</h1>
+                        </Link>
+                    </SwiperSlide>
                 ))}
             </Swiper>
         </div>

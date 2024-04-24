@@ -152,8 +152,8 @@ const Register = () => {
                     </label>
                     <input
                         type="text"
-                        placeholder="phone number (optional)"
-                        {...register("phone")}
+                        placeholder="phone number"
+                        {...register("phone", { required: true })}
                         className="input rounded-lg  input-bordered input-success  focus:outline-none  lg:w-[350px] w-[300px]"
                     />
                 </div>

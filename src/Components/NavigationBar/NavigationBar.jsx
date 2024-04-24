@@ -15,6 +15,8 @@ const NavigationBar = () => {
         logout()
             .then((result) => {})
             .catch((error) => {});
+
+        window.location.reload();
     };
     return (
         <div className="bg-white">
@@ -140,7 +142,10 @@ const NavigationBar = () => {
                                 className="menu menu-compact space-y-2 dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                             >
                                 <li>
-                                    <Link className="justify-between">
+                                    <Link
+                                        to={`/users/${user?.displayName}`}
+                                        className="justify-between"
+                                    >
                                         {user.displayName}
                                     </Link>
                                 </li>

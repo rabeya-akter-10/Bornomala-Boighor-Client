@@ -7,6 +7,10 @@ import Home from "../Pages/Home/Home";
 import BookDetails from "../Pages/BookDetails/BookDetails";
 import ManageBook from "../Pages/Dashboard/AdminPage/ManageBook/ManageBook";
 import Books from "../Pages/Books/Books";
+import CategoryBooks from "../Pages/CategoryBooks/CategoryBooks";
+import Publications from "../Pages/Publications/Publications";
+import Writers from "../Pages/Writers/Writers";
+import Profile from "../Pages/Profile/Profile";
 
 const router = createBrowserRouter([
     {
@@ -44,6 +48,22 @@ const router = createBrowserRouter([
             {
                 path: "/books",
                 element: <Books></Books>,
+            },
+            {
+                path: "/categories/:category",
+                element: <CategoryBooks></CategoryBooks>,
+            },
+            {
+                path: "/publications/:publication",
+                element: <Publications></Publications>,
+            },
+            {
+                path: "/writers/:writer",
+                element: <Writers></Writers>,
+            },
+            {
+                path: "/users/:name",
+                element: <Profile></Profile>,
             },
         ],
     },

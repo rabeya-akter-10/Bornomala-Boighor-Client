@@ -24,8 +24,8 @@ const Publications = () => {
     });
     // console.log(publications);
     return (
-        <div>
-            <h1 className="text-center pb-10 text-green-600 text-lg">
+        <div className="">
+            <h1 className="text-center pb-10 text-green-600 text-lg ">
                 প্রকাশনী
             </h1>
 
@@ -62,12 +62,12 @@ const Publications = () => {
             >
                 {publications.map((p) => (
                     <div key={p._id}>
-                        <SwiperSlide>
+                        <SwiperSlide className="w-full px-4">
                             <Link
-                                to={`/publications/${p._id}`}
-                                className="h-28 w-fit"
+                                to={`/publications/${p.pub}`}
+                                className="h-36 rounded-md shadow-lg shadow-cyan-600 mb-16 flex items-center  w-full justify-center"
                             >
-                                <h1>{p.pub}</h1>
+                                <h1 className="text-sm">{p.pub}</h1>
                             </Link>
                         </SwiperSlide>
                     </div>
