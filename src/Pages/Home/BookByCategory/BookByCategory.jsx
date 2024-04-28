@@ -47,14 +47,14 @@ const BookByCategory = () => {
         if (cats.length > 0) {
             filterBooksByCategory(cats[selectedTab].cat);
         }
-    }, [cats]); // Trigger only when categories data changes
+    }, [cats, selectedTab]); // Added selectedTab as a dependency
 
     useEffect(() => {
-        // Update filtered books when books data changes
-        if (selectedCategory) {
+        // Update filtered books when books or selected category changes
+        if (selectedCategory && books.length > 0) {
             filterBooksByCategory(selectedCategory);
         }
-    }, [books]); // Trigger only when books data changes
+    }, [selectedCategory, books]); // Added selectedCategory and books as dependencies
 
     // Effect to save the selected tab index to local storage
     useEffect(() => {

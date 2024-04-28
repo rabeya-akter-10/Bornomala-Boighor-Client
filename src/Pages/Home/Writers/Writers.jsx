@@ -59,8 +59,8 @@ const Writers = () => {
                 modules={[Pagination, Autoplay]}
                 className="mySwiper"
             >
-                {writers.map((p) => (
-                    <SwiperSlide key={p._id} className="w-full px-4">
+                {writers.map((p, index) => (
+                    <SwiperSlide key={index} className="w-full px-4">
                         <Link
                             to={`/writers/${p.writerName}`}
                             className="h-36 rounded-md shadow-lg shadow-green-400 mb-16 flex items-center  w-full justify-center"

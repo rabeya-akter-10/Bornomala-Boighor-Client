@@ -5,15 +5,15 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/UseAuth";
 
 import locationsData from "../../../public/location.json";
+import toast, { Toaster } from "react-hot-toast";
 
 const Profile = () => {
+    const [axiosSecure] = UseAxiosSecure();
     const [selectedDivision, setSelectedDivision] = useState("");
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const [selectedUpazila, setSelectedUpazila] = useState("");
     const { user } = useAuth();
     const [thisUser, setThisUser] = useState(null);
-
-    const [axiosSecure] = UseAxiosSecure();
 
     useEffect(() => {
         if (user) {
@@ -66,10 +66,21 @@ const Profile = () => {
                 street,
             },
         };
-        axiosSecure.put(`/users/${user.email}`, usersInfo).then((response) => {
-            console.log(response);
-        });
-        window.location.reload();
+
+        fetch(
+            `https://bornomala-boighor-server.vercel.app/users/${user.email}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(usersInfo),
+            }
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                window.location.reload();
+            });
     };
 
     useEffect(() => {
@@ -101,6 +112,14 @@ const Profile = () => {
                     <span className="text-gray-400">Phone:</span>{" "}
                     {thisUser?.phone}
                 </p>
+                <p>
+                    <span className="text-gray-400">Address:</span>{" "}
+                    {thisUser?.address?.district}
+                </p>
+                <p>
+                    <span className="text-gray-400">Street/Area:</span>{" "}
+                    {thisUser?.address?.street}
+                </p>
 
                 <button
                     className="w-fit px-4 py-1 mt-2 bg-green-500 text-white hover:bg-green-600 cursor-pointer text-xs rounded-sm"
@@ -108,7 +127,7 @@ const Profile = () => {
                         document.getElementById("my_modal_5").showModal()
                     }
                 >
-                    Edit Profile
+                    Edit Address
                 </button>
             </div>
 
@@ -248,6 +267,7 @@ const Profile = () => {
                     </div>
                 </div>
             </dialog>
+            <Toaster></Toaster>
         </div>
     );
 };

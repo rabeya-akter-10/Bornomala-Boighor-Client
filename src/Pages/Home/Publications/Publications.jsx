@@ -60,8 +60,8 @@ const Publications = () => {
                 modules={[Pagination, Autoplay]}
                 className="mySwiper"
             >
-                {publications.map((p) => (
-                    <div key={p._id}>
+                {publications.map((p, index) => (
+                    <div key={index}>
                         <SwiperSlide className="w-full px-4">
                             <Link
                                 to={`/publications/${p.pub}`}

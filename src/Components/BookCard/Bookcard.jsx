@@ -1,11 +1,33 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../../Hooks/UseAuth";
+import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
+import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 
 const Bookcard = ({ book }) => {
+    const [axiosSecure] = UseAxiosSecure();
+    const { user } = useAuth();
     const [show, setShow] = useState(false);
     const { bookName, image, sold, writerName, price, discounts, _id } = book;
     const discountPrice = price - price * (discounts / 100);
     const roundPrice = Math.ceil(discountPrice);
+
+    const handleAddCart = () => {
+        const item = {
+            bookName,
+            _id,
+            userEmail: user?.email,
+            userName: user?.displayName,
+        };
+
+        axiosSecure.post("/carts", item).then((data) => {
+            if (data.data.acknowledged) {
+                cartRefetch();
+                toast.success("Book added to cart");
+            }
+        });
+    };
 
     return (
         <div
@@ -54,7 +76,10 @@ const Bookcard = ({ book }) => {
             {show && (
                 <div className="absolute bottom-0 bg-gray-200 bg-opacity-80  z-30 w-full h-full ">
                     <div className="flex items-center justify-center w-full h-full flex-col">
-                        <button className="w-fit px-4 py-1 bg-green-600 hover:bg-green-700 z-40 text-white opacity-100 rounded-sm">
+                        <button
+                            onClick={handleAddCart}
+                            className="w-fit px-4 py-1 bg-green-600 hover:bg-green-700 z-40 text-white opacity-100 rounded-sm"
+                        >
                             Add to cart
                         </button>
 
@@ -67,6 +92,7 @@ const Bookcard = ({ book }) => {
                     </div>
                 </div>
             )}
+            <Toaster></Toaster>
         </div>
     );
 };
