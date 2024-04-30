@@ -24,7 +24,6 @@ const NavigationBar = () => {
         },
     });
 
-    console.log(carts);
     const handleLogout = () => {
         logout()
             .then((result) => {})
@@ -49,12 +48,12 @@ const NavigationBar = () => {
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
                                 >
-                                    {/* <path
+                                    <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         strokeWidth="2"
                                         d="M4 6h16M4 12h8m-8 6h16"
-                                    /> */}
+                                    />
                                 </svg>
                             </Link>
                         </label>
@@ -114,7 +113,7 @@ const NavigationBar = () => {
                             tabIndex={0}
                             className="btn btn-ghost btn-circle"
                         >
-                            <Link className="indicator relative">
+                            <Link to={"/cart"} className="indicator relative">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="h-5 w-5 text-[#149352]"

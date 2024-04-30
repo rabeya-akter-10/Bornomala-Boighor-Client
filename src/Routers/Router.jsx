@@ -11,6 +11,7 @@ import CategoryBooks from "../Pages/CategoryBooks/CategoryBooks";
 import Publications from "../Pages/Publications/Publications";
 import Writers from "../Pages/Writers/Writers";
 import Profile from "../Pages/Profile/Profile";
+import Cart from "../Pages/Cart/Cart";
 
 const router = createBrowserRouter([
     {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
             {
                 path: "/users/:name",
                 element: <Profile></Profile>,
+            },
+            {
+                path: "/cart",
+                element: <Cart></Cart>,
             },
         ],
     },

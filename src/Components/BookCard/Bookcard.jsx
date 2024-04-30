@@ -4,6 +4,7 @@ import useAuth from "../../Hooks/UseAuth";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 
 const Bookcard = ({ book }) => {
     const [axiosSecure] = UseAxiosSecure();
@@ -12,19 +13,27 @@ const Bookcard = ({ book }) => {
     const { bookName, image, sold, writerName, price, discounts, _id } = book;
     const discountPrice = price - price * (discounts / 100);
     const roundPrice = Math.ceil(discountPrice);
-
+    // get Cart
+    const { data: carts = [], refetch: cartRefetch } = useQuery({
+        queryKey: ["carts"],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/carts`);
+            return res.data;
+        },
+    });
     const handleAddCart = () => {
         const item = {
             bookName,
-            _id,
             userEmail: user?.email,
             userName: user?.displayName,
+            bookId: _id,
         };
+        console.log(carts);
 
         axiosSecure.post("/carts", item).then((data) => {
             if (data.data.acknowledged) {
-                cartRefetch();
                 toast.success("Book added to cart");
+                cartRefetch();
             }
         });
     };
