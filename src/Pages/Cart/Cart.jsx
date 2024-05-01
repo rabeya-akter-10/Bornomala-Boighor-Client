@@ -43,21 +43,27 @@ const Cart = () => {
     }, [books, userCart]);
 
     const handleDelete = async (selectedId) => {
-        console.log(selectedId);
+        const selectedItem = userCart.find((item) => item.bookId === selectedId);
         try {
-            await axiosSecure.delete(`/carts/selectedId`);
+            await axiosSecure.delete(`/carts/${selectedItem?._id}`);
             // If deletion is successful, refetch the books data
-            await booksRefetch();
+            await cartRefetch();
             // Show success message
-            Swal.fire("Deleted!", "Your book has been deleted.", "success");
+          toast.success("Item removed from cart")
         } catch (error) {
-            console.log(error);
-            console.error("Error deleting book:", error);
+          
             // Show error message
-            Swal.fire("Error!", "Failed to delete book.", "error");
+         toast.error("Failed to remove")
         }
     };
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
+    }, []);
     if (loadingData) {
         return <CustomLoader />;
     }

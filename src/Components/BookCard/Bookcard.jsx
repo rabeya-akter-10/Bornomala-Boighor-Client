@@ -28,7 +28,6 @@ const Bookcard = ({ book }) => {
             userName: user?.displayName,
             bookId: _id,
         };
-        console.log(carts);
 
         axiosSecure.post("/carts", item).then((data) => {
             if (data.data.acknowledged) {

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Vortex } from "react-loader-spinner";
 import "./NavigationBar.css";
@@ -16,13 +16,17 @@ const NavigationBar = () => {
 
     const [axiosSecure] = UseAxiosSecure();
     // get Cart
-    const { data: carts = [], refetch: cartRefetch } = useQuery({
-        queryKey: ["carts"],
+    const { data: cart = [], refetch: cartRefetch1 } = useQuery({
+        queryKey: ["cart"],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/carts`);
+            const res = await axiosSecure.get(`/carts/${user?.email}`);
             return res.data;
         },
     });
+
+    useEffect(()=>{
+        cartRefetch1()
+    },[user])
 
     const handleLogout = () => {
         logout()
@@ -40,10 +44,10 @@ const NavigationBar = () => {
                             tabIndex={0}
                             className="btn btn-ghost btn-circle "
                         >
-                            <Link to="/cart">
+                           {/* {user&&  <Link to={"/cart"} className="indicator relative">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-5 w-5"
+                                    className="h-5 w-5 text-[#149352]"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -52,10 +56,13 @@ const NavigationBar = () => {
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         strokeWidth="2"
-                                        d="M4 6h16M4 12h8m-8 6h16"
+                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                                     />
                                 </svg>
-                            </Link>
+                                <p className="badge bg-green-500 text-white absolute -left-4 -bottom-2">
+                                    {carts.length}
+                                </p>
+                            </Link>} */}
                         </label>
                         <div
                             tabIndex={0}
@@ -111,9 +118,9 @@ const NavigationBar = () => {
                     <div className="dropdown dropdown-end lg:mr-3 mr-1">
                         <label
                             tabIndex={0}
-                            className="btn btn-ghost btn-circle"
+                            className=""
                         >
-                            <Link to={"/cart"} className="indicator relative">
+                           {user&&  <Link to={"/cart"} className="indicator relative hover:bg-slate-200 p-4 rounded-full">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="h-5 w-5 text-[#149352]"
@@ -128,10 +135,10 @@ const NavigationBar = () => {
                                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                                     />
                                 </svg>
-                                <p className="badge bg-green-500 text-white absolute -left-4 -bottom-2">
-                                    {carts.length}
+                                <p className="badge bg-green-500 text-white absolute left-0 bottom-2">
+                                    {cart.length}
                                 </p>
-                            </Link>
+                            </Link>}
                         </label>
                     </div>
                     {!user && (
