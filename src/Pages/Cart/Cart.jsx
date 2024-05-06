@@ -7,21 +7,15 @@ import CustomLoader from "../../Components/CustomLoader/CustomLoader";
 import { FaTrashAlt } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
+import UseCart from "../../Hooks/UseCart";
 
 const Cart = () => {
     const { user } = useAuth();
     const [axiosSecure] = UseAxiosSecure();
     const [loadingData, setLoadingData] = useState(true);
-    const [cart, setCart] = useState([]);
+    const [userCart, setUserCart] = useState([]);
 
-    // get Cart
-    const { data: userCart = [], refetch: cartRefetch } = useQuery({
-        queryKey: ["userCart"],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/carts/${user?.email}`);
-            return res.data;
-        },
-    });
+    const {cart,cartRefetch}=UseCart(user?.email)
 
     // get Books
     const { data: books = [] } = useQuery({
@@ -33,29 +27,47 @@ const Cart = () => {
     });
 
     useEffect(() => {
-        if (userCart.length > 0) {
-            const savedItem = books.filter((book) =>
-                userCart.some((cartItem) => cartItem.bookId === book._id)
-            );
-            setCart(savedItem);
+        if (cart.length > 0 && books.length > 0) {
+            const groupedCart = cart.reduce((acc, currentItem) => {
+                const existingItem = acc.find(item => item.bookId === currentItem.bookId);
+                if (existingItem) {
+                    existingItem.count++;
+                } else {
+                    const book = books.find(book => book._id === currentItem.bookId);
+                    if (book) {
+                        acc.push({ ...book, count: 1 });
+                    }
+                }
+                return acc;
+            }, []);
+            setUserCart(groupedCart);
             setLoadingData(false);
         }
-    }, [books, userCart]);
+    }, [books, cart]);
+    
 
     const handleDelete = async (selectedId) => {
-        const selectedItem = userCart.find((item) => item.bookId === selectedId);
+        const selectedItem = cart.find((item) => item.bookId === selectedId);
         try {
             await axiosSecure.delete(`/carts/${selectedItem?._id}`);
-            // If deletion is successful, refetch the books data
+            // If deletion is successful, refetch the cart data
             await cartRefetch();
+            // Update userCart based on the newly fetched cart data
+            setUserCart(cart);
+            // If userCart is empty, reload the page
+            if (cart.length == 1) {
+                window.location.reload();
+            }
             // Show success message
-          toast.success("Item removed from cart")
+            toast.success("Item removed from cart");
         } catch (error) {
-          
             // Show error message
-         toast.error("Failed to remove")
+            console.log(error);
+            toast.error("Failed to remove");
         }
+
     };
+    
 
     useEffect(() => {
         window.scrollTo({
@@ -64,14 +76,24 @@ const Cart = () => {
             behavior: "smooth",
         });
     }, []);
+
     if (loadingData) {
-        return <CustomLoader />;
+        return <div>{userCart && userCart.length > 0 ? (
+            <div>
+             <CustomLoader></CustomLoader>
+            </div>
+        ) : (
+            <div   className="w-full h-screen flex items-center justify-center">
+                <h1 className="text-gray-500 font-mono">The cart is empty</h1>
+            </div>
+        )}</div>
     }
 
     return (
         <div>
-            <h1 className="mx-auto w-fit my-4 text-lg font-medium text-gray-600 font-mono">
-                Cart Items: {cart.length}
+           <div>
+           <h1 className="mx-auto w-fit my-4 text-lg font-medium text-gray-600 font-mono">
+                Cart Items: {userCart.length}
             </h1>
             <div className="px-4">
                 <div className="overflow-x-auto">
@@ -92,7 +114,7 @@ const Cart = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {cart.map((item) => (
+                            {userCart.map((item) => (
                                 <tr key={item._id}>
                                     <th>
                                         <label>
@@ -129,7 +151,6 @@ const Cart = () => {
                                                     (item.discounts / 100)
                                         )}
                                     </td>
-
                                     <td>
                                         <FaTrashAlt
                                             onClick={() =>
@@ -144,6 +165,7 @@ const Cart = () => {
                     </table>
                 </div>
             </div>
+           </div>
             <Toaster />
         </div>
     );

@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useLoaderData, useParams } from "react-router-dom";
 import CustomLoader from "../../Components/CustomLoader/CustomLoader";
 import Bookcard from "../../Components/BookCard/Bookcard";
+import UseCart from "../../Hooks/UseCart";
+import useAuth from "../../Hooks/UseAuth";
 
 const BookDetails = () => {
     const [loading, setLoading] = useState(true);
