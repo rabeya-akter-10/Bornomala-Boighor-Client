@@ -1,12 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Vortex } from "react-loader-spinner";
 import "./NavigationBar.css";
 import { AuthContext } from "../../Providers/AuthProviders";
 import logo from "../../assets/logo.png";
-import CustomLoader from "../CustomLoader/CustomLoader";
-import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+
 import UseCart from "../../Hooks/UseCart";
 import UseBooks from "../../Hooks/UseBooks";
 
@@ -29,16 +26,21 @@ const NavigationBar = () => {
   };
 
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
   };
-
+  
   let filteredBooks = [];
-
-  if(searchTerm) {
+  
+  if (searchTerm) {
     filteredBooks = books.filter((book) =>
-      book.bookName.toLowerCase().includes(searchTerm.toLowerCase())
+      book.bookName.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by Bengali book name
+      book.bookName_en.toLowerCase().includes(searchTerm.toLowerCase())|| // Search by English book name
+      book.writerName.toLowerCase().includes(searchTerm.toLowerCase())|| // Search by English book name
+      book.publications.toLowerCase().includes(searchTerm.toLowerCase())// Search by English book name
     );
   }
+  
   
 
 
@@ -190,16 +192,26 @@ const NavigationBar = () => {
       </div>
       {/* Render search results */}
       <div className="relative flex items-center w-full justify-center">
-        <ul className="absolute mx-auto bg-gray-200  top-0">
-         {filteredBooks?.map((book) => (
-           <Link onClick={()=>{
-            setSearchTerm("")
-           }} to={`/books/${book._id}`}> <li className="border-b border-white py-2 px-4 w-80 hover:bg-slate-50" key={book._id}>
-           {book.bookName}
-         </li></Link>
-          ))}
-        </ul>
-      </div>
+  <ul className="absolute mx-auto bg-gray-200 max-h-[510px] overflow-y-auto top-0 duration-1000">
+    {filteredBooks?.map((book) => (
+      <Link onClick={() => { setSearchTerm("") }} to={`/books/${book._id}`} key={book._id}>
+        <li className="border-b border-white py-2 px-2 w-80 hover:bg-slate-50">
+          <div className="flex">
+            <div>
+              <img className="w-10 h-10 mr-2" src={book.image} alt="" />
+            </div>
+            <div className="text-xs">
+              {book.bookName}
+              <br />
+              <span className="text-[10px]">{book?.writerName}</span>
+            </div>
+          </div>
+        </li>
+      </Link>
+    ))}
+  </ul>
+</div>
+
     </div>
   );
 };
