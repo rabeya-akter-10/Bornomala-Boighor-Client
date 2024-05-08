@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import UseCart from "../../Hooks/UseCart";
+import UseHandleAddCart from "../../Hooks/UseHandleAddCart";
 
 const Bookcard = ({ book }) => {
     const [axiosSecure] = UseAxiosSecure();
@@ -15,38 +16,9 @@ const Bookcard = ({ book }) => {
     const discountPrice = price - price * (discounts / 100);
     const roundPrice = Math.ceil(discountPrice);
     const {cart,cartRefetch}=UseCart(user?.email)
-    const handleAddCart = () => {
-        if (!user) {
-            // User is not logged in, show alert and navigate to login page
-            Swal.fire({
-                title: "Login Required",
-                text: "Please login to add items to the cart.",
-                icon: "warning",
-                confirmButtonText: "Login",
-                showCancelButton: true,
-                cancelButtonText: "Cancel"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Redirect to login page
-                    window.location.href = "/login"; 
-                }
-            });
-        } else {
-            const item = {
-                bookName,
-                userEmail: user.email,
-                userName: user.displayName,
-                bookId: _id,
-            };
-    
-            axiosSecure.post("/carts", item).then((data) => {
-                if (data.data.acknowledged) {
-                    toast.success("Book added to cart");
-                    cartRefetch();
-                }
-            });
-        }
-    };
+
+    const{handleAddCart}=UseHandleAddCart(book)
+   
     
 
     return (

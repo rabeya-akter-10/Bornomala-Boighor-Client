@@ -4,13 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useLoaderData, useParams } from "react-router-dom";
 import CustomLoader from "../../Components/CustomLoader/CustomLoader";
 import Bookcard from "../../Components/BookCard/Bookcard";
-import UseCart from "../../Hooks/UseCart";
-import useAuth from "../../Hooks/UseAuth";
+import UseHandleAddCart from "../../Hooks/UseHandleAddCart";
+
 
 const BookDetails = () => {
     const [loading, setLoading] = useState(true);
     const [book, setBook] = useState({});
     const [books, setBooks] = useState([]);
+    const {handleAddCart}=UseHandleAddCart(book)
 
     const loadedBook = useLoaderData();
     useEffect(() => {
@@ -132,6 +133,12 @@ const BookDetails = () => {
                             Sold: {sold}
                         </p>
                     )}
+                    <div>  <button
+                            onClick={handleAddCart}
+                            className="w-fit px-4 py-1 my-4 bg-green-600 hover:bg-green-700 z-40 text-white opacity-100 rounded-sm"
+                        >
+                            Add to cart
+                        </button></div>
                     <p className="text-xs py-8 text-[#757575]">
                         {descriptions}
                     </p>
