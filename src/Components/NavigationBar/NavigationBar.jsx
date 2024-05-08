@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Vortex } from "react-loader-spinner";
 import "./NavigationBar.css";
@@ -8,14 +8,12 @@ import CustomLoader from "../CustomLoader/CustomLoader";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import UseCart from "../../Hooks/UseCart";
+import UseBooks from "../../Hooks/UseBooks";
 
 const NavigationBar = () => {
   const { user, loading, logout } = useContext(AuthContext);
-
-  if (loading) {
-    return <CustomLoader></CustomLoader>;
-  }
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const { books } = UseBooks();
   const { cart, cartRefetch } = UseCart(user?.email);
 
   useEffect(() => {
@@ -29,6 +27,21 @@ const NavigationBar = () => {
 
     window.location.reload();
   };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  let filteredBooks = [];
+
+  if(searchTerm) {
+    filteredBooks = books.filter((book) =>
+      book.bookName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+  
+
+
   return (
     <div className="bg-white">
       <div className="navbar  border-b border-success max-w-7xl mx-auto">
@@ -88,6 +101,8 @@ const NavigationBar = () => {
             type="text"
             placeholder="Search by book name"
             className="px-2 py-1 text-[13px] focus:outline-none text-center rounded-3xl input input-bordered input-success ml-3 w-36"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
         </span>
         <div className="navbar-center hidden md:flex">
@@ -95,7 +110,9 @@ const NavigationBar = () => {
             <input
               type="text"
               placeholder="Search by book name"
-              className="px-4 py-2 text-center text-sm focus:outline-none input rounded-3xl input-bordered input-success w-80 "
+              className="px-4 py-2 text-center text-sm focus:outline-none input rounded-3xl input-bordered input-success w-80"
+              value={searchTerm}
+              onChange={handleSearchChange}
             />
           </ul>
         </div>
@@ -143,7 +160,7 @@ const NavigationBar = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full outline outline-success">
-                  <img src={user.photoURL} />
+                  <img src={user.photoURL} alt="User Avatar" />
                 </div>
               </label>
               <ul
@@ -170,6 +187,18 @@ const NavigationBar = () => {
             </div>
           )}
         </div>
+      </div>
+      {/* Render search results */}
+      <div className="relative flex items-center w-full justify-center">
+        <ul className="absolute mx-auto bg-gray-200  top-0">
+         {filteredBooks?.map((book) => (
+           <Link onClick={()=>{
+            setSearchTerm("")
+           }} to={`/books/${book._id}`}> <li className="border-b border-white py-2 px-4 w-80 hover:bg-slate-50" key={book._id}>
+           {book.bookName}
+         </li></Link>
+          ))}
+        </ul>
       </div>
     </div>
   );

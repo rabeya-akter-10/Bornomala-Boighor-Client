@@ -12,7 +12,7 @@ const BookByCategory = () => {
     const [loadingCategories, setLoadingCategories] = useState(true);
     const [loadingBooks, setLoadingBooks] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState(null); // State to keep track of the selected category
-    const [filteredBooks, setFilteredBooks] = useState([]);
+    const [filteredBooksByCat, setFilteredBooksByCat] = useState([]);
     const [selectedTab, setSelectedTab] = useState(0);
 
     // Get categories
@@ -25,21 +25,16 @@ const BookByCategory = () => {
         },
     });
 
+
     // Get books
-    const { data: books = [], refetch: booksRefetch } = useQuery({
-        queryKey: ["books"],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/books`);
-            setLoadingBooks(false);
-            return res.data;
-        },
-    });
+    const { books } = UseBooks();
 
     // Function to filter books based on the selected category
     const filterBooksByCategory = (category) => {
         setSelectedCategory(category);
         const filtered = books.filter((book) => book?.category == category);
-        setFilteredBooks(filtered);
+        setFilteredBooksByCat(filtered);
+        setLoadingBooks(false)
     };
 
     useEffect(() => {
@@ -102,7 +97,7 @@ const BookByCategory = () => {
                                 {c.cat}
                             </h2>
                             <div className="grid md:grid-cols-4 lg:grid-cols-6 grid-cols-2 md:gap-6 gap-4 py-6 mx-auto w-fit">
-                                {filteredBooks.map((book) => (
+                                {filteredBooksByCat.map((book) => (
                                     <Bookcard
                                         key={book._id}
                                         book={book}

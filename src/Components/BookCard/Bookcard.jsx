@@ -16,20 +16,38 @@ const Bookcard = ({ book }) => {
     const roundPrice = Math.ceil(discountPrice);
     const {cart,cartRefetch}=UseCart(user?.email)
     const handleAddCart = () => {
-        const item = {
-            bookName,
-            userEmail: user?.email,
-            userName: user?.displayName,
-            bookId: _id,
-        };
-
-        axiosSecure.post("/carts", item).then((data) => {
-            if (data.data.acknowledged) {
-                toast.success("Book added to cart");
-                cartRefetch();
-            }
-        });
+        if (!user) {
+            // User is not logged in, show alert and navigate to login page
+            Swal.fire({
+                title: "Login Required",
+                text: "Please login to add items to the cart.",
+                icon: "warning",
+                confirmButtonText: "Login",
+                showCancelButton: true,
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to login page
+                    window.location.href = "/login"; 
+                }
+            });
+        } else {
+            const item = {
+                bookName,
+                userEmail: user.email,
+                userName: user.displayName,
+                bookId: _id,
+            };
+    
+            axiosSecure.post("/carts", item).then((data) => {
+                if (data.data.acknowledged) {
+                    toast.success("Book added to cart");
+                    cartRefetch();
+                }
+            });
+        }
     };
+    
 
     return (
         <div
