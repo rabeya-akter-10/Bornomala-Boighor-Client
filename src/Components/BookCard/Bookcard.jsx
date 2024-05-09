@@ -9,7 +9,7 @@ import UseCart from "../../Hooks/UseCart";
 import UseHandleAddCart from "../../Hooks/UseHandleAddCart";
 
 const Bookcard = ({ book }) => {
-    const [axiosSecure] = UseAxiosSecure();
+
     const { user } = useAuth();
     const [show, setShow] = useState(false);
     const { bookName, image, sold, writerName, price, discounts, _id } = book;
@@ -38,8 +38,8 @@ const Bookcard = ({ book }) => {
                     src={image}
                     alt={bookName}
                 />
-                <h1 className="text-sm font-bold">{bookName}</h1>
-                <p className="text-xs">{writerName}</p>
+                <h1 className="text-[13px] font-bold">{bookName}</h1>
+                <p className="text-[11px]">{writerName}</p>
                 <div className="flex gap-2 text-xs font-medium">
                     {discounts > 0 && (
                         <p className="line-through text-red-500">TK.{price}</p>

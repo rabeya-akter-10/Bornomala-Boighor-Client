@@ -111,6 +111,8 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
             discounts,
             quantity,
             descriptions,
+            bookName_en,
+            keywords
         } = data;
         const editedBook = {
             bookName,
@@ -121,6 +123,8 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
             writerName,
             publications,
             descriptions,
+            bookName_en,
+            keywords
         };
 
         // Update form data with the latest values from the input fields
@@ -169,6 +173,20 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                             placeholder="book name"
                             defaultValue={book?.bookName}
                             {...register("bookName", { required: true })}
+                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                        />
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="text-xs text-[#757575dc] font-medium">
+                                Book name EN
+                            </span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="book name english"
+                            defaultValue={book?.bookName_en}
+                            {...register("bookName_en", { required: true })}
                             className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
                         />
                     </div>
@@ -335,6 +353,22 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                             placeholder="descriptions"
                             defaultValue={book?.descriptions}
                             {...register("descriptions", {
+                                required: true,
+                            })}
+                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                        />
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="text-xs text-[#757575] font-medium ">
+                                Keywords
+                            </span>
+                        </label>
+                        <textarea
+                            type="text"
+                            placeholder="keywords"
+                            defaultValue={book?.keywords}
+                            {...register("keywords", {
                                 required: true,
                             })}
                             className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
