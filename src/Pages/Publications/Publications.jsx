@@ -1,14 +1,18 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import UseBooks from "../../Hooks/UseBooks";
-import Bookcard from "../../Components/BookCard/Bookcard";
+import React, { useEffect, useState } from "react";
+import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const Publications = () => {
-    const { publication } = useParams();
-    const { books } = UseBooks();
-    const filteredBooks = books.filter(
-        (book) => book.publications == publication
-    );
+    const [publications, setPublications] = useState([]);
+
+    useEffect(() => {
+        fetch("https://bornomala-boighor-server.vercel.app/publications")
+            .then((res) => res.json())
+            .then((data) => {
+                setPublications(data);
+            });
+    }, []);
 
     // Scroll to top
     window.scrollTo({
@@ -18,15 +22,20 @@ const Publications = () => {
     });
 
     return (
-        <div>
-            <h1 className="text-green-600 text-center text-xl py-4">
-                {publication}
+        <div className="min-h-[80vh] w-full px-4 ">
+            <h1 className="text-center py-5 text-xl text-green-500 underline">
+                প্রকাশনী সমুহ
             </h1>
-            <div className="grid md:grid-cols-4 lg:grid-cols-6 grid-cols-2 md:gap-6 gap-4 py-6 mx-auto w-fit">
-                {filteredBooks.map((book) => (
-                    <Bookcard key={book._id} book={book}></Bookcard>
+
+            <ul className="w-full max-w-xl grid grid-cols-1 md:grid-cols-2 mx-auto gap-3 pb-16">
+                {publications.map((p) => (
+                    <li key={p._id} className="px-4 py-2 border border-gray-400 rounded-md hover:bg-slate-100 cursor-pointer shadow-md hover:shadow-success">
+                        <Link to={`/publications/${p.pub}`} className="w-full">
+                            {p.pub}
+                        </Link>
+                    </li>
                 ))}
-            </div>
+            </ul>
         </div>
     );
 };

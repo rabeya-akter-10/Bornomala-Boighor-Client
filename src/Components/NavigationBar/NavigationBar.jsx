@@ -228,7 +228,7 @@ const NavigationBar = () => {
         </div>
 
         {/* Main menu */}
-        <div className="pb-2">
+        <div className=" pb-2  w-full text-center ">
           <NavLink
             className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
             to={"/"}

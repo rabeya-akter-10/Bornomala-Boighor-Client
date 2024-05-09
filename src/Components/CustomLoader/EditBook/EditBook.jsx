@@ -155,7 +155,7 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
 
     return (
         <div className="">
-            <h1 className="text-center py-8 text-2xl">{book?.bookName} </h1>
+            <h1 className="text-center pt-4 md:pt-8 text-2xl">{book?.bookName} </h1>
 
             <form
                 onSubmit={handleSubmit(onSubmit)}

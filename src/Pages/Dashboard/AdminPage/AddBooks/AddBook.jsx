@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import useAuth from "../../../Hooks/UseAuth";
+import useAuth from "../../../../Hooks/UseAuth";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import UseAxiosSecure from "../../../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 

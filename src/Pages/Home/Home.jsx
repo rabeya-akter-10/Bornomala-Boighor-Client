@@ -13,7 +13,7 @@ const Home = () => {
             <div className="md:block hidden">
                 <Hero></Hero>
             </div>
-            <div className="md:hidden w-full flex items-center justify-center"><img src="https://i.ibb.co/nC0YqSG/Hero-banner.png" alt="" /></div>
+            <div className="md:hidden w-full flex items-center justify-center mt-6"><img src="https://i.ibb.co/nC0YqSG/Hero-banner.png" alt="" /></div>
 
             <h1 className="text-center pt-8 text-xl text-green-600 ">
                 ক্যাটাগরি সমুহ
