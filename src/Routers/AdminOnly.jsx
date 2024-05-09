@@ -1,16 +1,33 @@
-import React from "react";
-import UseAdmin from "../Hooks/UseAdmin";
-import { Navigate, useLocation } from "react-router-dom";
-import CustomLoader from "../Components/customLoader/CustomLoader";
+import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import useAuth from "../Hooks/UseAuth";
+import UseAdmin from "../Hooks/UseAdmin";
+import CustomLoader from "../Components/CustomLoader/CustomLoader";
 
 const AdminOnly = ({ children }) => {
     const { user, loading } = useAuth();
+    const { admin, adminLoading } = UseAdmin();
 
-    if (user && isAdmin) {
-        return children;
+    useEffect(() => {
+        if (!admin && !user && !loading) {
+            <Navigate to="/login" />;
+        }
+    }, [user, admin, loading]);
+
+    if (adminLoading) {
+        return <CustomLoader />;
     }
-    return <Navigate to={"/"}></Navigate>;
+    if (!admin && user) {
+        return <div className="w-full h-[80vh] flex-col text-red-500 text-3xl font-bold uppercase font-mono flex items-center justify-center">
+          Entry Restricted <br />
+          <span className="text-xl">authorised person only</span>
+        </div>;
+    }
+    if (!user) {
+        return <div className="w-full h-screen flex items-center justify-center">Please Login to continue</div>;
+    }
+    
+    return children;
 };
 
 export default AdminOnly;

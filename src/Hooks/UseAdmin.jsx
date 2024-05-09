@@ -4,12 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 import useAuth from './UseAuth';
 
 const UseAdmin = () => {
-    const [admin,setAdmin]=useState(false);
-    const {user}=useAuth()
+    const [admin, setAdmin] = useState(false);
+    const [adminLoading, setAdminLoading] = useState(true);
+    const { user } = useAuth();
     const [axiosSecure] = UseAxiosSecure();
-    
-      // Get Users
-      const { data: users = [], refetch: usersRefetch } = useQuery({
+
+    // Get Users
+    const { data: users = [], refetch: usersRefetch } = useQuery({
         queryKey: ["users"],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users`);
@@ -17,16 +18,18 @@ const UseAdmin = () => {
         },
     });
 
-useEffect(()=>{
-    const thisUser = users.find((u) => user?.email === u.email); 
-    if (thisUser?.role=="admin"){
-        setAdmin(true)
-    }
-},[users,user])
-   
+    useEffect(() => {
+        setAdminLoading(true); // Set loading state to true initially
 
- 
-    return {admin};
+        const thisUser = users.find((u) => user?.email === u.email);
+        if (thisUser?.role === "admin") {
+            setAdmin(true);
+        }
+        
+        setAdminLoading(false); // Update loading state after determining admin status
+    }, [users, user]);
+
+    return { admin, adminLoading };
 };
 
 export default UseAdmin;

@@ -10,6 +10,7 @@ import UseAdmin from "../../Hooks/UseAdmin";
 
 import { FaBox, FaGrinStars, FaSignOutAlt, FaSmileBeam } from "react-icons/fa";
 import { MdDashboardCustomize } from "react-icons/md";
+import CustomLoader from "../CustomLoader/CustomLoader";
 
 const NavigationBar = () => {
   const { user, loading, logout } = useContext(AuthContext);
@@ -46,6 +47,10 @@ const NavigationBar = () => {
         book.publications?.toLowerCase().includes(searchTerm.toLowerCase()) || // Search by English book name
         book.keywords?.toLowerCase().includes(searchTerm.toLowerCase()) // Search by English book name
     );
+  }
+
+  if(loading){
+    return <CustomLoader></CustomLoader>
   }
 
   return (

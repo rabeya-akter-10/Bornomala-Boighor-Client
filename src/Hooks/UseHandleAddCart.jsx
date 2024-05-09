@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Swal from 'sweetalert2';
 import UseAxiosSecure from './UseAxiosSecure';
 import useAuth from './UseAuth';
 import UseCart from './UseCart';
 import toast, { Toaster } from 'react-hot-toast';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const UseHandleAddCart = (book) => {
     const [axiosSecure] = UseAxiosSecure();
+    const location = useLocation();
+    const navigate = useNavigate();
     const { user } = useAuth();
-    const { bookName,_id } = book;
-    const {cartRefetch}=UseCart(user?.email)
+    const { bookName, _id } = book;
+    const { cartRefetch } = UseCart(user?.email);
 
     const handleAddCart = () => {
         if (!user) {
@@ -24,7 +27,7 @@ const UseHandleAddCart = (book) => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Redirect to login page
-                    window.location.href = "/login"; 
+                    navigate("/login", { state:  location  });
                 }
             });
         } else {
@@ -43,15 +46,14 @@ const UseHandleAddCart = (book) => {
                         icon: "success",
                         showConfirmButton: false,
                         timer: 1000
-                      });
+                    });
                     cartRefetch();
                 }
             });
         }
     };
-    return {handleAddCart}
-       
 
+    return { handleAddCart };
 };
 
 export default UseHandleAddCart;

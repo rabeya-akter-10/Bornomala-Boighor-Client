@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
 import useAuth from "../../Hooks/UseAuth";
@@ -8,19 +8,21 @@ import GoogleLogin from "../../Components/GoogleLogin/GoogleLogin";
 const Login = () => {
     const [error, setError] = useState("");
     const { user, login, loginWithGoogle } = useAuth();
-    // console.log(user);
+    const location = useLocation();
+    const from = location?.state?.pathname || "/"; 
+    const navigate = useNavigate();
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
         login(email, password)
             .then((result) => {
                 const loggedUser = result.user;
-                // console.log(loggedUser);
                 toast.success("Successfully Login!");
                 setError("");
+                navigate(from);
                 event.target.reset();
             })
             .catch((error) => {
@@ -35,7 +37,6 @@ const Login = () => {
         left: 0,
         behavior: "smooth",
     });
-
     return (
         <div className="w-full flex items-center justify-center min-h-[91vh]">
             <form

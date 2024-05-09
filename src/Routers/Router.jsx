@@ -12,6 +12,8 @@ import Publications from "../Pages/Publications/Publications";
 import Writers from "../Pages/Writers/Writers";
 import Profile from "../Pages/Profile/Profile";
 import Cart from "../Pages/Cart/Cart";
+import PrivateRoute from "./PrivateRoute";
+import AdminOnly from "./AdminOnly";
 
 const router = createBrowserRouter([
     {
@@ -28,7 +30,9 @@ const router = createBrowserRouter([
             },
             {
                 path: "/add-book",
-                element: <AddBook></AddBook>,
+                element:<AdminOnly>
+                    <AddBook></AddBook>,
+                </AdminOnly> 
             },
             {
                 path: "/",
@@ -44,7 +48,10 @@ const router = createBrowserRouter([
             },
             {
                 path: "/manage-books",
-                element: <ManageBook></ManageBook>,
+
+                element:<AdminOnly>
+                    <ManageBook></ManageBook>,
+                </AdminOnly>
             },
             {
                 path: "/books",
@@ -64,11 +71,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/users/:name",
-                element: <Profile></Profile>,
+                element: <PrivateRoute><Profile></Profile></PrivateRoute>,
             },
             {
                 path: "/cart",
-                element: <Cart></Cart>,
+                element:<PrivateRoute> <Cart></Cart></PrivateRoute>
             },
         ],
     },

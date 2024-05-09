@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import useAuth from "../../Hooks/UseAuth";
 import toast, { Toaster } from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const GoogleLogin = () => {
     const { loginWithGoogle } = useAuth();
     const [error, setError] = useState();
+    const location = useLocation(); 
+    const from = location?.state?.pathname || "/"; 
+    const navigate = useNavigate();
+
 
     // Google Login
     const hangleGoogle = () => {
@@ -29,6 +34,7 @@ const GoogleLogin = () => {
 
                 toast.success("Successfully Login!");
                 setError("");
+                navigate(from);
             })
             .catch((error) => {
                 setError(error.message);
