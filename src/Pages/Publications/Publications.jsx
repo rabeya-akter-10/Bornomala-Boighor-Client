@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Publications = () => {
     const [publications, setPublications] = useState([]);
+    
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("https://bornomala-boighor-server.vercel.app/publications")
@@ -13,6 +15,12 @@ const Publications = () => {
                 setPublications(data);
             });
     }, []);
+
+    const handleLink=(p)=>{
+        console.log(p);
+       navigate(`/publications/${p}`)
+
+    }
 
     // Scroll to top
     window.scrollTo({
@@ -29,10 +37,12 @@ const Publications = () => {
 
             <ul className="w-full max-w-xl grid grid-cols-1 md:grid-cols-2 mx-auto gap-3 pb-16">
                 {publications.map((p) => (
-                    <li key={p._id} className="px-4 py-2 border border-gray-400 rounded-md hover:bg-slate-100 cursor-pointer shadow-md hover:shadow-success">
-                        <Link to={`/publications/${p.pub}`} className="w-full">
+                    <li onClick={()=>{
+                        handleLink(`${p.pub}`)
+                    }} key={p._id} className="px-4 py-2 border border-gray-400 rounded-md hover:bg-slate-100 cursor-pointer shadow-md hover:shadow-success">
+                       
                             {p.pub}
-                        </Link>
+                      
                     </li>
                 ))}
             </ul>
