@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate,  } from "react-router-dom";
 import "./NavigationBar.css";
 import { AuthContext } from "../../Providers/AuthProviders";
 import logo from "../../assets/logo.png";
@@ -18,6 +18,8 @@ const NavigationBar = () => {
   const { books } = UseBooks();
   const { cart, cartRefetch } = UseCart(user?.email);
   const { admin } = UseAdmin();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     cartRefetch();
@@ -27,9 +29,12 @@ const NavigationBar = () => {
     logout()
       .then((result) => {})
       .catch((error) => {});
-
-    window.location.reload();
   };
+
+  const handleClickLogin = () => {
+    navigate("/login", { state: location } );
+}
+
 
   const handleSearchChange = (event) => {
     const searchTerm = event.target.value;
@@ -164,13 +169,13 @@ const NavigationBar = () => {
             </div>
             {!user && (
               <span>
-                {" "}
-                <NavLink
-                  className=" font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success "
-                  to={"/login"}
+                <p
+                onClick={handleClickLogin}
+                  className=" font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success cursor-pointer"
+                  
                 >
                   Login
-                </NavLink>
+                </p>
               </span>
             )}
             {user && (

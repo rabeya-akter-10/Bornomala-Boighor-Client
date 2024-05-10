@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
-
 const Categories = () => {
   const [categories, setCategories] = useState([]);
 
