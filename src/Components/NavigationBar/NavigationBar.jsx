@@ -142,7 +142,7 @@ const NavigationBar = () => {
             <div className="dropdown dropdown-end lg:mr-3 mr-1">
               <label tabIndex={0} className="">
                 {user && !admin && (
-                  <Link
+                  <NavLink
                     to={"/cart"}
                     className="indicator relative hover:bg-slate-200 p-4 rounded-full"
                   >
@@ -163,7 +163,7 @@ const NavigationBar = () => {
                     <p className="badge bg-green-500 text-white absolute left-0 bottom-2">
                       {cart.length}
                     </p>
-                  </Link>
+                  </NavLink>
                 )}
               </label>
             </div>

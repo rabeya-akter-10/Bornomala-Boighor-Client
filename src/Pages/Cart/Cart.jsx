@@ -1,5 +1,4 @@
-// Import useState and useEffect
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useAuth from "../../Hooks/UseAuth";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -8,23 +7,18 @@ import { FaTrashAlt } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
 import UseCart from "../../Hooks/UseCart";
+import UseBooks from "../../Hooks/UseBooks";
 
 const Cart = () => {
     const { user } = useAuth();
     const [axiosSecure] = UseAxiosSecure();
     const [loadingData, setLoadingData] = useState(true);
     const [userCart, setUserCart] = useState([]);
+    const [selectedItems, setSelectedItems] = useState({});
+    const { cart, cartRefetch } = UseCart(user?.email);
 
-    const {cart,cartRefetch}=UseCart(user?.email)
-
-    // get Books
-    const { data: books = [] } = useQuery({
-        queryKey: ["books"],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/books`);
-            return res.data;
-        },
-    });
+    // Get Books
+    const { books } = UseBooks()
 
     useEffect(() => {
         if (cart.length > 0 && books.length > 0) {
@@ -44,55 +38,82 @@ const Cart = () => {
             setLoadingData(false);
         }
     }, [books, cart]);
-    
 
     const handleDelete = async (selectedId) => {
         const selectedItem = cart.find((item) => item.bookId === selectedId);
         try {
             await axiosSecure.delete(`/carts/${selectedItem?._id}`);
-            // If deletion is successful, refetch the cart data
             await cartRefetch();
-            // Update userCart based on the newly fetched cart data
             setUserCart(cart);
-            // If userCart is empty, reload the page
-            if (cart.length == 1) {
+            if (cart.length === 1) {
                 window.location.reload();
             }
-            // Show success message
             toast.success("Item removed from cart");
         } catch (error) {
-            // Show error message
             console.log(error);
             toast.error("Failed to remove");
         }
-
     };
-    
 
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-        });
-    }, []);
+    const handlePlaceOrder = async () => {
+        const selectedItemsArray = userCart.filter(item => selectedItems[item._id]);
+        console.log(selectedItemsArray);
+
+        if (selectedItemsArray.length === 0) {
+            toast.error("Please select items to place an order.");
+            return;
+        }
+
+        try {
+            const orderData = {
+                items: selectedItemsArray.map(item => ({
+                    bookId: item._id,
+                    quantity: item.count
+                }))
+            };
+
+            // Save order data in local storage
+        localStorage.setItem('orderItem', JSON.stringify(orderData));
+        window.location.replace("/order-confirmation")
+
+            // const response = await axiosSecure.post("/orders", orderData);
+
+            // if (response.status === 200) {
+            //     toast.success("Order placed successfully.");
+            //     setSelectedItems({});
+            //     await cartRefetch();
+            // } else {
+            //     toast.error("Failed to place order. Please try again.");
+            // }
+        } catch (error) {
+            console.error("Error placing order:", error);
+            toast.error("Failed to place order. Please try again.");
+        }
+    };
+
+    const handleCheckboxChange = (event, itemId) => {
+        setSelectedItems(prevSelectedItems => ({
+            ...prevSelectedItems,
+            [itemId]: event.target.checked
+        }));
+    };
 
     if (loadingData) {
-        return <div>{userCart && userCart.length > 0 ? (
-            <div>
-             <CustomLoader></CustomLoader>
-            </div>
-        ) : (
-            <div   className="w-full h-screen flex items-center justify-center">
-                <h1 className="text-gray-500 font-mono">The cart is empty</h1>
-            </div>
-        )}</div>
+        return <CustomLoader />;
     }
 
+    // Calculate total price
+    const totalPrice = userCart.reduce((total, item) => {
+        if (selectedItems[item._id]) {
+            const discountedPrice = item.price - (item.price * (item.discounts / 100));
+            return total + Math.ceil(discountedPrice * item.count);
+        }
+        return total;
+    }, 0);
+
     return (
-        <div>
-           <div>
-           <h1 className="mx-auto w-fit my-4 text-lg font-medium text-gray-600 font-mono">
+        <div className="font-mono w-full max-w-4xl mx-auto relative">
+            <h1 className="mx-auto w-fit my-4 text-lg font-medium text-gray-600 font-mono">
                 Cart Items: {userCart.length}
             </h1>
             <div className="px-4">
@@ -100,14 +121,7 @@ const Cart = () => {
                     <table className="table text-xs">
                         <thead>
                             <tr>
-                                <th>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            className="checkbox"
-                                        />
-                                    </label>
-                                </th>
+                                <th></th>
                                 <th>Name</th>
                                 <th>Price</th>
                                 <th>Action</th>
@@ -117,12 +131,11 @@ const Cart = () => {
                             {userCart.map((item) => (
                                 <tr key={item._id}>
                                     <th>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                className="checkbox"
-                                            />
-                                        </label>
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedItems[item._id]}
+                                            onChange={(event) => handleCheckboxChange(event, item._id)}
+                                        />
                                     </th>
                                     <td>
                                         <div className="flex items-center gap-3">
@@ -147,8 +160,8 @@ const Cart = () => {
                                     <td>
                                         {Math.ceil(
                                             item.price -
-                                                item.price *
-                                                    (item.discounts / 100)
+                                            item.price *
+                                            (item.discounts / 100)
                                         )}
                                     </td>
                                     <td>
@@ -165,7 +178,14 @@ const Cart = () => {
                     </table>
                 </div>
             </div>
-           </div>
+            <div className="w-full max-w-4xl flex gap-4 justify-end bottom-0 fixed  px-3">
+
+                {
+                    totalPrice > 0 && <p className="my-3 py-3  bg-slate-200 rounded-sm bg-opacity-30 px-5">Estimated Price: {totalPrice}</p>
+                }
+
+                <button onClick={handlePlaceOrder} className="bg-orange-500 px-5 py-3 text-white font-semibold rounded-sm my-3 hover:bg-orange-600 hover:shadow-md hover:shadow-orange-300 uppercase">Place Order</button>
+            </div>
             <Toaster />
         </div>
     );

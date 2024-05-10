@@ -17,6 +17,7 @@ import Dashboard from "../Layouts/Dashboard";
 import Categories from "../Pages/Categories/Categories";
 import Publication from "../Pages/Publications/Publication.jsx";
 import Publications from "../Pages/Publications/Publications.jsx";
+import OrderConfirmation from "../Pages/Cart/OrderConfirmation.jsx";
 
 const router = createBrowserRouter([
     {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
                 path: "/register",
                 element: <Register></Register>,
             },
-           
+
             {
                 path: "/",
                 element: <Home></Home>,
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
                         `https://bornomala-boighor-server.vercel.app/books/${params?.id}`
                     ),
             },
-          
+
             {
                 path: "/books",
                 element: <Books></Books>,
@@ -71,11 +72,28 @@ const router = createBrowserRouter([
             },
             {
                 path: "/users/:name",
-                element: <PrivateRoute><Profile></Profile></PrivateRoute>,
+                element: (
+                    <PrivateRoute>
+                        <Profile></Profile>
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "/cart",
-                element:<PrivateRoute> <Cart></Cart></PrivateRoute>
+                element: (
+                    <PrivateRoute>
+                        {" "}
+                        <Cart></Cart>
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "/order-confirmation",
+                element: (
+                    <PrivateRoute>
+                        <OrderConfirmation></OrderConfirmation>
+                    </PrivateRoute>
+                ),
             },
         ],
     },
@@ -89,13 +107,12 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "add-book",
-                element: <AddBook></AddBook>
+                element: <AddBook></AddBook>,
             },
             {
                 path: "manage-books",
-                element: <ManageBook></ManageBook>
+                element: <ManageBook></ManageBook>,
             },
-           
         ],
     },
 ]);

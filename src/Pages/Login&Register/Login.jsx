@@ -9,7 +9,7 @@ const Login = () => {
     const [error, setError] = useState("");
     const { user, login, loginWithGoogle } = useAuth();
     const location = useLocation();
-    const from = location?.state?.pathname || "/"; 
+    const from = location?.state?.pathname || "/";
     const navigate = useNavigate();
 
 
