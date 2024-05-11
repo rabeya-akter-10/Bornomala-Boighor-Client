@@ -6,6 +6,7 @@ import useAuth from "../../Hooks/UseAuth";
 
 import locationsData from "../../../public/location.json";
 import toast, { Toaster } from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const Profile = () => {
     const [axiosSecure] = UseAxiosSecure();
@@ -67,21 +68,25 @@ const Profile = () => {
             },
         };
 
-        fetch(
-            `https://bornomala-boighor-server.vercel.app/users/${user.email}`,
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(usersInfo),
-            }
-        )
-            .then((res) => res.json())
-            .then((data) => {
-                window.location.reload();
+
+        axiosSecure.put(`/users/${user?.email}`, usersInfo)
+            .then((response) => {
+                console.log(response);
+                if (response.data.acknowledged) {
+                    toast.success("Address added successfully");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
+                }
+            })
+            .catch((error) => {
+                toast.error("An error occurred while updating the user's information.");
             });
+
+
     };
+
+
 
     useEffect(() => {
         window.scrollTo({

@@ -66,15 +66,21 @@ const Cart = () => {
 
         try {
             const orderData = {
-                items: selectedItemsArray.map(item => ({
-                    bookId: item._id,
-                    quantity: item.count
-                }))
+                items: selectedItemsArray.map(item => (
+                    {
+                        bookId: item._id,
+                        itemCount: item.count,
+                        bookName: item.bookName,
+                        discountedPrice: Math.ceil(item.price - (item.price * (item.discounts / 100))
+                        ),
+                        publications: item.publications,
+                        image: item.image,
+                    }))
             };
 
             // Save order data in local storage
-        localStorage.setItem('orderItem', JSON.stringify(orderData));
-        window.location.replace("/order-confirmation")
+            localStorage.setItem('orderItem', JSON.stringify(orderData));
+            window.location.replace("/order-confirmation")
 
             // const response = await axiosSecure.post("/orders", orderData);
 
