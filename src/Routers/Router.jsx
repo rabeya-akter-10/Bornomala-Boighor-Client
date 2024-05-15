@@ -18,6 +18,7 @@ import Categories from "../Pages/Categories/Categories";
 import Publication from "../Pages/Publications/Publication.jsx";
 import Publications from "../Pages/Publications/Publications.jsx";
 import OrderConfirmation from "../Pages/Cart/OrderConfirmation.jsx";
+import PaymentsSuccess from "../Pages/Payments/PaymentsSuccess.jsx";
 
 const router = createBrowserRouter([
     {
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
                     </PrivateRoute>
                 ),
             },
+            {
+                path: "/success-payment",
+                element: <PrivateRoute><PaymentsSuccess></PaymentsSuccess></PrivateRoute>
+            }
         ],
     },
     {

@@ -57,6 +57,7 @@ const Profile = () => {
         const form = e.target;
         const phone = form.phone.value;
         const street = form.street.value;
+        const postCode = form.postCode.value;
 
         const usersInfo = {
             phone,
@@ -65,6 +66,7 @@ const Profile = () => {
                 district: selectedDistrict,
                 upazila: selectedUpazila,
                 street,
+                postCode
             },
         };
 
@@ -120,6 +122,10 @@ const Profile = () => {
                 <p>
                     <span className="text-gray-400">Address:</span>{" "}
                     {thisUser?.address?.district}
+                </p>
+                <p>
+                    <span className="text-gray-400">Street/postCode:</span>{" "}
+                    {thisUser?.address?.postCode}
                 </p>
                 <p>
                     <span className="text-gray-400">Street/Area:</span>{" "}
@@ -242,7 +248,19 @@ const Profile = () => {
                         </div>
                         <div className="form-control w-full">
                             <label className="label">
-                                <span className="label-text">Address</span>
+                                <span className="label-text">Post Code</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="postCode"
+                                defaultValue={thisUser?.address?.postCode}
+                                placeholder="House no,building,street,area"
+                                className="input rounded-lg  input-bordered input-success  focus:outline-none  w-full"
+                            />
+                        </div>
+                        <div className="form-control w-full">
+                            <label className="label">
+                                <span className="label-text">Street Area</span>
                             </label>
                             <input
                                 type="text"
