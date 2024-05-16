@@ -88,8 +88,6 @@ const Profile = () => {
 
     };
 
-
-
     useEffect(() => {
         window.scrollTo({
             top: 0,

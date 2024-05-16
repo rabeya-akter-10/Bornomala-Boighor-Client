@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaArrowRight, FaArrowRightArrowLeft } from 'react-icons/fa6';
 import { TiTick } from 'react-icons/ti';
 import { Link } from 'react-router-dom';
+import UseCart from '../../Hooks/UseCart';
+import useAuth from '../../Hooks/UseAuth';
 
 const PaymentsSuccess = () => {
+    const { user } = useAuth()
+    const email = user?.email
+    const { cart, cartRefetch } = UseCart(email)
+
+    // useEffect(() => {
+    //     window.location.reload()
+    // }, [])
+
+
     return (
         <div className='flex items-center justify-center w-full h-[80vh]'>
             <div className='w-full flex flex-col items-center gap-4 font-mono'>

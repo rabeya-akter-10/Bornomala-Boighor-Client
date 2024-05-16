@@ -35,8 +35,8 @@ const Cart = () => {
                 return acc;
             }, []);
             setUserCart(groupedCart);
-            setLoadingData(false);
         }
+        setLoadingData(false);
     }, [books, cart]);
 
     const handleDelete = async (selectedId) => {
@@ -82,15 +82,7 @@ const Cart = () => {
             localStorage.setItem('orderItem', JSON.stringify(orderData));
             window.location.replace("/order-confirmation")
 
-            // const response = await axiosSecure.post("/orders", orderData);
 
-            // if (response.status === 200) {
-            //     toast.success("Order placed successfully.");
-            //     setSelectedItems({});
-            //     await cartRefetch();
-            // } else {
-            //     toast.error("Failed to place order. Please try again.");
-            // }
         } catch (error) {
             console.error("Error placing order:", error);
             toast.error("Failed to place order. Please try again.");
@@ -117,83 +109,103 @@ const Cart = () => {
         return total;
     }, 0);
 
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+    });
+
     return (
-        <div className="font-mono w-full max-w-4xl mx-auto relative">
-            <h1 className="mx-auto w-fit my-4 text-lg font-medium text-gray-600 font-mono">
-                Cart Items: {userCart.length}
-            </h1>
-            <div className="px-4">
-                <div className="overflow-x-auto">
-                    <table className="table text-xs">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {userCart.map((item) => (
-                                <tr key={item._id}>
-                                    <th>
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedItems[item._id]}
-                                            onChange={(event) => handleCheckboxChange(event, item._id)}
-                                        />
-                                    </th>
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle w-12 h-12">
-                                                    <img
-                                                        src={item.image}
-                                                        alt={item.bookName}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-medium text-[12px]">
-                                                    {item.bookName}
-                                                </div>
-                                                <div className="text-sm opacity-50 hidden md:flex">
-                                                    {item.writerName}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {Math.ceil(
-                                            item.price -
-                                            item.price *
-                                            (item.discounts / 100)
-                                        )}
-                                    </td>
-                                    <td>
-                                        <FaTrashAlt
-                                            onClick={() =>
-                                                handleDelete(item._id)
-                                            }
-                                            className="text-red-500 cursor-pointer p-2 w-10 h-10 hover:bg-red-500 hover:text-white rounded-full"
-                                        />
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+        <div>
+            {userCart.length <= 0 ? (
+                <div className="w-full min-h-[80vh] flex items-center justify-center ">
+                    <h1 className="text-mono text-gray-500">The cart is empty</h1>
                 </div>
-            </div>
-            <div className="w-full max-w-4xl flex gap-4 justify-end bottom-0 fixed  px-3">
+            ) : (
 
-                {
-                    totalPrice > 0 && <p className="my-3 py-3  bg-slate-200 rounded-sm bg-opacity-30 px-5">Estimated Price: {totalPrice}</p>
-                }
+                <div>
+                    <div className="font-mono w-full max-w-4xl mx-auto relative">
+                        <h1 className="mx-auto w-fit my-4 text-lg font-medium text-gray-600 font-mono">
+                            Cart Items: {userCart.length}
+                        </h1>
+                        <div className="px-4">
+                            <div className="overflow-x-auto">
+                                <table className="table text-xs">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {userCart.map((item) => (
+                                            <tr key={item._id}>
+                                                <th>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selectedItems[item._id]}
+                                                        onChange={(event) => handleCheckboxChange(event, item._id)}
+                                                    />
+                                                </th>
+                                                <td>
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="avatar">
+                                                            <div className="mask mask-squircle w-12 h-12">
+                                                                <img
+                                                                    src={item.image}
+                                                                    alt={item.bookName}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-medium text-[12px]">
+                                                                {item.bookName}
+                                                            </div>
+                                                            <div className="text-sm opacity-50 hidden md:flex">
+                                                                {item.writerName}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {Math.ceil(
+                                                        item.price -
+                                                        item.price *
+                                                        (item.discounts / 100)
+                                                    )}
+                                                </td>
+                                                <td>
+                                                    <FaTrashAlt
+                                                        onClick={() =>
+                                                            handleDelete(item._id)
+                                                        }
+                                                        className="text-red-500 cursor-pointer p-2 w-10 h-10 hover:bg-red-500 hover:text-white rounded-full"
+                                                    />
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div className="w-full max-w-4xl flex gap-4 justify-end bottom-0 fixed  px-3">
 
-                <button onClick={handlePlaceOrder} className="bg-orange-500 px-5 py-3 text-white font-semibold rounded-sm my-3 hover:bg-orange-600 hover:shadow-md hover:shadow-orange-300 uppercase">Place Order</button>
-            </div>
-            <Toaster />
-        </div>
+                            {
+                                totalPrice > 0 && <p className="my-3 py-3  bg-slate-200 rounded-sm bg-opacity-30 px-5">Estimated Price: {totalPrice}</p>
+                            }
+
+                            <button onClick={handlePlaceOrder} className="bg-orange-500 px-5 py-3 text-white font-semibold rounded-sm my-3 hover:bg-orange-600 hover:shadow-md hover:shadow-orange-300 uppercase">Place Order</button>
+                        </div>
+                        <Toaster />
+                    </div>
+                </div>
+            )}
+
+
+
+        </div >
     );
 };
 

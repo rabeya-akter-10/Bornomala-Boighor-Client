@@ -12,7 +12,7 @@ const OrderConfirmation = () => {
   const [items, setItem] = useState([]);
   const { client, clientLoading } = UseThisUser();
   const address = `${client?.address?.division},${client?.address?.district}, ${client?.address?.upazila}`;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!clientLoading) {
@@ -39,7 +39,7 @@ const OrderConfirmation = () => {
     }
   }, [client, clientLoading]);
 
-  const orderDetails = { items, client };
+  const orderDetails = { items, client, deliveryCost: 70 };
 
   const initiatePayment = () => {
 

@@ -97,7 +97,7 @@ const router = createBrowserRouter([
                 ),
             },
             {
-                path: "/success-payment",
+                path: `/success-payment/:trans_id`,
                 element: <PrivateRoute><PaymentsSuccess></PaymentsSuccess></PrivateRoute>
             }
         ],
