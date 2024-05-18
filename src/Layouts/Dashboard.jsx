@@ -35,15 +35,15 @@ const Dashboard = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink  className={"w-64  mx-auto"} to={"manage-books"}>
-                        
+                    <NavLink className={"w-64  mx-auto"} to={"manage-books"}>
+
                         <FaClipboardList></FaClipboardList> Manage Books
                     </NavLink>
                 </li>
             </>
         );
-    } 
-    
+    }
+
 
     window.scrollTo({
         top: 0,
@@ -65,7 +65,7 @@ const Dashboard = () => {
 
                 <label
                     htmlFor="my-drawer-2"
-                    className="p-3 text-2xl top-0 w-full bg-black opacity-20 absolute z-20 drawer-button lg:hidden"
+                    className="p-3 text-2xl top-0 w-full bg-green-500 opacity-20 absolute z-20 drawer-button lg:hidden"
                 >
                     <FaBars className="text-white"></FaBars>
                 </label>
@@ -77,9 +77,8 @@ const Dashboard = () => {
                         htmlFor="my-drawer-2"
                         className="drawer-overlay "
                     ></label>
-                    {/* <ul className="menu w-80 p-4 h-full bg-base-200 pt-12 uppercase text-base-content"> */}
-                    <ul className="menu p-4  w-80 min-h-full bg-base-200 text-base-content">
-                        <Link to={"/"} className="w-full ml-4 mt-3 mb-6">
+                    <ul className="menu  lg:p-4 pt-12  w-80 min-h-full bg-base-200 text-base-content">
+                        <Link to={"/"} className="w-full ml-12 mt-3 mb-6">
                             <img className="w-28" src={logo} alt="" />
                         </Link>
                         <motion.div

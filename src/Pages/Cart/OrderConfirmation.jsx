@@ -61,7 +61,7 @@ const OrderConfirmation = () => {
   }
 
   return (
-    <div className="px-4 font-mono">
+    <div className="px-4 font-mono ">
       <div className="flex flex-col ">
         <p className="text-center py-8 text-gray-400 underline">Your Items:</p>
 
@@ -112,8 +112,8 @@ const OrderConfirmation = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-end mt-8  md:pr-72 pr-10 ">
-          <button onClick={initiatePayment} className="bg-orange-500 text-white font-semibold font-mono rounded-sm px-5 py-3 hover:bg-orange-600 hover:shadow-md">Pay Now</button>
+        <div className="flex flex-col items-end my-8  md:pr-72 pr-10 ">
+          <button onClick={initiatePayment} className="bg-orange-500 text-white font-semibold font-mono rounded-sm px-5 py-3 hover:bg-orange-600 hover:shadow-md ">Pay Now</button>
         </div>
 
       </div>

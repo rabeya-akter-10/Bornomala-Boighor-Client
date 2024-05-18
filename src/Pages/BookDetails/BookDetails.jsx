@@ -11,7 +11,7 @@ const BookDetails = () => {
     const [loading, setLoading] = useState(true);
     const [book, setBook] = useState({});
     const [books, setBooks] = useState([]);
-    const {handleAddCart}=UseHandleAddCart(book)
+    const { handleAddCart } = UseHandleAddCart(book)
 
     const loadedBook = useLoaderData();
     useEffect(() => {
@@ -133,12 +133,16 @@ const BookDetails = () => {
                             Sold: {sold}
                         </p>
                     )}
-                    <div>  <button
-                            onClick={handleAddCart}
-                            className="w-fit px-4 py-1 my-4 bg-green-600 hover:bg-green-700 z-40 text-white opacity-100 rounded-sm"
-                        >
-                            Add to cart
-                        </button></div>
+                    <div>
+                        {
+                            book.quantity > 0 ? <button
+                                onClick={handleAddCart}
+                                className="w-fit px-4 py-1 my-4 bg-green-600 hover:bg-green-700 z-40 text-white opacity-100 rounded-sm"
+                            >
+                                Add to cart
+                            </button> : <p className="py-4 text-red-500">Out of stock</p>
+                        }
+                    </div>
                     <p className="text-xs py-8 text-[#757575]">
                         {descriptions}
                     </p>

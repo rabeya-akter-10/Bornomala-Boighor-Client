@@ -5,11 +5,13 @@ import toast, { Toaster } from "react-hot-toast";
 import UseAxiosSecure from "../../../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import waitAminute from '../../../../assets/please_wait_a_minute.gif'
 
 const AddBook = () => {
   const { user } = useAuth();
 
   const [loading, setLoading] = useState(true);
+  const [uploadLoading, setUploadLoading] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
@@ -163,11 +165,11 @@ const AddBook = () => {
     setShowDropdown1(false);
   };
 
-  const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
-    import.meta.env.VITE_IMAGE_HOSTING_KEY
-  }`;
+  const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING_KEY
+    }`;
 
   const onSubmit = (data) => {
+    setUploadLoading(true)
     const formData = new FormData();
     formData.append("image", data.image[0]);
     fetch(imageHostingUrl, {
@@ -187,7 +189,7 @@ const AddBook = () => {
             discounts,
             quantity,
             descriptions,
-            bookName_en,keywords
+            bookName_en, keywords
           } = data;
           const addedBook = {
             bookName,
@@ -208,6 +210,7 @@ const AddBook = () => {
 
           axiosSecure.post("/books", addedBook).then((data) => {
             if (data.data.acknowledged) {
+              setUploadLoading(false)
               Swal.fire({
                 icon: "success",
                 title: "Book Added Successfully",
@@ -222,6 +225,13 @@ const AddBook = () => {
       });
   };
 
+  if (uploadLoading) {
+    return <div className="w-full flex flex-col gap-4 items-center justify-center min-h-[95vh] absolute bg-white z-10 px-5 lg:pr-80 ">
+      <img src={waitAminute} alt="" />
+      <h1 className="text-gray-500 text-2xl font-mono font-semibold">Uploading...</h1>
+    </div>
+  }
+
   // Scroll to top
   window.scrollTo({
     top: 0,
@@ -230,7 +240,7 @@ const AddBook = () => {
   });
 
   return (
-    <div className="flex flex-col w-full items-center">
+    <div className="flex flex-col w-full items-center md:pt-8">
       <h1 className="text-center py-8 text-2xl">Add a Book to your shop</h1>
 
       <form
@@ -345,7 +355,7 @@ const AddBook = () => {
         </div>
 
         <div className="flex md:flex-row md:gap-4 flex-col">
-         
+
           <div className="form-control ">
             <label className="label">
               <span className="text-xs text-[#757575] font-medium ">
@@ -423,37 +433,37 @@ const AddBook = () => {
             />
           </div>
         </div>
-       <div  className="flex md:flex-row md:gap-4 flex-col">
-      
-        <div className="form-control">
-          <label className="label">
-            <span className="text-xs text-[#757575] font-medium ">
-              Quantity
-            </span>
-          </label>
-          <input
-            type="number"
-            placeholder="quantity"
-            {...register("quantity", { required: true })}
-            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
-          />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="text-xs text-[#757575] font-medium ">
-              Descriptions
-            </span>
-          </label>
-          <textarea
-            type="text"
-            placeholder="descriptions"
-            {...register("descriptions")}
-            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
-          />
-        </div>
-       </div>
+        <div className="flex md:flex-row md:gap-4 flex-col">
 
-       <div className="form-control">
+          <div className="form-control">
+            <label className="label">
+              <span className="text-xs text-[#757575] font-medium ">
+                Quantity
+              </span>
+            </label>
+            <input
+              type="number"
+              placeholder="quantity"
+              {...register("quantity", { required: true })}
+              className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="text-xs text-[#757575] font-medium ">
+                Descriptions
+              </span>
+            </label>
+            <textarea
+              type="text"
+              placeholder="descriptions"
+              {...register("descriptions")}
+              className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
+            />
+          </div>
+        </div>
+
+        <div className="form-control">
           <label className="label">
             <span className="text-xs text-[#757575] font-medium ">
               Keywords

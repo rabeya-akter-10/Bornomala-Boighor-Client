@@ -32,6 +32,10 @@ const Login = () => {
             });
     };
 
+    if (user) {
+        window.location.replace('https://bornomala-mart.web.app/')
+    }
+
     // Scroll to top
     window.scrollTo({
         top: 0,

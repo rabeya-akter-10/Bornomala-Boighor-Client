@@ -19,6 +19,7 @@ import Publication from "../Pages/Publications/Publication.jsx";
 import Publications from "../Pages/Publications/Publications.jsx";
 import OrderConfirmation from "../Pages/Cart/OrderConfirmation.jsx";
 import PaymentsSuccess from "../Pages/Payments/PaymentsSuccess.jsx";
+import OrderHistory from "../Pages/OrderHistory/OrderHistory.jsx";
 
 const router = createBrowserRouter([
     {
@@ -93,6 +94,14 @@ const router = createBrowserRouter([
                 element: (
                     <PrivateRoute>
                         <OrderConfirmation></OrderConfirmation>
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "/order-history",
+                element: (
+                    <PrivateRoute>
+                        <OrderHistory></OrderHistory>
                     </PrivateRoute>
                 ),
             },

@@ -141,15 +141,19 @@ const Cart = () => {
                                     </thead>
                                     <tbody>
                                         {userCart.map((item) => (
-                                            <tr key={item._id}>
+                                            <tr key={item._id} >
+
                                                 <th>
-                                                    <input
+                                                    {item?.quantity > 0 ? <input
                                                         type="checkbox"
                                                         checked={selectedItems[item._id]}
                                                         onChange={(event) => handleCheckboxChange(event, item._id)}
-                                                    />
+                                                    /> : <th></th>}
                                                 </th>
-                                                <td>
+                                                <td className="">
+                                                    {
+                                                        item?.quantity == 0 && <div className="w-full md:max-w-3xl max-w-[310px] rounded-md left-0  h-[60px] absolute bg-black bg-opacity-40 text-red-500  text-xl flex items-center justify-center"><p className="text-center">Out of stock</p></div>
+                                                    }
                                                     <div className="flex items-center gap-3">
                                                         <div className="avatar">
                                                             <div className="mask mask-squircle w-12 h-12">
@@ -176,7 +180,7 @@ const Cart = () => {
                                                         (item.discounts / 100)
                                                     )}
                                                 </td>
-                                                <td>
+                                                <td className="">
                                                     <FaTrashAlt
                                                         onClick={() =>
                                                             handleDelete(item._id)
@@ -193,7 +197,7 @@ const Cart = () => {
                         <div className="w-full max-w-4xl flex gap-4 justify-end bottom-0 fixed  px-3">
 
                             {
-                                totalPrice > 0 && <p className="my-3 py-3  bg-slate-200 rounded-sm bg-opacity-30 px-5">Estimated Price: {totalPrice}</p>
+                                totalPrice > 0 && <p className="my-3 py-3  bg-slate-200 rounded-sm bg-opacity-70 px-5">Estimated Price: {totalPrice}</p>
                             }
 
                             <button onClick={handlePlaceOrder} className="bg-orange-500 px-5 py-3 text-white font-semibold rounded-sm my-3 hover:bg-orange-600 hover:shadow-md hover:shadow-orange-300 uppercase">Place Order</button>

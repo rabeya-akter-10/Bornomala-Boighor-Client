@@ -15,11 +15,11 @@ const Bookcard = ({ book }) => {
     const { bookName, image, sold, writerName, price, discounts, _id } = book;
     const discountPrice = price - price * (discounts / 100);
     const roundPrice = Math.ceil(discountPrice);
-    const {cart,cartRefetch}=UseCart(user?.email)
+    const { cart, cartRefetch } = UseCart(user?.email)
 
-    const{handleAddCart}=UseHandleAddCart(book)
-   
-    
+    const { handleAddCart } = UseHandleAddCart(book)
+
+
 
     return (
         <div
@@ -27,7 +27,6 @@ const Bookcard = ({ book }) => {
                 setShow(true);
             }}
             onMouseLeave={() => {
-                // Corrected from handleMouseLeave to onMouseLeave
                 setShow(false);
             }}
             className="relative w-fit"
@@ -46,8 +45,10 @@ const Bookcard = ({ book }) => {
                     )}
                     <p className="text-green-500">TK.{roundPrice}</p>
                 </div>
+
+
                 {sold > 0 && (
-                    <p className="text-xs font-medium text-warning absolute left-4 bottom-4">
+                    <p className="text-xs font-medium text-warning absolute left-1 bottom-1">
                         Sold: {sold}
                     </p>
                 )}
@@ -68,13 +69,12 @@ const Bookcard = ({ book }) => {
             {show && (
                 <div className="absolute bottom-0 bg-gray-200 bg-opacity-80  z-30 w-full h-full ">
                     <div className="flex items-center justify-center w-full h-full flex-col">
-                        <button
+                        {book.quantity > 0 ? <button
                             onClick={handleAddCart}
                             className="w-fit px-4 py-1 bg-green-600 hover:bg-green-700 z-40 text-white opacity-100 rounded-sm"
                         >
                             Add to cart
-                        </button>
-
+                        </button> : <p className="text-red-500 font-medium">Out of stock</p>}
                         <Link
                             to={`/books/${_id}`}
                             className="absolute bottom-0 py-2 bg-blue-500 w-full text-center hover:bg-blue-700 text-white font-medium"
