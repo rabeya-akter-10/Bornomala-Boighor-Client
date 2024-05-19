@@ -52,10 +52,6 @@ const OrderHistory = () => {
     };
 
     const handleGiveRivew = (orderId, bookId) => {
-        console.log(`
-        orderId: ${orderId},
-        bookId: ${bookId}`);
-        // const data = { orderId }
         localStorage.setItem('data', JSON.stringify(orderId));
         navigate(`/give-review/${bookId}`)
     }
@@ -65,6 +61,14 @@ const OrderHistory = () => {
     }
 
     const sortedOrders = sortOrders(orders, sortOrder); // Sort orders based on sortOrder
+
+    // Scroll to top
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+    });
+
 
     return (
         <div className='bg-green-100 bg-opacity-50 min-h-[88vh]'>
