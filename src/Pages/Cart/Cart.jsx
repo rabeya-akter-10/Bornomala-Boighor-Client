@@ -75,6 +75,7 @@ const Cart = () => {
                         ),
                         publications: item.publications,
                         image: item.image,
+                        reviews: false
                     }))
             };
 

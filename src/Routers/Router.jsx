@@ -20,6 +20,7 @@ import Publications from "../Pages/Publications/Publications.jsx";
 import OrderConfirmation from "../Pages/Cart/OrderConfirmation.jsx";
 import PaymentsSuccess from "../Pages/Payments/PaymentsSuccess.jsx";
 import OrderHistory from "../Pages/OrderHistory/OrderHistory.jsx";
+import GiveAReview from "../Pages/GiveAReview/GiveAReview.jsx";
 
 const router = createBrowserRouter([
     {
@@ -108,6 +109,12 @@ const router = createBrowserRouter([
             {
                 path: `/success-payment/:trans_id`,
                 element: <PrivateRoute><PaymentsSuccess></PaymentsSuccess></PrivateRoute>
+            },
+            {
+                path: `/give-review/:bookId`,
+                element: <PrivateRoute>
+                    <GiveAReview></GiveAReview>
+                </PrivateRoute>
             }
         ],
     },

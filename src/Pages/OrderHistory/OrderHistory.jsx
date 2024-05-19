@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UserOrderHistory from '../../Hooks/UserOrderHistory';
 import useAuth from '../../Hooks/UseAuth';
 import { Toaster } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import CustomLoader from '../../Components/CustomLoader/CustomLoader';
 
 const OrderHistory = () => {
     const { user } = useAuth();
     const email = user?.email;
+    const navigate = useNavigate()
     const { orders, ordersRefetch } = UserOrderHistory(email);
 
+    const [sortOrder, setSortOrder] = useState('asc'); // State to manage sort order
 
     const formatDate = (dateString) => {
         const options = {
@@ -40,40 +43,85 @@ const OrderHistory = () => {
         }
     };
 
-    if (!orders.length) {
-        return <div>Loading...</div>;
+    const sortOrders = (orders, order) => {
+        return [...orders].sort((a, b) => {
+            const dateA = new Date(a.orderCreationDate);
+            const dateB = new Date(b.orderCreationDate);
+            return order === 'asc' ? dateA - dateB : dateB - dateA;
+        });
+    };
+
+    const handleGiveRivew = (orderId, bookId) => {
+        console.log(`
+        orderId: ${orderId},
+        bookId: ${bookId}`);
+        // const data = { orderId }
+        localStorage.setItem('data', JSON.stringify(orderId));
+        navigate(`/give-review/${bookId}`)
     }
+
+    if (!orders.length) {
+        return <CustomLoader></CustomLoader>
+    }
+
+    const sortedOrders = sortOrders(orders, sortOrder); // Sort orders based on sortOrder
 
     return (
         <div className='bg-green-100 bg-opacity-50 min-h-[88vh]'>
             <h1 className='text-center py-6 text-xl text-gray-400 font-medium'>Orders</h1>
             <div className='max-w-3xl mx-auto w-full px-4 flex flex-col items-center gap-4 pb-12'>
-                {orders.map((order) => {
+                {/* Sort select */}
+                <div className='flex items-center justify-end w-full mb-4 text-xs'>
+                    <label htmlFor="sortOrder" className="mr-2 text-gray-600">Sort by Date:</label>
+                    <select
+                        id="sortOrder"
+                        className='px-4 py-1 bg-white border border-gray-300 rounded-md'
+                        value={sortOrder}
+                        onChange={(e) => setSortOrder(e.target.value)}
+                    >
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+                {sortedOrders.map((order) => {
                     const totalPrice = calculateTotalPrice(order.products);
                     const deliveryCost = order.deliveryCost || 70; // Default to 70 if deliveryCost is not specified
                     const subtotal = totalPrice + deliveryCost;
 
                     return (
-                        <div key={order.transactionId} className='w-full p-6  rounded-md bg-white shadow-lg'>
-                            <div className='flex flex-col md:flex-row  md:justify-between w-full gap-2'>
+                        <div key={order.transactionId} className='w-full p-6 rounded-md bg-white shadow-lg'>
+                            <div className='flex flex-col md:flex-row md:justify-between w-full gap-2'>
                                 <div>
                                     <p className='text-sm text-gray-400'>Order #{order.transactionId}</p>
                                     <p className='text-sm text-gray-400'>Placed on {formatDate(order.orderCreationDate)}</p>
                                 </div>
                                 <p className='text-green-500 text-sm md:w-64'>Estimated Delivery {order.estimatedDelivery}</p>
                             </div>
-                            <div className='w-full flex flex-col gap-3'>
+                            <div className='w-full flex flex-col gap-3 pt-4'>
                                 {order.products.map((product) => (
-                                    <Link to={`/books/${product.bookId}`} key={product.bookId} className='w-full flex justify-between gap-4 border-b p-6 rounded-md items-center hover:shadow-md'>
+                                    <div to={`/books/${product.bookId}`} key={product.bookId} className='w-full flex justify-between gap-4 border-b p-6 rounded-md items-center hover:shadow-md'>
                                         <div className='flex gap-2 items-center'>
                                             <img className='w-10 h-10' src={product.image} alt="" />
-                                            <div className=''>
+                                            <div>
                                                 <h3 className='font-medium'>{product.bookName}</h3>
                                                 <p className='text-xs text-gray-500'>{product.publications}</p>
                                             </div>
                                         </div>
-                                        <p>{product.discountedPrice}tk</p>
-                                    </Link>
+
+                                        <div className='flex flex-col gap-1 items-center justify-center w-[20%]'>
+                                            <p>{product.discountedPrice}tk</p>
+                                            {order.orderStatus === 'Delivered' && !product.reviews && (
+                                                <button onClick={() => {
+                                                    handleGiveRivew(order._id, product.bookId)
+                                                }} className='text-blue-500 text-center text-xs md:text-sm px-2 py-1 hover:bg-slate-50 bg-slate-100 rounded-sm'>
+                                                    Give Review
+                                                </button>
+                                                // <Link to={`/give-review/${product.bookId}`} className='text-blue-500 text-center text-xs md:text-sm px-2 py-1 hover:bg-slate-50 bg-slate-100 rounded-sm'>
+                                                //     Give Review
+                                                // </Link>
+                                            )}
+                                        </div>
+                                    </div>
                                 ))}
                             </div>
                             <div className='flex justify-between items-center'>
