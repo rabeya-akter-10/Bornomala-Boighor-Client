@@ -6,7 +6,9 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import paid from '../../assets/paid.png'
 import logo from '../../assets/logo.png'
-import { FaDownload } from 'react-icons/fa6';
+import { FaAddressCard, FaDownload, FaGlobe, FaMapLocationDot, FaMobile } from 'react-icons/fa6';
+import { FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa';
+import Profile from '../Profile/Profile';
 
 const Invoice = () => {
     const params = useParams();
@@ -56,14 +58,13 @@ const Invoice = () => {
         });
     };
 
+    const cusAdd = `${order?.client?.address?.division}, ${order?.client?.address?.district}, ${order?.client?.address?.postCode} `
+
     if (!order) {
         return <div>Loading...</div>; // Or any loading state you prefer
     }
+    console.log(order);
 
-    // Ensure order is an array, if it's a single order object, wrap it in an array
-    const orders = Array.isArray(order) ? order : [order];
-
-    console.log(orders);
 
     return (
         <div className='py-4 flex flex-col justify-between px-2 max-w-7xl mx-auto '>
@@ -86,79 +87,74 @@ const Invoice = () => {
                     padding: 0;
                 }
                 .pdf-content {
-                    padding: 20px;
                     margin: 0 auto;
                     width: calc(210mm - 2 * 25.4mm); 
-                height: calc(297mm - 2 * 12.7mm); 
-            box-sizing: border-box;
-            font-size: 12pt;
+                    height: calc(297mm - 2 * 12.7mm); 
+                    box-sizing: border-box;
+                    font-size: 12pt;
                 }
                 `}
                     </style>
 
-                    <div className='text-xs pb-6 '>
+                    <div className='text-xs pb-6 w-full space-y-4'>
                         <div className=''>
-                            <img className='w-28 pb-2' src={logo} alt="" />
-                            <p>Address: Mirpur 10,Block D,Dhaka</p>
-                            <p>Mobile: +8801644976404</p>
-                            <p>Website: <a className='underline ' href="https://bornomala-mart.web.app">https://bornomala-mart.web.app</a></p>
+                            <img className='w-40 pb-4' src={logo} alt="" />
+                            <div className='space-y-1'>
+                                <p className='flex gap-1'><FaMapMarkerAlt></FaMapMarkerAlt> Address: Mirpur 10,Block D,Dhaka</p>
+                                <p className='flex gap-1'><FaPhoneAlt></FaPhoneAlt> Mobile: +8801644976404</p>
+                                <p className='flex gap-1 pb-2'><FaGlobe></FaGlobe> Website: <a href="https://bornomala-mart.web.app">https://bornomala-mart.web.app</a></p>
+                            </div>
+                            <hr />
                         </div>
-                        <div>
-                            <p>Customer Name: {orders.client?.name}</p>
+                        <div className='w-full flex gap-4 justify-between'>
+                            <div className='font-semibold space-y-1 w-[50%]'>
+                                <p className='underline text-sm font-semibold'>Customer Info:</p>
+                                <p className='font-semibold'> Name: {order.client?.name}</p>
+                                <p>Phone: {order?.client?.phone}</p>
+                                <p> Address: {cusAdd}</p>
+                                <p>Area/Street: {order?.client?.address?.street}</p>
+                            </div>
+                            <div className=' space-y-1 w-[50%]'>
+                                <p className='underline text-sm  font-semibold'>Order Info:</p>
+                                <p >Transaction Id: <span className='text-sm'> {order.transactionId}</span></p>
+                                <p >Placed on {formatDate(order.orderCreationDate)}</p>
+                                <p >Estimated Delivery {order.estimatedDelivery}</p>
+                            </div>
                         </div>
                     </div>
-                    {
-                        orders.map((orderItem) => {
-                            const totalPrice = calculateTotalPrice(orderItem.products);
-                            const deliveryCost = orderItem.deliveryCost || 70; // Default to 70 if deliveryCost is not specified
-                            const subtotal = totalPrice + deliveryCost;
+                    <div className='w-full rounded-md text-xs'>
 
-                            return (
-                                <div key={orderItem.transactionId} className='w-full rounded-md text-xs'>
-                                    <div className='flex  flex-row justify-between w-full gap-2 '>
+                        <div className='w-full flex flex-col gap-3 pt-4'>
+                            {order?.products?.map((product) => (
+                                <div key={product.bookId} className='w-full flex justify-between gap-4 border-b p-2 items-center '>
+                                    <div className='flex gap-2 items-center'>
+                                        <img className='w-10 h-10' src={product.image} alt={product.bookName} />
                                         <div>
-                                            <p className='py-1'>Order #{orderItem.transactionId}</p>
-                                            <p className='py-[4px]'>Placed on {formatDate(orderItem.orderCreationDate)}</p>
+                                            <h3 className='font-medium py-[4px]'>{product.bookName}</h3>
+                                            <p className='text-xs py-[4px]'>{product.publications}</p>
                                         </div>
-                                        <p className=' py-[2px]'>Estimated Delivery {orderItem.estimatedDelivery}</p>
                                     </div>
-                                    <div className='w-full flex flex-col gap-3 pt-4'>
-                                        {orderItem.products.map((product) => (
-                                            <div key={product.bookId} className='w-full flex justify-between gap-4 border-b p-2 items-center '>
-                                                <div className='flex gap-2 items-center'>
-                                                    <img className='w-10 h-10' src={product.image} alt={product.bookName} />
-                                                    <div>
-                                                        <h3 className='font-medium py-[4px]'>{product.bookName}</h3>
-                                                        <p className='text-xs py-[4px]'>{product.publications}</p>
-                                                    </div>
-                                                </div>
-                                                <div className='flex flex-col gap-1 items-center justify-center w-[20%]'>
-                                                    <p>{product.discountedPrice}tk</p>
-                                                    {orderItem.orderStatus === 'Delivered' && !product.reviews && (
-                                                        <button onClick={() => {
-                                                            handleGiveRivew(orderItem._id, product.bookId)
-                                                        }} className='text-blue-500 text-center text-xs md:text-sm px-2 py-1 hover:bg-slate-50 bg-slate-100 rounded-sm'>
-                                                            Give Review
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className='flex w-full justify-end items-center text-xs'>
-                                        <div className="relative w-full flex flex-col items-end pr-12 pt-4  text-gray-600">
-                                            <p className=' py-[4px]'>Total Price: {totalPrice}tk</p>
-                                            <p className=" py-[4px]">Delivery Cost: + {deliveryCost}tk</p>
-                                            <hr className='w-40 mt-2' />
-                                            <p >SubTotal: = {subtotal}tk</p>
-
-                                            <img className='absolute left-48 w-28' src={paid} alt="" />
-                                        </div>
+                                    <div className='flex justify-between w-[25%]'>
+                                        <p>{product?.itemCount}pcs</p>
+                                        <p>{product.discountedPrice}*{product?.itemCount}={product.itemCount * product.discountedPrice}tk</p>
                                     </div>
                                 </div>
-                            );
-                        })
-                    }
+                            ))}
+                        </div>
+
+
+                        <div className='flex w-full justify-end items-center text-xs'>
+                            <div className="relative w-full flex flex-col items-end pr-2 pt-4  text-gray-600">
+                                <p className=' py-[4px]'>Total Price: {order?.totalPrice}tk</p>
+                                <p className=" py-[4px]">Delivery Cost: + {order?.deliveryCost}tk</p>
+                                <hr className='w-40 mt-2' />
+                                <p >SubTotal: = {order?.totalPrice + order?.deliveryCost}tk</p>
+
+                                <img className='absolute left-48 w-28' src={paid} alt="" />
+                            </div>
+                        </div>
+                    </div>
+
                 </div >
             </div>
 
