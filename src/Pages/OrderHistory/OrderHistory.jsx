@@ -47,7 +47,7 @@ const OrderHistory = () => {
         return [...orders].sort((a, b) => {
             const dateA = new Date(a.orderCreationDate);
             const dateB = new Date(b.orderCreationDate);
-            return order === 'asc' ? dateA - dateB : dateB - dateA;
+            return order === 'asc' ? dateB - dateA : dateA - dateB;
         });
     };
 
@@ -71,7 +71,7 @@ const OrderHistory = () => {
 
 
     return (
-        <div className='bg-green-100 bg-opacity-50 min-h-[88vh]'>
+        <div className='bg-green-100 lg:bg-white bg-opacity-50 min-h-[88vh]'>
             <h1 className='text-center py-6 text-xl text-gray-400 font-medium'>Orders</h1>
             <div className='max-w-3xl mx-auto w-full px-4 flex flex-col items-center gap-4 pb-12'>
                 {/* Sort select */}
@@ -94,6 +94,15 @@ const OrderHistory = () => {
 
                     return (
                         <div key={order.transactionId} className='w-full p-6 rounded-md bg-white shadow-lg'>
+                            {/* <style>
+                                {`
+                * {
+                    color: #000 !important;
+                    background-color: #fff !important;
+                }
+                `}
+                            </style> */}
+
                             <div className='flex flex-col md:flex-row md:justify-between w-full gap-2'>
                                 <div>
                                     <p className='text-sm text-gray-400'>Order #{order.transactionId}</p>
@@ -120,17 +129,18 @@ const OrderHistory = () => {
                                                 }} className='text-blue-500 text-center text-xs md:text-sm px-2 py-1 hover:bg-slate-50 bg-slate-100 rounded-sm'>
                                                     Give Review
                                                 </button>
-                                                // <Link to={`/give-review/${product.bookId}`} className='text-blue-500 text-center text-xs md:text-sm px-2 py-1 hover:bg-slate-50 bg-slate-100 rounded-sm'>
-                                                //     Give Review
-                                                // </Link>
                                             )}
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                            <div className='flex justify-between items-center'>
-                                <p className={`text-xs font-semibold text-white badge ${getBadgeClass(order.orderStatus)}`}>{order.orderStatus}</p>
-                                <div className="flex flex-col items-end lg:pr-72 pr-4 pt-4 text-sm text-gray-600">
+                            <div className='flex justify-between   items-center'>
+                                {/* <Link to={`/invoice/${order?.transactionId}`} className='bg-green-500 hover:bg-green-600 px-2 py-1 text-xs text-white rounded-md font-medium'>Invoice</Link> */}
+
+                                <a href={`/invoice/${order?.transactionId}`} target='blank'
+                                    className='bg-green-500 hover:bg-green-600 px-2 py-1 text-xs text-white rounded-md font-medium'>Invoice</a>
+                                <p className={`text-xs w-fit font-semibold text-white badge ${getBadgeClass(order.orderStatus)}`}>{order.orderStatus}</p>
+                                <div className="flex flex-col  w-40 items-end  pr-4 pt-4 text-sm text-gray-600">
                                     <p>Total Price: {totalPrice}tk</p>
                                     <p className="border-b border-gray-400">Delivery Cost: + {deliveryCost}tk</p>
                                     <p>SubTotal: = {subtotal}tk</p>

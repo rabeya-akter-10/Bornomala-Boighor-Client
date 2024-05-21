@@ -21,6 +21,7 @@ import OrderConfirmation from "../Pages/Cart/OrderConfirmation.jsx";
 import PaymentsSuccess from "../Pages/Payments/PaymentsSuccess.jsx";
 import OrderHistory from "../Pages/OrderHistory/OrderHistory.jsx";
 import GiveAReview from "../Pages/GiveAReview/GiveAReview.jsx";
+import Invoice from "../Pages/OrderHistory/Invoice.jsx";
 
 const router = createBrowserRouter([
     {
@@ -106,6 +107,7 @@ const router = createBrowserRouter([
                     </PrivateRoute>
                 ),
             },
+
             {
                 path: `/success-payment/:trans_id`,
                 element: <PrivateRoute><PaymentsSuccess></PaymentsSuccess></PrivateRoute>
@@ -115,7 +117,9 @@ const router = createBrowserRouter([
                 element: <PrivateRoute>
                     <GiveAReview></GiveAReview>
                 </PrivateRoute>
-            }
+            },
+
+
         ],
     },
     {
@@ -136,6 +140,15 @@ const router = createBrowserRouter([
             },
         ],
     },
+    {
+        path: "/invoice/:transactionId",
+        element: (
+            <PrivateRoute>
+                <Invoice></Invoice>
+            </PrivateRoute>
+        ),
+    },
+
 ]);
 
 export default router;
