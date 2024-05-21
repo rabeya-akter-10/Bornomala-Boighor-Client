@@ -52,7 +52,7 @@ const Invoice = () => {
             const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
             pdf.addImage(imgData, 'PNG', 25.4, 25.4, pdfWidth - 50.8, pdfHeight - 50.8);
-            pdf.save(`invoice-${transactionId}.pdf`);
+            pdf.save(`Bornomala Invoice-${transactionId}.pdf`);
         }).catch((error) => {
             console.error('Error generating PDF:', error);
         });
@@ -100,9 +100,9 @@ const Invoice = () => {
                         <div className=''>
                             <img className='w-40 pb-4' src={logo} alt="" />
                             <div className='space-y-1'>
-                                <p className='flex gap-1'><FaMapMarkerAlt></FaMapMarkerAlt> Address: Mirpur 10,Block D,Dhaka</p>
-                                <p className='flex gap-1'><FaPhoneAlt></FaPhoneAlt> Mobile: +8801644976404</p>
-                                <p className='flex gap-1 pb-2'><FaGlobe></FaGlobe> Website: <a href="https://bornomala-mart.web.app">https://bornomala-mart.web.app</a></p>
+                                <p className='flex items-center gap-1'><FaMapMarkerAlt></FaMapMarkerAlt> Address: Mirpur 10,Block D,Dhaka</p>
+                                <p className='flex items-center gap-1'><FaPhoneAlt></FaPhoneAlt> Mobile: +8801644976404</p>
+                                <p className='flex items-center gap-1 pb-2'><FaGlobe></FaGlobe> Website: <a href="https://bornomala-mart.web.app">https://bornomala-mart.web.app</a></p>
                             </div>
                             <hr />
                         </div>

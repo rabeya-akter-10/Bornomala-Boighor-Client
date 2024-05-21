@@ -22,6 +22,7 @@ import PaymentsSuccess from "../Pages/Payments/PaymentsSuccess.jsx";
 import OrderHistory from "../Pages/OrderHistory/OrderHistory.jsx";
 import GiveAReview from "../Pages/GiveAReview/GiveAReview.jsx";
 import Invoice from "../Pages/OrderHistory/Invoice.jsx";
+import Reviews from "../Pages/Reviews/Reviews.jsx";
 
 const router = createBrowserRouter([
     {
@@ -116,6 +117,12 @@ const router = createBrowserRouter([
                 path: `/give-review/:bookId`,
                 element: <PrivateRoute>
                     <GiveAReview></GiveAReview>
+                </PrivateRoute>
+            },
+            {
+                path: `/my-reviews`,
+                element: <PrivateRoute>
+                    <Reviews></Reviews>
                 </PrivateRoute>
             },
 

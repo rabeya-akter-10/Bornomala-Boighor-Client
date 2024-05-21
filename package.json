@@ -12,6 +12,7 @@
   "dependencies": {
     "@egjs/react-flicking": "^4.11.2",
     "@react-pdf/renderer": "^3.4.4",
+    "@smastrom/react-rating": "^1.5.0",
     "@tanstack/react-query": "^5.28.2",
     "axios": "^1.6.7",
     "firebase": "^10.11.1",

@@ -1,0 +1,47 @@
+.reviews-container {
+    margin: 20px;
+}
+
+.reviews-heading {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+    margin: auto;
+}
+
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.review-content {
+    padding: 20px;
+    width: 100%;
+}
+
+.review-comment {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+
+
+.no-reviews-message {
+    font-size: 20px;
+    color: #666;
+    text-align: center;
+}
