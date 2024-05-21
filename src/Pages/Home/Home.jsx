@@ -21,7 +21,7 @@ const Home = () => {
             <BookByCategory></BookByCategory>
             <BestSellerBook></BestSellerBook>
             <AllBooks></AllBooks>
-            <Publications></Publications>
+            {/* <Publications></Publications> */}
             <Writers></Writers>
         </div>
     );
