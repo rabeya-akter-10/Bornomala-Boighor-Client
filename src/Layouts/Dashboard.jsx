@@ -65,11 +65,11 @@ const Dashboard = () => {
 
                 <label
                     htmlFor="my-drawer-2"
-                    className="p-3 text-2xl top-0 w-full bg-green-500 opacity-20 absolute z-20 drawer-button lg:hidden"
+                    className="p-3 text-2xl top-0 w-full bg-green-500 opacity-40 absolute z-20 drawer-button lg:hidden"
                 >
                     <FaBars className="text-white"></FaBars>
                 </label>
-                <div className="drawer-content pt-10 md:pt-0">
+                <div className="drawer-content  lg:pt-0 ">
                     <Outlet></Outlet>
                 </div>
                 <div className="drawer-side h-screen w-80">
@@ -103,11 +103,7 @@ const Dashboard = () => {
                                 <FaBook></FaBook> Books
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink className={"w-64  mx-auto"} to={"/classes"}>
-                                <FaBook></FaBook> Classes
-                            </NavLink>
-                        </li>
+
                     </ul>
                 </div>
             </div>

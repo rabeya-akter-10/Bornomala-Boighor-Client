@@ -23,6 +23,7 @@ import OrderHistory from "../Pages/OrderHistory/OrderHistory.jsx";
 import GiveAReview from "../Pages/GiveAReview/GiveAReview.jsx";
 import Invoice from "../Pages/OrderHistory/Invoice.jsx";
 import Reviews from "../Pages/Reviews/Reviews.jsx";
+import AdminDashBoard from "../Pages/Dashboard/AdminPage/AdminDashBoard/AdminDashBoard.jsx";
 
 const router = createBrowserRouter([
     {
@@ -137,6 +138,10 @@ const router = createBrowserRouter([
             </AdminOnly>
         ),
         children: [
+            {
+                path: '/dashboard',
+                element: <AdminOnly><AdminDashBoard></AdminDashBoard></AdminOnly>
+            },
             {
                 path: "add-book",
                 element: <AddBook></AddBook>,
