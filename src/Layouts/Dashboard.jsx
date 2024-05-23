@@ -97,7 +97,7 @@ const Dashboard = () => {
                         >
                             {navOptions}
                         </motion.div>
-                        <div className="divider"></div>
+                        <div className="w-full border-b-4 my-10"></div>
                         <li>
                             <NavLink className={"w-64  mx-auto"} to={"/"}>
                                 <FaHome></FaHome> Home

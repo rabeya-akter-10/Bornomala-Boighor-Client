@@ -1,19 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
-import useAuth from "../../Hooks/UseAuth";
-import GoogleLogin from "../../Components/GoogleLogin/GoogleLogin";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import wait from "../../assets/please_wait.gif"
+import wait from "../../assets/please_wait.gif";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import useAuth from "../../Hooks/UseAuth";
+import GoogleLogin from "../../Components/GoogleLogin/GoogleLogin";
 
 const Register = () => {
     const [error, setError] = useState("");
     const { createUser, updateUser, logout, verification, user } = useAuth();
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
-    const [creating, setCreating] = useState(false)
+    const [creating, setCreating] = useState(false);
     const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING_KEY}`;
 
     const {
@@ -23,8 +23,9 @@ const Register = () => {
     } = useForm();
 
     const onSubmit = (data) => {
+        setError("")
         const { name, email, password, gender, phone } = data;
-        setCreating(true)
+        setCreating(true);
         const formData = new FormData();
         formData.append("image", data.image[0]);
 
@@ -58,7 +59,8 @@ const Register = () => {
                                         },
                                         body: JSON.stringify(savedUser),
                                     });
-                                    setCreating(false)
+                                    setCreating(false);
+                                    setError("");
                                     verification().then(() => {
                                         Swal.fire({
                                             icon: "success",
@@ -71,6 +73,7 @@ const Register = () => {
                                             navigate("/login");
                                         }).catch((error) => {
                                             console.error(error.message);
+                                            setError(error.message);
                                         });
                                     }).catch((error) => {
                                         console.error(error.message);
@@ -78,19 +81,40 @@ const Register = () => {
                                 })
                                 .catch((error) => {
                                     console.error(error.message);
+                                    setError(error.message);
                                 });
                         })
                         .catch((error) => {
                             console.error(error.message);
+                            setError(error.message);
                         });
                 }
             });
     };
-    if (creating) {
-        return <div className="fixed top-0 z-40 bg-white w-full min-h-screen flex items-center justify-center">
-            <img className="w-[300px]" src={wait} alt="" />
-        </div>
+
+    useEffect(() => {
+        if (error) {
+            Swal.fire({
+                icon: "error",
+                text: error,
+                timer: 3000,
+            });
+        }
+    }, [error]);
+
+    if (creating && !error) {
+        return (
+            <div className="fixed top-0 z-40 bg-white w-full min-h-screen flex items-center justify-center">
+                <img className="w-[300px]" src={wait} alt="Please wait" />
+            </div>
+        );
     }
+
+    if (user) {
+        window.location.replace('https://bornomala-mart.web.app/')
+    }
+
+
     // Scroll to top
     window.scrollTo({
         top: 0,
@@ -100,10 +124,9 @@ const Register = () => {
 
     return (
         <div className="w-full flex items-center justify-center min-h-[80vh]">
-            <form onSubmit={handleSubmit(onSubmit)} className="border shadow-xl rounded-2xl my-5 py-4 px-8  space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="border shadow-xl rounded-2xl my-5 py-4 px-8 space-y-4">
                 <h1 className="text-2xl text-center font-medium mb-5">Sign Up</h1>
                 <div className="form-control">
-
                     <input
                         type="text"
                         placeholder="name"
@@ -113,7 +136,6 @@ const Register = () => {
                     />
                 </div>
                 <div className="form-control">
-
                     <input
                         type="email"
                         placeholder="email"
@@ -129,12 +151,10 @@ const Register = () => {
                     <input
                         type="file"
                         {...register("image", { required: true })}
-                        className="border border-success py-1 px-4  max-w-xs rounded-lg focus:outline-none lg:w-[350px] w-[300px]"
+                        className="border border-success py-1 px-4 max-w-xs rounded-lg focus:outline-none lg:w-[350px] w-[300px]"
                     />
                 </div>
-
                 <div className="form-control w-full">
-
                     <input
                         type="text"
                         placeholder="phone number"
@@ -142,9 +162,7 @@ const Register = () => {
                         className="border border-success py-1 px-4 rounded-lg input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
                     />
                 </div>
-
                 <div className="form-control relative">
-
                     <input
                         type={show ? "text" : "password"}
                         placeholder="password"
@@ -152,39 +170,34 @@ const Register = () => {
                         required
                         className="border border-success py-1 px-4 rounded-lg input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
                     />
-                    <div onClick={() => { setShow(!show) }} className="absolute bottom-[6px] right-4 cursor-pointer text-xl hover:text-red-700">
-                        {
-                            show ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
-                        }
+                    <div onClick={() => { setShow(!show); }} className="absolute bottom-[6px] right-4 cursor-pointer text-xl hover:text-red-700">
+                        {show ? <FaEye /> : <FaEyeSlash />}
                     </div>
                 </div>
-
                 <div className="form-control w-full">
-
                     <select
                         {...register("gender", { required: true })}
-                        className=" rounded-lg border py-1 px-4 border-success focus:outline-none lg:w-[350px] w-[300px]"
+                        className="rounded-lg border py-1 px-4 border-success focus:outline-none lg:w-[350px] w-[300px]"
                     >
-                        <option value={""}>Select Gender</option>
+                        <option value="">Select Gender</option>
                         <option>Male</option>
                         <option>Female</option>
                     </select>
                 </div>
-
                 <span className="w-full flex justify-center mt-4">
                     <small className="text-red-600">{error}</small>
                 </span>
                 <input
                     className="bg-[#149352] cursor-pointer text-white py-[10px] rounded-3xl mt-4 hover:bg-transparent hover:text-[#149352] hover:outline outline-[#149352] font-medium w-full"
                     type="submit"
-                    value={"Register"}
+                    value="Register"
                 />
                 <div className="divider">OR</div>
                 <GoogleLogin />
                 <span className="flex w-full justify-center mt-3">
                     <small className="text-center">
                         Already Have An Account?{" "}
-                        <Link to={"/login"} className="text-info underline">
+                        <Link to="/login" className="text-info underline">
                             Login
                         </Link>
                     </small>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
@@ -17,6 +17,7 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setError('')
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
@@ -59,6 +60,18 @@ const Login = () => {
         });
     };
 
+    useEffect(() => {
+        if (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Login Failed",
+                text: "The email or password you entered is incorrect. Try again.",
+            });
+
+
+        }
+    }, [error]);
+
     if (user) {
         window.location.replace('https://bornomala-mart.web.app/')
     }
@@ -73,7 +86,7 @@ const Login = () => {
         <div className="w-full flex items-center justify-center min-h-[91vh]">
             <form
                 onSubmit={handleSubmit}
-                className="border shadow-xl rounded-2xl py-10 px-8"
+                className="border shadow-xl rounded-2xl py-10 px-8 w-fit md:max-w-[370px]"
             >
                 <h1 className="text-3xl text-center font-medium mb-8">Login</h1>
                 <div className="form-control">

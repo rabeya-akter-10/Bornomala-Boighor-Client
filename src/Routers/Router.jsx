@@ -25,6 +25,8 @@ import Invoice from "../Pages/OrderHistory/Invoice.jsx";
 import Reviews from "../Pages/Reviews/Reviews.jsx";
 import AdminDashBoard from "../Pages/Dashboard/AdminPage/AdminDashBoard.jsx";
 import NewOrders from "../Pages/Dashboard/NewOrders/NewOrders.jsx";
+import ToShipped from "../Pages/Dashboard/ToShipped/ToShipped.jsx";
+import DelivaredOrders from "../Pages/Dashboard/DeliveredOrders/DelivaredOrders.jsx";
 
 const router = createBrowserRouter([
     {
@@ -162,6 +164,14 @@ const router = createBrowserRouter([
                 element: <AdminOnly>
                     <NewOrders></NewOrders>
                 </AdminOnly>
+            },
+            {
+                path: "to-shipped",
+                element: <AdminOnly><ToShipped /></AdminOnly>
+            },
+            {
+                path: "delivered",
+                element: <AdminOnly><DelivaredOrders /></AdminOnly>
             }
         ],
     },
