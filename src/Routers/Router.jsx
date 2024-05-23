@@ -2,10 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layouts/Main";
 import Login from "../Pages/Login&Register/Login";
 import Register from "../Pages/Login&Register/Register";
-import AddBook from "../Pages/Dashboard/AdminPage/AddBooks/AddBook";
+import AddBook from "../Pages/Dashboard/AddBooks/AddBook.jsx";
 import Home from "../Pages/Home/Home";
 import BookDetails from "../Pages/BookDetails/BookDetails";
-import ManageBook from "../Pages/Dashboard/AdminPage/ManageBook/ManageBook";
+import ManageBook from "../Pages/Dashboard/ManageBook/ManageBook.jsx";
 import Books from "../Pages/Books/Books";
 import CategoryBooks from "../Pages/CategoryBooks/CategoryBooks";
 import Writers from "../Pages/Writers/Writers";
@@ -23,7 +23,8 @@ import OrderHistory from "../Pages/OrderHistory/OrderHistory.jsx";
 import GiveAReview from "../Pages/GiveAReview/GiveAReview.jsx";
 import Invoice from "../Pages/OrderHistory/Invoice.jsx";
 import Reviews from "../Pages/Reviews/Reviews.jsx";
-import AdminDashBoard from "../Pages/Dashboard/AdminPage/AdminDashBoard/AdminDashBoard.jsx";
+import AdminDashBoard from "../Pages/Dashboard/AdminPage/AdminDashBoard.jsx";
+import NewOrders from "../Pages/Dashboard/NewOrders/NewOrders.jsx";
 
 const router = createBrowserRouter([
     {
@@ -140,16 +141,28 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/dashboard',
-                element: <AdminOnly><AdminDashBoard></AdminDashBoard></AdminOnly>
+                element: <AdminOnly>
+                    <AdminDashBoard></AdminDashBoard>
+                </AdminOnly>
             },
             {
                 path: "add-book",
-                element: <AddBook></AddBook>,
+                element: <AdminOnly>
+                    <AddBook></AddBook>
+                </AdminOnly>,
             },
             {
                 path: "manage-books",
-                element: <ManageBook></ManageBook>,
+                element: <AdminOnly>
+                    <ManageBook></ManageBook>
+                </AdminOnly>,
             },
+            {
+                path: 'new-orders',
+                element: <AdminOnly>
+                    <NewOrders></NewOrders>
+                </AdminOnly>
+            }
         ],
     },
     {

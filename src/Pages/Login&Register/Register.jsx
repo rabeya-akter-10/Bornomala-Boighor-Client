@@ -5,25 +5,29 @@ import useAuth from "../../Hooks/UseAuth";
 import GoogleLogin from "../../Components/GoogleLogin/GoogleLogin";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import wait from "../../assets/please_wait.gif"
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
     const [error, setError] = useState("");
-    const { createUser, updateUser, logout } = useAuth();
+    const { createUser, updateUser, logout, verification, user } = useAuth();
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
-    const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
-        import.meta.env.VITE_IMAGE_HOSTING_KEY
-    }`;
+    const [creating, setCreating] = useState(false)
+    const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING_KEY}`;
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
+
     const onSubmit = (data) => {
         const { name, email, password, gender, phone } = data;
-
+        setCreating(true)
         const formData = new FormData();
         formData.append("image", data.image[0]);
+
         fetch(imageHostingUrl, {
             method: "POST",
             body: formData,
@@ -38,6 +42,7 @@ const Register = () => {
                         photoURL: imgUrl,
                         gender,
                         phone,
+                        password,
                         role: "buyer",
                     };
 
@@ -45,44 +50,47 @@ const Register = () => {
                         .then((result) => {
                             const loggedUser = result.user;
                             updateUser(name, imgUrl)
-                                .then((result) => {
-                                    fetch(
-                                        "https://bornomala-boighor-server.vercel.app/users",
-                                        {
-                                            method: "POST",
-                                            headers: {
-                                                "Content-Type":
-                                                    "application/json",
-                                            },
-                                            body: JSON.stringify(savedUser),
-                                        }
-                                    );
-
-                                    Swal.fire({
-                                        icon: "success",
-                                        title: "User Created Successfully Please Login to continue",
-                                        showConfirmButton: false,
-                                        timer: 1500,
+                                .then(() => {
+                                    fetch("https://bornomala-boighor-server.vercel.app/users", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify(savedUser),
                                     });
+                                    setCreating(false)
+                                    verification().then(() => {
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: "User Created Successfully. Please check your email to verify your account.",
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                        });
 
-                                    logout()
-                                        .then((result) => {
+                                        logout().then(() => {
                                             navigate("/login");
-                                        })
-                                        .catch((error) => {});
+                                        }).catch((error) => {
+                                            console.error(error.message);
+                                        });
+                                    }).catch((error) => {
+                                        console.error(error.message);
+                                    });
                                 })
                                 .catch((error) => {
-                                    console.log(error.message);
+                                    console.error(error.message);
                                 });
-                            console.log(loggedUser);
                         })
                         .catch((error) => {
-                            console.log(error.message);
+                            console.error(error.message);
                         });
                 }
             });
     };
-
+    if (creating) {
+        return <div className="fixed top-0 z-40 bg-white w-full min-h-screen flex items-center justify-center">
+            <img className="w-[300px]" src={wait} alt="" />
+        </div>
+    }
     // Scroll to top
     window.scrollTo({
         top: 0,
@@ -91,81 +99,71 @@ const Register = () => {
     });
 
     return (
-        <div className="w-full flex items-center justify-center min-h-[91vh]">
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="border shadow-xl rounded-2xl my-5 py-10 px-8"
-            >
-                <h1 className="text-3xl text-center font-medium mb-5">
-                    Sign Up
-                </h1>
+        <div className="w-full flex items-center justify-center min-h-[80vh]">
+            <form onSubmit={handleSubmit(onSubmit)} className="border shadow-xl rounded-2xl my-5 py-4 px-8  space-y-4">
+                <h1 className="text-2xl text-center font-medium mb-5">Sign Up</h1>
                 <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Name</span>
-                    </label>
+
                     <input
                         type="text"
                         placeholder="name"
                         {...register("name", { required: true })}
                         required
-                        className="input rounded-lg  input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
+                        className="border border-success py-1 px-4 rounded-lg input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
                     />
                 </div>
                 <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Email</span>
-                    </label>
+
                     <input
                         type="email"
                         placeholder="email"
                         {...register("email", { required: true })}
                         required
-                        className="input rounded-lg  input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
+                        className="border border-success py-1 px-4 rounded-lg input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
                     />
                 </div>
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">Photo</span>
+                        <span className="label-text">Image</span>
                     </label>
                     <input
                         type="file"
                         {...register("image", { required: true })}
-                        className="file-input file-input-bordered file-input-success max-w-xs rounded-lg  focus:outline-none lg:w-[350px] w-[300px]"
+                        className="border border-success py-1 px-4  max-w-xs rounded-lg focus:outline-none lg:w-[350px] w-[300px]"
                     />
                 </div>
 
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Password</span>
-                    </label>
-                    <input
-                        type="password"
-                        placeholder="password"
-                        {...register("password", { required: true })}
-                        required
-                        className="input rounded-lg  input-bordered input-success  focus:outline-none  lg:w-[350px] w-[300px]"
-                    />
-                </div>
                 <div className="form-control w-full">
-                    <label className="label">
-                        <span className="label-text">Phone Number</span>
-                    </label>
+
                     <input
                         type="text"
                         placeholder="phone number"
                         {...register("phone", { required: true })}
-                        className="input rounded-lg  input-bordered input-success  focus:outline-none  lg:w-[350px] w-[300px]"
+                        className="border border-success py-1 px-4 rounded-lg input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
                     />
                 </div>
+
+                <div className="form-control relative">
+
+                    <input
+                        type={show ? "text" : "password"}
+                        placeholder="password"
+                        {...register("password", { required: true })}
+                        required
+                        className="border border-success py-1 px-4 rounded-lg input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
+                    />
+                    <div onClick={() => { setShow(!show) }} className="absolute bottom-[6px] right-4 cursor-pointer text-xl hover:text-red-700">
+                        {
+                            show ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                        }
+                    </div>
+                </div>
+
                 <div className="form-control w-full">
-                    <label className="label">
-                        <span className="label-text">Gender</span>
-                    </label>
+
                     <select
-                        {...register("gender", {
-                            required: true,
-                        })}
-                        className="select rounded-lg  input-bordered select-success  focus:outline-none  lg:w-[350px] w-[300px]"
+                        {...register("gender", { required: true })}
+                        className=" rounded-lg border py-1 px-4 border-success focus:outline-none lg:w-[350px] w-[300px]"
                     >
                         <option value={""}>Select Gender</option>
                         <option>Male</option>
@@ -182,7 +180,7 @@ const Register = () => {
                     value={"Register"}
                 />
                 <div className="divider">OR</div>
-                <GoogleLogin></GoogleLogin>
+                <GoogleLogin />
                 <span className="flex w-full justify-center mt-3">
                     <small className="text-center">
                         Already Have An Account?{" "}
@@ -192,7 +190,7 @@ const Register = () => {
                     </small>
                 </span>
             </form>
-            <Toaster></Toaster>
+            <Toaster />
         </div>
     );
 };

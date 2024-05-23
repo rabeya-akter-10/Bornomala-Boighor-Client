@@ -30,6 +30,11 @@ const Dashboard = () => {
         navOptions = (
             <>
                 <li>
+                    <Link className={"w-64  mx-auto mb-1"} to={"/dashboard"}>
+                        <FaHome></FaHome> Dashboard
+                    </Link>
+                </li>
+                <li>
                     <NavLink className={"w-64  mx-auto mb-1"} to={"add-book"}>
                         <BiSolidBookAdd></BiSolidBookAdd> Add Book
                     </NavLink>
@@ -98,6 +103,7 @@ const Dashboard = () => {
                                 <FaHome></FaHome> Home
                             </NavLink>
                         </li>
+
                         <li>
                             <NavLink className={"w-64  mx-auto"} to={"/books"}>
                                 <FaBook></FaBook> Books

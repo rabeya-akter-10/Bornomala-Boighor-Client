@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, NavLink, useLocation, useNavigate,  } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate, } from "react-router-dom";
 import "./NavigationBar.css";
 import { AuthContext } from "../../Providers/AuthProviders";
 import logo from "../../assets/logo.png";
@@ -11,6 +11,7 @@ import UseAdmin from "../../Hooks/UseAdmin";
 import { FaBox, FaGrinStars, FaSignOutAlt, FaSmileBeam } from "react-icons/fa";
 import { MdDashboardCustomize } from "react-icons/md";
 import CustomLoader from "../CustomLoader/CustomLoader";
+import Swal from "sweetalert2";
 
 const NavigationBar = () => {
   const { user, loading, logout } = useContext(AuthContext);
@@ -21,19 +22,31 @@ const NavigationBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+
   useEffect(() => {
+    if (user && !user?.emailVerified) {
+      Swal.fire({
+        icon: "info",
+        title: "Please check your email to verify your account.",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+      logout()
+        .then((result) => { })
+        .catch((error) => { });
+    }
     cartRefetch();
   }, [user]);
 
   const handleLogout = () => {
     logout()
-      .then((result) => {})
-      .catch((error) => {});
+      .then((result) => { })
+      .catch((error) => { });
   };
 
   const handleClickLogin = () => {
-    navigate("/login", { state: location } );
-}
+    navigate("/login", { state: location });
+  }
 
 
   const handleSearchChange = (event) => {
@@ -54,7 +67,7 @@ const NavigationBar = () => {
     );
   }
 
-  if(loading){
+  if (loading) {
     return <CustomLoader></CustomLoader>
   }
 
@@ -63,57 +76,7 @@ const NavigationBar = () => {
       <div className="flex flex-col w-full items-center border-b border-success">
         <div className="navbar max-h-14  max-w-7xl mx-auto">
           <div className="navbar-start">
-            {/* <div className="dropdown ">
-            <button className="btn btn-square btn-ghost">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="inline-block w-5 h-5 stroke-current"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
-              </svg>
-            </button>
-           
-            <div
-              tabIndex={0}
-              className=" menu-compact dropdown-content mt-3 p-2 flex flex-col shadow bg-base-100 rounded-box w-52"
-            >
-              <NavLink
-                className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
-                to={"/"}
-              >
-                Home
-              </NavLink>
-              <NavLink
-                className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
-                to={"/books"}
-              >
-                All Books
-              </NavLink>
-              {
-                admin && <>
-                <NavLink
-                className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
-                to={"/add-book"}
-              >
-                Add A Book
-              </NavLink>
-              <NavLink
-                className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
-                to={"/manage-books"}
-              >
-                Manage Stocks
-              </NavLink></>
-              }
-             
-            </div>
-          </div> */}
+
             <Link to={"/"} className="flex items-center ml-2  md:ml-4">
               <img className="h-10" src={logo} alt="" />
             </Link>
@@ -170,9 +133,9 @@ const NavigationBar = () => {
             {!user && (
               <span>
                 <p
-                onClick={handleClickLogin}
+                  onClick={handleClickLogin}
                   className=" font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success cursor-pointer"
-                  
+
                 >
                   Login
                 </p>
@@ -210,14 +173,14 @@ const NavigationBar = () => {
                       <span className="text-sm">My Reviews</span>
                     </NavLink>
                   </li>
-                 {
-                  user && admin &&  <li>
-                  <NavLink to={"/dashboard"}>
-                    <MdDashboardCustomize className="text-xl  text-green-600"></MdDashboardCustomize>{" "}
-                    <span className="text-sm">Dashboard</span>
-                  </NavLink>
-                </li>
-                 }
+                  {
+                    user && admin && <li>
+                      <NavLink to={"/dashboard"}>
+                        <MdDashboardCustomize className="text-xl  text-green-600"></MdDashboardCustomize>{" "}
+                        <span className="text-sm">Dashboard</span>
+                      </NavLink>
+                    </li>
+                  }
                   {user && (
                     <li>
                       <a onClick={handleLogout} className="text-red-400">

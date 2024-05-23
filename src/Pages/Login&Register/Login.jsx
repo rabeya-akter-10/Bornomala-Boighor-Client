@@ -2,12 +2,14 @@ import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
-import useAuth from "../../Hooks/UseAuth";
 import GoogleLogin from "../../Components/GoogleLogin/GoogleLogin";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import useAuth from "../../Hooks/UseAuth";
 
 const Login = () => {
     const [error, setError] = useState("");
-    const { user, login, loginWithGoogle } = useAuth();
+    const [show, setShow] = useState(false);
+    const { user, login, loginWithGoogle, resetPassword } = useAuth();
     const location = useLocation();
     const from = location?.state?.pathname || "/";
     const navigate = useNavigate();
@@ -30,6 +32,31 @@ const Login = () => {
                 console.log(error.message);
                 setError(error.message);
             });
+    };
+
+    const handleResetPassword = () => {
+        Swal.fire({
+            title: 'Enter your email address',
+            input: 'email',
+            inputPlaceholder: 'Email address',
+            showCancelButton: true,
+            confirmButtonText: 'Send reset link',
+            preConfirm: (email) => {
+                return resetPassword(email)
+                    .then(() => {
+                        Swal.fire({
+                            icon: "success",
+                            text: "Password reset email sent successfully",
+                            title: "Please check your email account.",
+                            showConfirmButton: false,
+                            timer: 3000,
+                        });
+                    })
+                    .catch((error) => {
+                        Swal.showValidationMessage(`Request failed: ${error.message}`);
+                    });
+            },
+        });
     };
 
     if (user) {
@@ -61,17 +88,22 @@ const Login = () => {
                         className="input input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
                     />
                 </div>
-                <div className="form-control">
+                <div className="form-control relative">
                     <label className="label">
                         <span className="label-text">Password</span>
                     </label>
                     <input
-                        type="password"
+                        type={show ? "text" : "password"}
                         placeholder="password"
                         name="password"
                         required
-                        className="input input-bordered input-success  focus:outline-none  lg:w-[350px] w-[300px]"
+                        className=" input input-bordered input-success  focus:outline-none  lg:w-[350px] w-[300px]"
                     />
+                    <div onClick={() => { setShow(!show) }} className="absolute bottom-4 right-4 cursor-pointer text-xl hover:text-red-700">
+                        {
+                            show ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                        }
+                    </div>
                 </div>
                 <span className="w-full flex justify-center mt-4">
                     <small className="text-red-600">{error}</small>
@@ -81,6 +113,15 @@ const Login = () => {
                     type="submit"
                     value="Login"
                 />
+                <div className="w-full text-center mt-4">
+                    <button
+                        type="button"
+                        className="text-info underline"
+                        onClick={handleResetPassword}
+                    >
+                        Forgot Password?
+                    </button>
+                </div>
                 <div className="divider">OR</div>
                 <GoogleLogin></GoogleLogin>
                 <span className="flex w-full justify-center mt-3">
