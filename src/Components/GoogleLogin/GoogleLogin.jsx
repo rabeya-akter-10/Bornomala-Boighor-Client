@@ -6,8 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 const GoogleLogin = () => {
     const { loginWithGoogle } = useAuth();
     const [error, setError] = useState();
-    const location = useLocation(); 
-    const from = location?.state?.pathname || "/"; 
+    const location = useLocation();
+    const from = location?.state?.pathname || "/";
     const navigate = useNavigate();
 
 
@@ -35,6 +35,7 @@ const GoogleLogin = () => {
                 toast.success("Successfully Login!");
                 setError("");
                 navigate(from);
+                window.location.reload()
             })
             .catch((error) => {
                 setError(error.message);

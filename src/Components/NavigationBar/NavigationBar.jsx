@@ -18,7 +18,7 @@ const NavigationBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { books } = UseBooks();
   const { cart, cartRefetch } = UseCart(user?.email);
-  const { admin } = UseAdmin();
+  const { admin, usersRefetch } = UseAdmin();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -36,6 +36,7 @@ const NavigationBar = () => {
         .catch((error) => { });
     }
     cartRefetch();
+    usersRefetch()
   }, [user]);
 
   const handleLogout = () => {
@@ -161,18 +162,22 @@ const NavigationBar = () => {
                       <span className="text-sm"> Manage My Account</span>
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink to={"/order-history"}>
-                      <FaBox className="text-xl  text-green-600"></FaBox>{" "}
-                      <span className="text-sm">Order History</span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to={"/my-reviews"}>
-                      <FaGrinStars className="text-xl  text-green-600"></FaGrinStars>{" "}
-                      <span className="text-sm">My Reviews</span>
-                    </NavLink>
-                  </li>
+                  {
+                    user && !admin &&
+                    <>
+                      <li>
+                        <NavLink to={"/order-history"}>
+                          <FaBox className="text-xl  text-green-600"></FaBox>{" "}
+                          <span className="text-sm">Order History</span>
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to={"/my-reviews"}>
+                          <FaGrinStars className="text-xl  text-green-600"></FaGrinStars>{" "}
+                          <span className="text-sm">My Reviews</span>
+                        </NavLink>
+                      </li></>
+                  }
                   {
                     user && admin && <li>
                       <NavLink to={"/dashboard"}>

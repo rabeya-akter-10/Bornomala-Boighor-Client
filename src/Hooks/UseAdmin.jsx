@@ -25,11 +25,11 @@ const UseAdmin = () => {
         if (thisUser?.role === "admin") {
             setAdmin(true);
         }
-        
+
         setAdminLoading(false); // Update loading state after determining admin status
     }, [users, user]);
 
-    return { admin, adminLoading };
+    return { admin, adminLoading, usersRefetch };
 };
 
 export default UseAdmin;

@@ -27,6 +27,7 @@ const Login = () => {
                 toast.success("Successfully Login!");
                 setError("");
                 navigate(from);
+                window.location.reload()
                 event.target.reset();
             })
             .catch((error) => {
