@@ -7,7 +7,6 @@ import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useNavigate } from "react-router-dom";
 
 const OrderConfirmation = () => {
-
   const [axiosSecure] = UseAxiosSecure();
   const [items, setItem] = useState([]);
   const { client, clientLoading } = UseThisUser();
@@ -42,31 +41,35 @@ const OrderConfirmation = () => {
   const orderDetails = { items, client, deliveryCost: 70 };
 
   const initiatePayment = () => {
-
     const response = axiosSecure.post('/orders', orderDetails).then((response) => {
-      window.location.replace(`${response.data.url}`)
-      console.log(response.data.url);
-    })
-      .catch((error) => {
-        toast.error("An error occurred while updating the user's information.");
-      });
-
+      window.location.replace(`${response.data.url}`);
+    }).catch((error) => {
+      toast.error("An error occurred while updating the user's information.");
+    });
   }
 
   // Calculate total price from the items array
-  const totalPrice = items.reduce((total, item) => total + item.discountedPrice, 0);
+  const totalPrice = items.reduce((total, item) => total + item.discountedPrice * item.itemCount, 0);
 
   if (clientLoading) {
     return <CustomLoader></CustomLoader>
   }
 
   return (
-    <div className="px-4 font-mono ">
+    <div className="px-4 font-mono max-w-xl mx-auto w-full  ">
       <div className="flex flex-col ">
         <p className="text-center py-8 text-gray-400 underline">Your Items:</p>
 
-        <div className="overflow-x-auto max-w-lg w-full mx-auto">
-          <table className="table">
+        <div className="overflow-x-auto max-w-lg w-full mx-auto flex">
+          <table className="table w-full mx-auto">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th> Qty</th>
+                {/* <th>Item Count</th> */}
+                <th>Price</th>
+              </tr>
+            </thead>
             <tbody>
               {
                 items.map((i) =>
@@ -84,8 +87,9 @@ const OrderConfirmation = () => {
                         </div>
                       </div>
                     </td>
+                    <td>{i?.itemCount}pcs</td>
+                    <td >{i?.discountedPrice * i?.itemCount}tk</td>
 
-                    <td>{i?.discountedPrice}tk</td>
 
                   </tr>
                 )
@@ -94,13 +98,13 @@ const OrderConfirmation = () => {
           </table>
         </div>
 
-        <div className="flex flex-col items-end  md:pr-72 pr-10 text-sm">
+        <div className="flex flex-col items-end  md:pr-16 pr-6 text-sm">
           <p>Products Price: {totalPrice}tk </p>
           <p className="border-b border-gray-400">Delivery Cost: + 70tk</p>
           <p>SubTotal: = {70 + totalPrice}</p>
         </div>
 
-        <div className="md:pl-60 pl-6">
+        <div className=" pl-6">
           <p className="py-2 text-xl">Delivered To:</p>
           <div>
             <p>Receiver Name: {client?.name}</p>
@@ -112,15 +116,13 @@ const OrderConfirmation = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-end my-8  md:pr-72 pr-10 ">
+        <div className="flex flex-col items-end my-8  pr-10 ">
           <button onClick={initiatePayment} className="bg-orange-500 text-white font-semibold font-mono rounded-sm px-5 py-3 hover:bg-orange-600 hover:shadow-md ">Pay Now</button>
         </div>
-
       </div>
       <Toaster />
     </div >
   );
 };
-
 
 export default OrderConfirmation;

@@ -57,7 +57,7 @@ const OrderHistory = () => {
     }
 
     if (!orders.length) {
-        return <CustomLoader></CustomLoader>
+        return <div className='w-full min-h-[80vh] flex items-center justify-center'><h1 className='text-center text-gray-400'>After placing your first order,<br />regular updates will be listed here</h1></div>
     }
 
     const sortedOrders = sortOrders(orders, sortOrder); // Sort orders based on sortOrder
