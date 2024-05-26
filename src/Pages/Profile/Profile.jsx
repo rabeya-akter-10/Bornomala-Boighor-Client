@@ -97,47 +97,51 @@ const Profile = () => {
     }, []);
 
     return (
-        <div>
-            <div className="p-4">
-                <img
-                    className="w-36 h-36 rounded-full outline outline-green-500 mx-auto m-10"
-                    src={thisUser?.photoURL}
-                    alt=""
-                />
+        <div className="">
+            <div className="p-4 w-full flex flex-col">
+                <div className="w-36 md:w-48 h-36 md:h-48 avatar mx-auto my-10 outline outline-green-500  rounded-full hover:scale-110">
+                    <img
+                        className="w-36 lg:w-48 mask mask-circle rounded-full mx-auto"
+                        src={thisUser?.photoURL}
+                        alt=""
+                    />
+                </div>
 
-                <p>
-                    <span className="text-gray-400">Name:</span>{" "}
-                    {thisUser?.name}
-                </p>
-                <p>
-                    <span className="text-gray-400">Email:</span>{" "}
-                    {thisUser?.email}
-                </p>
-                <p>
-                    <span className="text-gray-400">Phone:</span>{" "}
-                    {thisUser?.phone}
-                </p>
-                <p>
-                    <span className="text-gray-400">Address:</span>{" "}
-                    {thisUser?.address?.district}
-                </p>
-                <p>
-                    <span className="text-gray-400">Street/postCode:</span>{" "}
-                    {thisUser?.address?.postCode}
-                </p>
-                <p>
-                    <span className="text-gray-400">Street/Area:</span>{" "}
-                    {thisUser?.address?.street}
-                </p>
+                <div>
+                    <p>
+                        <span className="text-gray-400">Name:</span>{" "}
+                        {thisUser?.name}
+                    </p>
+                    <p>
+                        <span className="text-gray-400">Email:</span>{" "}
+                        {thisUser?.email}
+                    </p>
+                    <p>
+                        <span className="text-gray-400">Phone:</span>{" "}
+                        {thisUser?.phone}
+                    </p>
+                    <p>
+                        <span className="text-gray-400">Address:</span>{" "}
+                        {thisUser?.address?.district}
+                    </p>
+                    <p>
+                        <span className="text-gray-400">Street/postCode:</span>{" "}
+                        {thisUser?.address?.postCode}
+                    </p>
+                    <p>
+                        <span className="text-gray-400">Street/Area:</span>{" "}
+                        {thisUser?.address?.street}
+                    </p>
 
-                <button
-                    className="w-fit px-4 py-1 mt-2 bg-green-500 text-white hover:bg-green-600 cursor-pointer text-xs rounded-sm"
-                    onClick={() =>
-                        document.getElementById("my_modal_5").showModal()
-                    }
-                >
-                    Edit Address
-                </button>
+                    <button
+                        className="w-fit px-4 py-1 mt-2 bg-green-500 text-white hover:bg-green-600 cursor-pointer text-xs rounded-sm"
+                        onClick={() =>
+                            document.getElementById("my_modal_5").showModal()
+                        }
+                    >
+                        Edit Address
+                    </button>
+                </div>
             </div>
 
             <dialog

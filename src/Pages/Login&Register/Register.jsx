@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import wait from "../../assets/please_wait.gif";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import useAuth from "../../Hooks/UseAuth";
 import GoogleLogin from "../../Components/GoogleLogin/GoogleLogin";
+import useAuth from "../../Hooks/UseAuth";
 
 const Register = () => {
     const [error, setError] = useState("");
@@ -16,81 +16,155 @@ const Register = () => {
     const [creating, setCreating] = useState(false);
     const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING_KEY}`;
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
-        setError("")
+    // const onSubmit = async (data) => {
+    //     setError("");
+    //     const { name, email, password, gender, phone } = data;
+    //     setCreating(true);
+    //     const formData = new FormData();
+    //     formData.append("image", data.image[0]);
+
+    //     try {
+    //         const res = await fetch(imageHostingUrl, {
+    //             method: "POST",
+    //             body: formData,
+    //         });
+    //         const imgResponse = await res.json();
+    //         if (imgResponse.success) {
+    //             const imgUrl = imgResponse.data.display_url;
+    //             const savedUser = {
+    //                 name,
+    //                 email,
+    //                 photoURL: imgUrl,
+    //                 gender,
+    //                 phone,
+    //                 password,
+    //                 role: "buyer",
+    //             };
+
+
+
+    //             try {
+    //                 const result = await createUser(email, password);
+    //                 const loggedUser = result.user;
+
+
+
+    //                 // Check if user is authenticated
+    //                 if (loggedUser) {
+    //                     await updateUser(name, imgUrl);
+    //                     await verification(loggedUser);
+    //                       // Send savedUser to your server
+    //                 const response = await fetch("https://bornomala-boighor-server.vercel.app/users", {
+    //                     method: "POST",
+    //                     headers: {
+    //                         "Content-Type": "application/json",
+    //                     },
+    //                     body: JSON.stringify(savedUser),
+    //                 });
+    //                     Swal.fire({
+    //                         icon: "success",
+    //                         title: "User Created Successfully. Please check your email to verify your account.",
+    //                         showConfirmButton: false,
+    //                         timer: 3000,
+    //                     });
+    //                     await logout();
+    //                     navigate("/login");
+    //                 } else {
+    //                     throw new Error("User is not authenticated.");
+    //                 }
+    //             } catch (verificationError) {
+    //                 console.error("Verification email failed to send:", verificationError);
+    //                 setError("Verification email failed to send.");
+    //             }
+    //         } else {
+    //             throw new Error("Image upload failed");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error:", error.message);
+    //         setError(error.message);
+    //     } finally {
+    //         setCreating(false);
+    //     }
+    // };
+
+    const onSubmit = async (data) => {
+        setError("");
         const { name, email, password, gender, phone } = data;
         setCreating(true);
         const formData = new FormData();
         formData.append("image", data.image[0]);
 
-        fetch(imageHostingUrl, {
-            method: "POST",
-            body: formData,
-        })
-            .then((res) => res.json())
-            .then((imgResponse) => {
-                if (imgResponse.success) {
-                    const imgUrl = imgResponse.data.display_url;
-                    const savedUser = {
-                        name,
-                        email,
-                        photoURL: imgUrl,
-                        gender,
-                        phone,
-                        password,
-                        role: "buyer",
-                    };
-
-                    createUser(email, password)
-                        .then((result) => {
-                            const loggedUser = result.user;
-                            updateUser(name, imgUrl)
-                                .then(() => {
-                                    fetch("https://bornomala-boighor-server.vercel.app/users", {
-                                        method: "POST",
-                                        headers: {
-                                            "Content-Type": "application/json",
-                                        },
-                                        body: JSON.stringify(savedUser),
-                                    });
-                                    setCreating(false);
-                                    setError("");
-                                    verification().then(() => {
-                                        Swal.fire({
-                                            icon: "success",
-                                            title: "User Created Successfully. Please check your email to verify your account.",
-                                            showConfirmButton: false,
-                                            timer: 3000,
-                                        });
-
-                                        logout().then(() => {
-                                            navigate("/login");
-                                        }).catch((error) => {
-                                            console.error(error.message);
-                                            setError(error.message);
-                                        });
-                                    }).catch((error) => {
-                                        console.error(error.message);
-                                    });
-                                })
-                                .catch((error) => {
-                                    console.error(error.message);
-                                    setError(error.message);
-                                });
-                        })
-                        .catch((error) => {
-                            console.error(error.message);
-                            setError(error.message);
-                        });
-                }
+        try {
+            const res = await fetch(imageHostingUrl, {
+                method: "POST",
+                body: formData,
             });
+            const imgResponse = await res.json();
+            if (imgResponse.success) {
+                const imgUrl = imgResponse.data.display_url;
+                const savedUser = {
+                    name,
+                    email,
+                    photoURL: imgUrl,
+                    gender,
+                    phone,
+                    password,
+                    role: "buyer",
+                };
+
+                try {
+                    const result = await createUser(email, password);
+                    const loggedUser = result.user;
+
+                    // Check if user is authenticated
+                    if (loggedUser) {
+                        await updateUser(name, imgUrl);
+                        await verification(loggedUser);
+
+                        // Send savedUser to your server
+                        const response = await fetch("https://bornomala-boighor-server.vercel.app/users", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(savedUser),
+                        });
+
+                        if (response.ok) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "User Created Successfully. Please check your email to verify your account.",
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                            await logout();
+                            navigate("/login");
+                        } else {
+                            throw new Error("Failed to save user data to the server.");
+                        }
+                    } else {
+                        throw new Error("User is not authenticated.");
+                    }
+                } catch (verificationError) {
+                    console.error("Verification email failed to send:", verificationError);
+                    setError("Verification email failed to send.");
+                }
+            } else {
+                throw new Error("Image upload failed");
+            }
+        } catch (error) {
+            console.error("Error:", error.message);
+            setError(error.message);
+        } finally {
+            setCreating(false);
+        }
     };
+
+
+
+
 
     useEffect(() => {
         if (error) {
@@ -111,9 +185,8 @@ const Register = () => {
     }
 
     if (user) {
-        window.location.replace('https://bornomala-mart.web.app/')
+        window.location.replace('https://bornomala-mart.web.app/');
     }
-
 
     // Scroll to top
     window.scrollTo({
@@ -144,14 +217,14 @@ const Register = () => {
                         className="border border-success py-1 px-4 rounded-lg input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
                     />
                 </div>
-                <div className="form-control">
+                <div className="form-control  lg:w-[350px] w-[300px]">
                     <label className="label">
                         <span className="label-text">Image</span>
                     </label>
                     <input
                         type="file"
                         {...register("image", { required: true })}
-                        className="border border-success py-1 px-4 max-w-xs rounded-lg focus:outline-none lg:w-[350px] w-[300px]"
+                        className="w-full border py-1 px-4 rounded-lg border-success"
                     />
                 </div>
                 <div className="form-control w-full">

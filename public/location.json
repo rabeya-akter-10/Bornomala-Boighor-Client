@@ -5,107 +5,71 @@
             "districts": [
                 {
                     "label": "Dhaka",
-                    "upazilas": [
-                        "Dhaka",
-                        "Narayanganj",
-                        "Gazipur",
-                        "Tangail"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Faridpur",
-                    "upazilas": [
-                        "Faridpur",
-                        "Gopalganj",
-                        "Madaripur",
-                        "Rajbari"
-                    ]
+                    "upazilas": []
+                },
+                {
+                    "label": "Gazipur",
+                    "upazilas": []
                 },
                 {
                     "label": "Gopalganj",
-                    "upazilas": [
-                        "Gopalganj"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Jamalpur",
-                    "upazilas": [
-                        "Jamalpur",
-                        "Mymensingh",
-                        "Netrokona"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Kishoreganj",
-                    "upazilas": [
-                        "Kishoreganj"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Madaripur",
-                    "upazilas": [
-                        "Madaripur"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Manikganj",
-                    "upazilas": [
-                        "Manikganj"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Munshiganj",
-                    "upazilas": [
-                        "Munshiganj"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Mymensingh",
-                    "upazilas": [
-                        "Mymensingh"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Narayanganj",
-                    "upazilas": [
-                        "Narayanganj"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Narsingdi",
-                    "upazilas": [
-                        "Narsingdi"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Netrokona",
-                    "upazilas": [
-                        "Netrokona"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Rajbari",
-                    "upazilas": [
-                        "Rajbari"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Shariatpur",
-                    "upazilas": [
-                        "Shariatpur"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Sherpur",
-                    "upazilas": [
-                        "Sherpur"
-                    ]
+                    "upazilas": []
                 },
                 {
                     "label": "Tangail",
-                    "upazilas": [
-                        "Tangail"
-                    ]
+                    "upazilas": []
                 }
             ]
         },

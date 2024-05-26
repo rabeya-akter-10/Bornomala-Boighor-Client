@@ -87,7 +87,7 @@ const Login = () => {
         <div className="w-full flex items-center justify-center min-h-[91vh]">
             <form
                 onSubmit={handleSubmit}
-                className="border shadow-xl rounded-2xl py-10 px-8 w-fit md:max-w-[370px]"
+                className="border shadow-xl rounded-2xl py-10 px-8 w-fit md:max-w-[396px] mx-auto "
             >
                 <h1 className="text-3xl text-center font-medium mb-8">Login</h1>
                 <div className="form-control">
@@ -99,7 +99,7 @@ const Login = () => {
                         placeholder="email"
                         name="email"
                         required
-                        className="input input-bordered input-success focus:outline-none lg:w-[350px] w-[300px]"
+                        className="input input-bordered input-success focus:outline-none  w-[300px]"
                     />
                 </div>
                 <div className="form-control relative">
@@ -111,7 +111,7 @@ const Login = () => {
                         placeholder="password"
                         name="password"
                         required
-                        className=" input input-bordered input-success  focus:outline-none  lg:w-[350px] w-[300px]"
+                        className=" input input-bordered input-success  focus:outline-none   w-[300px]"
                     />
                     <div onClick={() => { setShow(!show) }} className="absolute bottom-4 right-4 cursor-pointer text-xl hover:text-red-700">
                         {

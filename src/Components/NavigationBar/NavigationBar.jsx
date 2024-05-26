@@ -135,7 +135,7 @@ const NavigationBar = () => {
               <span>
                 <p
                   onClick={handleClickLogin}
-                  className=" font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success cursor-pointer"
+                  className=" font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-[13px] text-xs text-success cursor-pointer"
 
                 >
                   Login
@@ -201,27 +201,27 @@ const NavigationBar = () => {
         </div>
 
         {/* Main menu */}
-        <div className=" pb-2  w-full text-center ">
+        <div className=" pb-2  w-full text-center  ">
           <NavLink
-            className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
+            className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-[13px] text-xs text-success"
             to={"/"}
           >
             Home
           </NavLink>
           <NavLink
-            className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
+            className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-[13px] text-xs text-success"
             to={"/books"}
           >
             All Books
           </NavLink>
           <NavLink
-            className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
+            className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-[13px] text-xs text-success"
             to={"/categories"}
           >
             Categories
           </NavLink>
           <NavLink
-            className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-base text-xs text-success"
+            className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-[13px] text-xs text-success"
             to={"/publications"}
           >
             Publications

@@ -49,8 +49,12 @@ const AuthProviders = ({ children }) => {
         });
     };
 
-    const verification = () => {
-        return sendEmailVerification(auth.currentUser);
+    const verification = (user) => {
+        if (user) {
+            return sendEmailVerification(user);
+        } else {
+            return Promise.reject(new Error("User is not authenticated."));
+        }
     };
 
     const resetPassword = (email) => {

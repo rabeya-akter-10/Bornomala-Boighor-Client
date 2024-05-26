@@ -27,7 +27,7 @@ const OrderHistory = () => {
     };
 
     const calculateTotalPrice = (products) => {
-        return products.reduce((total, product) => total + product.discountedPrice, 0);
+        return products.reduce((total, product) => total + (product.discountedPrice * product.itemCount), 0);
     };
 
     const getBadgeClass = (status) => {
@@ -69,7 +69,6 @@ const OrderHistory = () => {
         behavior: "smooth",
     });
 
-
     return (
         <div className='bg-green-100 lg:bg-white bg-opacity-50 min-h-[88vh]'>
             <h1 className='text-center py-6 text-xl text-gray-400 font-medium'>Orders</h1>
@@ -94,15 +93,6 @@ const OrderHistory = () => {
 
                     return (
                         <div key={order.transactionId} className='w-full p-6 rounded-md bg-white shadow-lg'>
-                            {/* <style>
-                                {`
-                * {
-                    color: #000 !important;
-                    background-color: #fff !important;
-                }
-                `}
-                            </style> */}
-
                             <div className='flex flex-col md:flex-row md:justify-between w-full gap-2'>
                                 <div>
                                     <p className='text-sm text-gray-400'>Order #{order.transactionId}</p>
@@ -123,6 +113,7 @@ const OrderHistory = () => {
 
                                         <div className='flex flex-col gap-1 items-center justify-center w-[20%]'>
                                             <p>{product.discountedPrice}tk</p>
+                                            <p className='text-xs '>Qty: {product.itemCount}</p> {/* Added itemCount display */}
                                             {order.orderStatus === 'Delivered' && !product.reviews && (
                                                 <button onClick={() => {
                                                     handleGiveRivew(order._id, product.bookId)
@@ -135,8 +126,6 @@ const OrderHistory = () => {
                                 ))}
                             </div>
                             <div className='flex justify-between   items-center'>
-                                {/* <Link to={`/invoice/${order?.transactionId}`} className='bg-green-500 hover:bg-green-600 px-2 py-1 text-xs text-white rounded-md font-medium'>Invoice</Link> */}
-
                                 <a href={`/invoice/${order?.transactionId}`} target='blank'
                                     className='bg-green-500 hover:bg-green-600 px-2 py-1 text-xs text-white rounded-md font-medium'>Invoice</a>
                                 <p className={`text-xs w-fit font-semibold text-white badge ${getBadgeClass(order.orderStatus)}`}>{order.orderStatus}</p>
