@@ -8,7 +8,6 @@ import paid from '../../assets/paid.png'
 import logo from '../../assets/logo.png'
 import { FaAddressCard, FaDownload, FaGlobe, FaMapLocationDot, FaMobile } from 'react-icons/fa6';
 import { FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa';
-import Profile from '../Profile/Profile';
 
 const Invoice = () => {
     const params = useParams();
@@ -63,7 +62,6 @@ const Invoice = () => {
     if (!order) {
         return <div>Loading...</div>; // Or any loading state you prefer
     }
-    console.log(order);
 
 
     return (

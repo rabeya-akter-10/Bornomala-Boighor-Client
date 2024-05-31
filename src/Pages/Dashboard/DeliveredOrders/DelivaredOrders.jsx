@@ -80,7 +80,7 @@ const DeliveredOrders = () => {
                             <p className='bg-white text-green-500 font-semibold'>Delivered In: <br /> {formatDate(order?.deliveredIn)}</p>
                         </div>
                         <div className='absolute right-4 bottom-4 flex'>
-                            <Link to={`/dashbard/orders/${order._id}`} className='bg-blue-400 px-2 py-1 rounded-md text-white uppercase font-medium hover:bg-blue-600 flex items-center gap-1 text-md'>Details <RiNewspaperLine /></Link>
+                            <Link to={`/dashboard/order-details/${order.transactionId}`} className='bg-blue-400 px-2 py-1 rounded-md text-white uppercase font-medium hover:bg-blue-600 flex items-center gap-1 text-md'>Details <RiNewspaperLine /></Link>
                         </div>
                     </div>
                 ))}

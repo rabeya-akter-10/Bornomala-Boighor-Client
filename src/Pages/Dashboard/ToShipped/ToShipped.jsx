@@ -103,7 +103,7 @@ const ToShipped = () => {
                         </div>
                         <div className='bg-white'>
                             <div className='absolute right-4 bottom-4 flex'>
-                                <Link to={`/dashbard/orders/${order._id}`} className='bg-blue-400 px-2 py-1 rounded-md text-white uppercase font-medium hover:bg-blue-600 flex items-center gap-1 text-md'>Details <RiNewspaperLine /> </Link>
+                                <Link to={`/dashboard/order-details/${order.transactionId}`} className='bg-blue-400 px-2 py-1 rounded-md text-white uppercase font-medium hover:bg-blue-600 flex items-center gap-1 text-md'>Details <RiNewspaperLine /> </Link>
                             </div>
                             <div className='absolute left-4 bottom-4 flex'>
                                 <p className='w-5/6 bg-white'>{order.estimatedDelivery}</p>

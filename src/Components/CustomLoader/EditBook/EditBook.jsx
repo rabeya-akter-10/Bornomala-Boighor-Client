@@ -114,6 +114,7 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
             bookName_en,
             keywords
         } = data;
+
         const editedBook = {
             bookName,
             price: parseInt(price),
@@ -131,6 +132,7 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
         Object.keys(data).forEach((key) => {
             setValue(key, data[key]);
         });
+
 
         axiosSecure.patch(`/books/${id}`, data).then((response) => {
             if (response.data.acknowledged) {

@@ -100,11 +100,12 @@ const NewOrders = () => {
                             </ul>)
                         }
                         <div className='absolute right-4 bottom-4 flex'>
-                            <Link to={`/dashbard/orders/${order._id}`} className='bg-blue-400 px-2 py-1 rounded-md text-white uppercase font-medium hover:bg-blue-600 flex items-center gap-1 text-md'>Details <RiNewspaperLine /> </Link>
+                            <Link to={`/dashboard/order-details/${order.transactionId}`} className='bg-blue-400 px-2 py-1 rounded-md text-white uppercase font-medium hover:bg-blue-600 flex items-center gap-1 text-md'>Details <RiNewspaperLine /> </Link>
                         </div>
                         <div className='absolute left-4 bottom-4 flex'>
                             <a
                                 href={`/shipping-level/${order?.transactionId}`}
+                                target='blank'
                                 className='bg-yellow-400 px-2 py-1 rounded-md text-white uppercase font-medium hover:bg-yellow-600 flex items-center gap-1 text-sm'
                             >
                                 <TbFileBarcode />

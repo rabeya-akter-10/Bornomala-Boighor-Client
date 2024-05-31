@@ -6,6 +6,8 @@ import { FaXmark } from 'react-icons/fa6';
 import { LuClipboardList } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 import Greeting from '../../../Components/Greetings/Greetings';
+import { MdOutlineManageHistory } from 'react-icons/md';
+import { PiEmptyBold } from 'react-icons/pi';
 
 const AdminDashBoard = () => {
     const [pending, setPending] = useState([])
@@ -101,7 +103,7 @@ const AdminDashBoard = () => {
 
             {/* Manage Books */}
 
-            {/* <div className='w-fit mx-auto px-4 mt-4'>
+            <div className='w-fit mx-auto px-4 mt-4 pb-20'>
                 <h1 className='text-2xl text-gray-500 py-6 text-center uppercase'>Manage Books</h1>
                 <div className='grid grid-cols-2 md:grid-cols-4 md:gap-5 gap-2 w-fit mx-auto'>
                     <Link to={'/dashboard/add-book'} className='bg-white hover:shadow-lg hover:scale-90 duration-300 text-sky-400 w-[184px] md:h-32 h-28 md:w-52 rounded-xl flex flex-col items-center gap-2 justify-center border-b-4  border-r-4 shadow-md  border-sky-400'>
@@ -128,32 +130,20 @@ const AdminDashBoard = () => {
                         </p>
                     </Link>
 
-                    <Link to={"/delivered"} className='bg-white hover:shadow-lg hover:scale-90 duration-300 text-green-400 w-[184px] md:h-32 h-28 md:w-52 rounded-xl flex flex-col items-center gap-2 justify-center border-b-4  border-r-4 shadow-md  border-success'>
-                        <div className='flex items-center justify-center gap-3'>
-                            <div className=' bg-green-200  w-8 h-8  p-2 rounded-full flex items-center justify-center'>
-                                <FaBox className='text-green-400' />
-                            </div>
-                            <p className='text-5xl'>{delivered?.length}</p>
-                        </div>
-                        <p className='text-xl font-medium  text-center'>
-                            Delivered
-                        </p>
-                    </Link>
-
-
-                    <Link to={'/canceled'} className='bg-white hover:shadow-lg hover:scale-90 duration-300 text-red-400 w-48 md:h-32 h-28 md:w-52 rounded-xl flex flex-col items-center gap-2 justify-center border-b-4  border-r-4 shadow-md  border-red-400'>
+                    <Link to={"/dashboard/manage-stocks"} className='bg-white hover:shadow-lg hover:scale-90 duration-300 text-yellow-400 w-[184px] md:h-32 h-28 md:w-52 rounded-xl flex flex-col items-center gap-2 justify-center border-b-4  border-r-4 shadow-md  border-red-400'>
                         <div className='flex items-center justify-center gap-3'>
                             <div className=' bg-red-200  w-8 h-8  p-2 rounded-full flex items-center justify-center'>
-                                <FaXmark className='text-red-400' />
+                                <PiEmptyBold className='text-red-400' />
                             </div>
-                            <p className='text-5xl'>{canceled?.length}</p>
+
                         </div>
                         <p className='text-xl font-medium  text-center'>
-                            Canceled
+                            Stock Out Books
                         </p>
                     </Link>
+
                 </div>
-            </div> */}
+            </div>
 
 
         </div>

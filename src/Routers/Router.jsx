@@ -27,64 +27,34 @@ import AdminDashBoard from "../Pages/Dashboard/AdminPage/AdminDashBoard.jsx";
 import NewOrders from "../Pages/Dashboard/NewOrders/NewOrders.jsx";
 import ToShipped from "../Pages/Dashboard/ToShipped/ToShipped.jsx";
 import DelivaredOrders from "../Pages/Dashboard/DeliveredOrders/DelivaredOrders.jsx";
-import TestVerification from "../Pages/TestVerification/TestVerification.jsx";
+import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails.jsx";
+import ShippingLevel from "../Pages/Dashboard/ShippingLevel/ShippingLevel.jsx";
+import ManageStocks from "../Pages/Dashboard/ManageStocks/ManageStocks.jsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Main></Main>,
+        element: <Main />,
         children: [
-            {
-                path: "/login",
-                element: <Login></Login>,
-            },
-            {
-                path: "/register",
-                element: <Register></Register>,
-            },
-
-            {
-                path: "/",
-                element: <Home></Home>,
-            },
+            { path: "/login", element: <Login /> },
+            { path: "/register", element: <Register /> },
+            { path: "/", element: <Home /> },
             {
                 path: "/books/:id",
-                element: <BookDetails></BookDetails>,
-                loader: ({ params }) =>
-                    fetch(
-                        `https://bornomala-boighor-server.vercel.app/books/${params?.id}`
-                    ),
+                element: <BookDetails />,
+                loader: ({ params }) => fetch(`https://bornomala-boighor-server.vercel.app/books/${params?.id}`)
             },
-
-            {
-                path: "/books",
-                element: <Books></Books>,
-            },
-            {
-                path: "/categories/:category",
-                element: <CategoryBooks></CategoryBooks>,
-            },
-            {
-                path: "/categories",
-                element: <Categories></Categories>,
-            },
-            {
-                path: "/publications/:publication",
-                element: <Publication></Publication>,
-            },
-            {
-                path: "/publications",
-                element: <Publications></Publications>,
-            },
-            {
-                path: "/writers/:writer",
-                element: <Writers></Writers>,
-            },
+            { path: "/books", element: <Books /> },
+            { path: "/categories/:category", element: <CategoryBooks /> },
+            { path: "/categories", element: <Categories /> },
+            { path: "/publications/:publication", element: <Publication /> },
+            { path: "/publications", element: <Publications /> },
+            { path: "/writers/:writer", element: <Writers /> },
             {
                 path: "/users/:name",
                 element: (
                     <PrivateRoute>
-                        <Profile></Profile>
+                        <Profile />
                     </PrivateRoute>
                 ),
             },
@@ -92,8 +62,7 @@ const router = createBrowserRouter([
                 path: "/cart",
                 element: (
                     <PrivateRoute>
-                        {" "}
-                        <Cart></Cart>
+                        <Cart />
                     </PrivateRoute>
                 ),
             },
@@ -101,7 +70,7 @@ const router = createBrowserRouter([
                 path: "/order-confirmation",
                 element: (
                     <PrivateRoute>
-                        <OrderConfirmation></OrderConfirmation>
+                        <OrderConfirmation />
                     </PrivateRoute>
                 ),
             },
@@ -109,82 +78,129 @@ const router = createBrowserRouter([
                 path: "/order-history",
                 element: (
                     <PrivateRoute>
-                        <OrderHistory></OrderHistory>
+                        <OrderHistory />
                     </PrivateRoute>
                 ),
             },
-
             {
-                path: `/success-payment/:trans_id`,
-                element: <PrivateRoute><PaymentsSuccess></PaymentsSuccess></PrivateRoute>
+                path: "/success-payment/:trans_id",
+                element: (
+                    <PrivateRoute>
+                        <PaymentsSuccess />
+                    </PrivateRoute>
+                ),
             },
             {
-                path: `/give-review/:bookId`,
-                element: <PrivateRoute>
-                    <GiveAReview></GiveAReview>
-                </PrivateRoute>
+                path: "/give-review/:bookId",
+                element: (
+                    <PrivateRoute>
+                        <GiveAReview />
+                    </PrivateRoute>
+                ),
             },
             {
-                path: `/my-reviews`,
-                element: <PrivateRoute>
-                    <Reviews></Reviews>
-                </PrivateRoute>
+                path: "/my-reviews",
+                element: (
+                    <PrivateRoute>
+                        <Reviews />
+                    </PrivateRoute>
+                ),
             },
-
-
         ],
     },
     {
         path: "/dashboard",
         element: (
             <AdminOnly>
-                <Dashboard></Dashboard>
+                <Dashboard />
             </AdminOnly>
         ),
         children: [
             {
-                path: '/dashboard',
-                element: <AdminOnly>
-                    <AdminDashBoard></AdminDashBoard>
-                </AdminOnly>
+                path: "",
+                element: (
+                    <AdminOnly>
+                        <AdminDashBoard />
+                    </AdminOnly>
+                ),
             },
             {
                 path: "add-book",
-                element: <AdminOnly>
-                    <AddBook></AddBook>
-                </AdminOnly>,
+                element: (
+                    <AdminOnly>
+                        <AddBook />
+                    </AdminOnly>
+                ),
             },
             {
                 path: "manage-books",
-                element: <AdminOnly>
-                    <ManageBook></ManageBook>
-                </AdminOnly>,
+                element: (
+                    <AdminOnly>
+                        <ManageBook />
+                    </AdminOnly>
+                ),
             },
             {
-                path: 'new-orders',
-                element: <AdminOnly>
-                    <NewOrders></NewOrders>
-                </AdminOnly>
+                path: "new-orders",
+                element: (
+                    <AdminOnly>
+                        <NewOrders />
+                    </AdminOnly>
+                ),
             },
             {
                 path: "to-shipped",
-                element: <AdminOnly><ToShipped /></AdminOnly>
+                element: (
+                    <AdminOnly>
+                        <ToShipped />
+                    </AdminOnly>
+                ),
             },
             {
                 path: "delivered",
-                element: <AdminOnly><DelivaredOrders /></AdminOnly>
-            }
+                element: (
+                    <AdminOnly>
+                        <DelivaredOrders />
+                    </AdminOnly>
+                ),
+            },
+            {
+                path: "order-details/:transactionId",
+                element: (
+                    <AdminOnly>
+                        <OrderDetails />
+                    </AdminOnly>
+                ),
+            },
+            {
+                path: "manage-stocks",
+                element: (
+                    <AdminOnly>
+                        <ManageStocks />
+                    </AdminOnly>
+                ),
+            },
+
+
+
         ],
     },
     {
         path: "/invoice/:transactionId",
         element: (
             <PrivateRoute>
-                <Invoice></Invoice>
+                <Invoice />
             </PrivateRoute>
         ),
     },
-
+    {
+        path: "shipping-level/:transactionId",
+        element: (
+            <AdminOnly>
+                <ShippingLevel />
+            </AdminOnly>
+        ),
+    },
 ]);
 
 export default router;

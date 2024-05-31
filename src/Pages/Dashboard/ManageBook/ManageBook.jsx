@@ -3,6 +3,7 @@ import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import EditBook from "../../../Components/CustomLoader/EditBook/EditBook";
+import UseAllBooks from "../../../Hooks/UseAllBooks";
 
 const ManageBook = () => {
     const [axiosSecure] = UseAxiosSecure();
@@ -10,14 +11,7 @@ const ManageBook = () => {
     const [modalID, setModalID] = useState(null);
 
     // get all Books
-    const { data: books = [], refetch: booksRefetch } = useQuery({
-        queryKey: ["books"],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/all-books`);
-            return res.data;
-        },
-    });
-
+    const { books, booksRefetch } = UseAllBooks()
     // Function to handle book deletion
     const handleDeleteBook = async (bookId) => {
         // Show confirmation dialog

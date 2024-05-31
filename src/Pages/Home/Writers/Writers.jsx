@@ -64,7 +64,7 @@ const Writers = () => {
                     <SwiperSlide key={index} className="w-full px-4">
                         <Link
                             to={`/writers/${p.writerName}`}
-                            className="h-44  rounded-md shadow-lg shadow-green-400 mb-16 flex flex-col gap-4 items-center  w-full justify-center "
+                            className="h-44  rounded-md shadow-sm shadow-green-400 mb-16 flex flex-col gap-4 items-center  w-full justify-center "
                         >
                             <div>
                                 <FaUserAlt className="text-7xl w-20 h-20 text-gray-400 p-3 bg-slate-100 rounded-full"></FaUserAlt>
