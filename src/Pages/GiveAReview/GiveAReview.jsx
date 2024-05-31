@@ -41,10 +41,33 @@ const GiveAReview = () => {
         const imageFile = e.target.image.files[0];
 
         if (!imageFile) {
-            toast.error("Please select an image file.");
-            setUploading(false);
-            return;
+            // toast.error("Please select an image file.");
+            // setUploading(false);
+            // return;
+
+            const review = {
+                rating,
+                comment,
+                userEmail: user?.email,
+                userName: user?.displayName,
+                bookId,
+                orderId
+            };
+
+            axiosSecure.post(`/reviews`, review)
+                .then(() => {
+                    setUploading(false);
+                    toast.success('Review submitted successfully!');
+                    setTimeout(() => {
+                        navigate('/order-history');
+                    }, 500);
+                })
+                .catch((error) => {
+                    setUploading(false);
+                    console.error('Error submitting review:', error);
+                });
         }
+
 
         const formData = new FormData();
         formData.append("image", imageFile);
@@ -139,6 +162,7 @@ const GiveAReview = () => {
                     </label>
                     <textarea
                         name='comment'
+                        required
                         className="w-full h-40 md:h-20 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
                     />
                 </div>

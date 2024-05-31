@@ -98,7 +98,11 @@ const OrderHistory = () => {
                                     <p className='text-sm text-gray-400'>Order #{order.transactionId}</p>
                                     <p className='text-sm text-gray-400'>Placed on {formatDate(order.orderCreationDate)}</p>
                                 </div>
-                                <p className='text-green-500 text-sm md:w-64'>Estimated Delivery {order.estimatedDelivery}</p>
+                                {
+                                    order.deliveredIn ?
+                                        <p className='text-sm text-green-500'>Delivered on {formatDate(order?.deliveredIn)}</p> :
+                                        <p className='text-yellow-400 text-sm md:w-64'>Estimated Delivery {order.estimatedDelivery}</p>
+                                }
                             </div>
                             <div className='w-full flex flex-col gap-3 pt-4'>
                                 {order.products.map((product) => (

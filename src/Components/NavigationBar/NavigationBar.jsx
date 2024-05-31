@@ -5,18 +5,18 @@ import { AuthContext } from "../../Providers/AuthProviders";
 import logo from "../../assets/logo.png";
 
 import UseCart from "../../Hooks/UseCart";
-import UseBooks from "../../Hooks/UseBooks";
 import UseAdmin from "../../Hooks/UseAdmin";
 
 import { FaBox, FaGrinStars, FaSignOutAlt, FaSmileBeam } from "react-icons/fa";
 import { MdDashboardCustomize } from "react-icons/md";
 import CustomLoader from "../CustomLoader/CustomLoader";
 import Swal from "sweetalert2";
+import UseAllBooks from "../../Hooks/UseAllBooks";
 
 const NavigationBar = () => {
   const { user, loading, logout } = useContext(AuthContext);
   const [searchTerm, setSearchTerm] = useState("");
-  const { books } = UseBooks();
+  const { books } = UseAllBooks();
   const { cart, cartRefetch } = UseCart(user?.email);
   const { admin, usersRefetch } = UseAdmin();
   const navigate = useNavigate();

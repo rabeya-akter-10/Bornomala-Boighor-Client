@@ -29,9 +29,10 @@ const ToShipped = () => {
         return sortedOrders;
     };
 
-    const handlePacked = (id) => {
+    const handleDelivared = (id) => {
         const update = {
-            orderStatus: "Delivered"
+            orderStatus: "Delivered",
+            deliveredIn: new Date()
         }
 
         Swal.fire({
@@ -43,7 +44,7 @@ const ToShipped = () => {
             confirmButtonText: "Yes"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`/orders/status/${id}`, update).then((response) => {
+                axiosSecure.patch(`orders/setDelivered/${id}`, update).then((response) => {
                     if (response.data.acknowledged) {
                         ordersRefetch();
                         Swal.fire({
@@ -86,24 +87,26 @@ const ToShipped = () => {
                                 <p className='text-gray-400'>Price: <span className='text-green-500 font-semibold text-sm'> {order?.totalPrice}tk</span></p>
 
                                 <button onClick={() => {
-                                    handlePacked(order?._id)
+                                    handleDelivared(order?._id)
                                 }} className='bg-yellow-400 px-2 py-1 rounded-md text-white uppercase font-medium hover:bg-yellow-600 flex items-center gap-1'>Shipped <FaTruck className='text-lg' /> </button>
 
                             </div>
                         </div>
-                        {
-                            order?.products?.map((p, index) => <ul key={index} className='list-disc'>
-                                <li className='flex justify-between items-center font-medium border-b'>
-                                    <p className=''>{index + 1}. {p.bookName}</p>  <p className=''>{p?.itemCount}pcs</p>
-                                </li>
-                            </ul>)
-                        }
+                        <div className='h-16 overflow-y-auto'>
+                            {
+                                order?.products?.map((p, index) => <ul key={index} className='list-disc'>
+                                    <li className='flex justify-between items-center font-medium border-b'>
+                                        <p className=''>{index + 1}. {p.bookName}</p>  <p className=''>{p?.itemCount}pcs</p>
+                                    </li>
+                                </ul>)
+                            }
+                        </div>
                         <div className='bg-white'>
                             <div className='absolute right-4 bottom-4 flex'>
                                 <Link to={`/dashbard/orders/${order._id}`} className='bg-blue-400 px-2 py-1 rounded-md text-white uppercase font-medium hover:bg-blue-600 flex items-center gap-1 text-md'>Details <RiNewspaperLine /> </Link>
                             </div>
                             <div className='absolute left-4 bottom-4 flex'>
-                                <p className='w-5/6'>{order.estimatedDelivery}</p>
+                                <p className='w-5/6 bg-white'>{order.estimatedDelivery}</p>
                             </div>
                         </div>
 

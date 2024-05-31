@@ -1,11 +1,11 @@
 import React from "react";
-import UseBooks from "../../Hooks/UseBooks";
 import { useParams } from "react-router-dom";
 import Bookcard from "../../Components/BookCard/Bookcard";
+import UseAllBooks from "../../Hooks/UseAllBooks";
 
 const CategoryBooks = () => {
     const { category } = useParams();
-    const { books } = UseBooks();
+    const { books } = UseAllBooks();
     const filteredBooks = books.filter((book) => book.category == category);
     // Scroll to top
     window.scrollTo({

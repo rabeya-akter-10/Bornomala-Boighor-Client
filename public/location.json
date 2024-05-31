@@ -1,127 +1,673 @@
 {
     "divisions": [
         {
-            "label": "Dhaka",
-            "districts": [
-                {
-                    "label": "Dhaka",
-                    "upazilas": []
-                },
-                {
-                    "label": "Faridpur",
-                    "upazilas": []
-                },
-                {
-                    "label": "Gazipur",
-                    "upazilas": []
-                },
-                {
-                    "label": "Gopalganj",
-                    "upazilas": []
-                },
-                {
-                    "label": "Jamalpur",
-                    "upazilas": []
-                },
-                {
-                    "label": "Kishoreganj",
-                    "upazilas": []
-                },
-                {
-                    "label": "Madaripur",
-                    "upazilas": []
-                },
-                {
-                    "label": "Manikganj",
-                    "upazilas": []
-                },
-                {
-                    "label": "Munshiganj",
-                    "upazilas": []
-                },
-                {
-                    "label": "Mymensingh",
-                    "upazilas": []
-                },
-                {
-                    "label": "Narayanganj",
-                    "upazilas": []
-                },
-                {
-                    "label": "Narsingdi",
-                    "upazilas": []
-                },
-                {
-                    "label": "Netrokona",
-                    "upazilas": []
-                },
-                {
-                    "label": "Rajbari",
-                    "upazilas": []
-                },
-                {
-                    "label": "Shariatpur",
-                    "upazilas": []
-                },
-                {
-                    "label": "Sherpur",
-                    "upazilas": []
-                },
-                {
-                    "label": "Tangail",
-                    "upazilas": []
-                }
-            ]
-        },
-        {
             "label": "Chittagong",
             "districts": [
                 {
                     "label": "Chittagong",
                     "upazilas": [
-                        "Chittagong",
-                        "Comilla",
-                        "Feni",
-                        "Noakhali"
+                        {
+                            "name": "Chittagong",
+                            "police_stations": ["Double Mooring", "Kotwali", "Panchlaish"]
+                        },
+                        {
+                            "name": "Comilla",
+                            "police_stations": ["Daudkandi", "Kotwali", "Muradnagar"]
+                        },
+                        {
+                            "name": "Feni",
+                            "police_stations": ["Feni Sadar"]
+                        },
+                        {
+                            "name": "Noakhali",
+                            "police_stations": ["Noakhali Sadar"]
+                        }
                     ]
                 },
                 {
                     "label": "Cox's Bazar",
                     "upazilas": [
-                        "Cox's Bazar",
-                        "Bandarban",
-                        "Khagrachari",
-                        "Rangamati"
+                        {
+                            "name": "Bandarban",
+                            "police_stations": ["Bandarban Sadar"]
+                        },
+                        {
+                            "name": "Cox's Bazar",
+                            "police_stations": ["Cox's Bazar Sadar"]
+                        },
+                        {
+                            "name": "Khagrachari",
+                            "police_stations": ["Khagrachari Sadar"]
+                        },
+                        {
+                            "name": "Rangamati",
+                            "police_stations": ["Rangamati Sadar"]
+                        }
                     ]
                 },
                 {
                     "label": "Feni",
                     "upazilas": [
-                        "Feni"
+                        {
+                            "name": "Feni",
+                            "police_stations": ["Feni Sadar"]
+                        }
                     ]
                 },
                 {
                     "label": "Khagrachari",
                     "upazilas": [
-                        "Khagrachari"
+                        {
+                            "name": "Khagrachari",
+                            "police_stations": ["Khagrachari Sadar"]
+                        }
                     ]
                 },
                 {
                     "label": "Lakshmipur",
                     "upazilas": [
-                        "Lakshmipur"
+                        {
+                            "name": "Lakshmipur",
+                            "police_stations": ["Lakshmipur Sadar"]
+                        }
                     ]
                 },
                 {
                     "label": "Noakhali",
                     "upazilas": [
-                        "Noakhali"
+                        {
+                            "name": "Noakhali",
+                            "police_stations": ["Noakhali Sadar"]
+                        }
                     ]
                 },
                 {
                     "label": "Rangamati",
                     "upazilas": [
-                        "Rangamati"
+                        {
+                            "name": "Rangamati",
+                            "police_stations": ["Rangamati Sadar"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Dhaka",
+            "districts": [
+                {
+                    "label": "Dhaka",
+                    "upazilas": [
+                        {
+                            "name": "Dhamrai",
+                            "police_stations": ["Dhamrai","Kamalnagar","Nabinagar"]
+                        },
+                       
+                        {
+                            "name": "Keraniganj",
+                            "police_stations": ["Keraniganj","Hasnabad","Kalatia","Daudkandi","Basta","Ruhitpur"]
+                        },
+                        {
+                            "name": "Lalbagh",
+                            "police_stations": ["Lalbagh"]
+                        },
+                       
+                        {
+                            "name": "Savar",
+                            "police_stations": ["Savar","Ashulia","Amin Bazar","DEPZ (Dhaka Export Processing Zone)"]
+                        },
+                        {
+                            "name": "Nawabganj",
+                            "police_stations": ["Nawabganj","Sreepur","Tongi"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Faridpur",
+                    "upazilas": [
+                        {
+                            "name": "Alfadanga",
+                            "police_stations": ["Alfadanga"]
+                        },
+                        {
+                            "name": "Bhanga",
+                            "police_stations": ["Bhanga"]
+                        },
+                        {
+                            "name": "Boalmari",
+                            "police_stations": ["Boalmari"]
+                        },
+                        {
+                            "name": "Charbhadrasan",
+                            "police_stations": ["Charbhadrasan"]
+                        },
+                        {
+                            "name": "Faridpur Sadar",
+                            "police_stations": ["Faridpur"]
+                        },
+                        {
+                            "name": "Madhukhali",
+                            "police_stations": ["Madhukhali"]
+                        },
+                        {
+                            "name": "Nagarkanda",
+                            "police_stations": ["Nagarkanda"]
+                        },
+                        {
+                            "name": "Sadarpur",
+                            "police_stations": ["Sadarpur"]
+                        },
+                        {
+                            "name": "Saltha",
+                            "police_stations": ["Saltha"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Gazipur",
+                    "upazilas": [
+                        {
+                            "name": "Gazipur Sadar",
+                            "police_stations": ["Joydebpur"]
+                        },
+                        {
+                            "name": "Kaliakair",
+                            "police_stations": ["Kaliakair"]
+                        },
+                        {
+                            "name": "Kaliganj",
+                            "police_stations": ["Kaliganj"]
+                        },
+                        {
+                            "name": "Kapasia",
+                            "police_stations": ["Kapasia"]
+                        },
+                        {
+                            "name": "Sreepur",
+                            "police_stations": ["Sreepur"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Gopalganj",
+                    "upazilas": [
+                        {
+                            "name": "Gopalganj Sadar",
+                            "police_stations": ["Gopalganj"]
+                        },
+                        {
+                            "name": "Kashiani",
+                            "police_stations": ["Kashiani"]
+                        },
+                        {
+                            "name": "Kotalipara",
+                            "police_stations": ["Kotalipara"]
+                        },
+                        {
+                            "name": "Muksudpur",
+                            "police_stations": ["Muksudpur"]
+                        },
+                        {
+                            "name": "Tungipara",
+                            "police_stations": ["Tungipara"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Jamalpur",
+                    "upazilas": [
+                        {
+                            "name": "Baksiganj",
+                            "police_stations": ["Baksiganj"]
+                        },
+                        {
+                            "name": "Dewanganj",
+                            "police_stations": ["Dewanganj"]
+                        },
+                        {
+                            "name": "Islampur",
+                            "police_stations": ["Islampur"]
+                        },
+                        {
+                            "name": "Jamalpur Sadar",
+                            "police_stations": ["Jamalpur"]
+                        },
+                        {
+                            "name": "Madarganj",
+                            "police_stations": ["Madarganj"]
+                        },
+                        {
+                            "name": "Melandaha",
+                            "police_stations": ["Melandaha"]
+                        },
+                        {
+                            "name": "Sarishabari",
+                            "police_stations": ["Sarishabari"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Kishoreganj",
+                    "upazilas": [
+                        {
+                            "name": "Austagram",
+                            "police_stations": ["Austagram"]
+                        },
+                        {
+                            "name": "Bajitpur",
+                            "police_stations": ["Bajitpur"]
+                        },
+                        {
+                            "name": "Bhairab",
+                            "police_stations": ["Bhairab"]
+                        },
+                        {
+                            "name": "Hossainpur",
+                            "police_stations": ["Hossainpur"]
+                        },
+                        {
+                            "name": "Itna",
+                            "police_stations": ["Itna"]
+                        },
+                        {
+                            "name": "Karimganj",
+                            "police_stations": ["Karimganj"]
+                        },
+                        {
+                            "name": "Katiadi",
+                            "police_stations": ["Katiadi"]
+                        },
+                        {
+                            "name": "Kishoreganj Sadar",
+                            "police_stations": ["Kishoreganj"]
+                        },
+                        {
+                            "name": "Kuliarchar",
+                            "police_stations": ["Kuliarchar"]
+                        },
+                        {
+                            "name": "Mithamain",
+                            "police_stations": ["Mithamain"]
+                        },
+                        {
+                            "name": "Nikli",
+                            "police_stations": ["Nikli"]
+                        },
+                        {
+                            "name": "Pakundia",
+                            "police_stations": ["Pakundia"]
+                        },
+                        {
+                            "name": "Tarail",
+                            "police_stations": ["Tarail"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Madaripur",
+                    "upazilas": [
+                        {
+                            "name": "Kalkini",
+                            "police_stations": ["Kalkini"]
+                        },
+                        {
+                            "name": "Madaripur Sadar",
+                            "police_stations": ["Madaripur"]
+                        },
+                        {
+                            "name": "Rajoir",
+                            "police_stations": ["Rajoir"]
+                        },
+                        {
+                            "name": "Shibchar",
+                            "police_stations": ["Shibchar"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Manikganj",
+                    "upazilas": [
+                        {
+                            "name": "Daulatpur",
+                            "police_stations": ["Daulatpur"]
+                        },
+                        {
+                            "name": "Ghior",
+                            "police_stations": ["Ghior"]
+                        },
+                        {
+                            "name": "Harirampur",
+                            "police_stations": ["Harirampur"]
+                        },
+                        {
+                            "name": "Manikganj Sadar",
+                            "police_stations": ["Manikganj"]
+                        },
+                        {
+                            "name": "Saturia",
+                            "police_stations": ["Saturia"]
+                        },
+                        {
+                            "name": "Shivalaya",
+                            "police_stations": ["Shivalaya"]
+                        },
+                        {
+                            "name": "Singair",
+                            "police_stations": ["Singair"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Munshiganj",
+                    "upazilas": [
+                        {
+                            "name": "Gazaria",
+                            "police_stations": ["Gazaria"]
+                        },
+                        {
+                            "name": "Lohajang",
+                            "police_stations": ["Lohajang"]
+                        },
+                        {
+                            "name": "Munshiganj Sadar",
+                            "police_stations": ["Munshiganj"]
+                        },
+                        {
+                            "name": "Sirajdikhan",
+                            "police_stations": ["Sirajdikhan"]
+                        },
+                        {
+                            "name": "Sreenagar",
+                            "police_stations": ["Sreenagar"]
+                        },
+                        {
+                            "name": "Tongibari",
+                            "police_stations": ["Tongibari"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Mymensingh",
+                    "upazilas": [
+                        {
+                            "name": "Bhaluka",
+                            "police_stations": ["Bhaluka"]
+                        },
+                        {
+                            "name": "Dhobaura",
+                            "police_stations": ["Dhobaura"]
+                        },
+                        {
+                            "name": "Fulbaria",
+                            "police_stations": ["Fulbaria"]
+                        },
+                        {
+                            "name": "Gafargaon",
+                            "police_stations": ["Gafargaon"]
+                        },
+                        {
+                            "name": "Gauripur",
+                            "police_stations": ["Gauripur"]
+                        },
+                        {
+                            "name": "Haluaghat",
+                            "police_stations": ["Haluaghat"]
+                        },
+                        {
+                            "name": "Ishwarganj",
+                            "police_stations": ["Ishwarganj"]
+                        },
+                        {
+                            "name": "Mymensingh Sadar",
+                            "police_stations": ["Kotwali"]
+                        },
+                        {
+                            "name": "Muktagachha",
+                            "police_stations": ["Muktagachha"]
+                        },
+                        {
+                            "name": "Nandail",
+                            "police_stations": ["Nandail"]
+                        },
+                        {
+                            "name": "Phulpur",
+                            "police_stations": ["Phulpur"]
+                        },
+                        {
+                            "name": "Trishal",
+                            "police_stations": ["Trishal"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Narayanganj",
+                    "upazilas": [
+                        {
+                            "name": "Araihazar",
+                            "police_stations": ["Araihazar"]
+                        },
+                        {
+                            "name": "Bandar",
+                            "police_stations": ["Bandar"]
+                        },
+                        {
+                            "name": "Narayanganj Sadar",
+                            "police_stations": ["Fatulla"]
+                        },
+                        {
+                            "name": "Rupganj",
+                            "police_stations": ["Rupganj"]
+                        },
+                        {
+                            "name": "Sonargaon",
+                            "police_stations": ["Sonargaon"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Narsingdi",
+                    "upazilas": [
+                        {
+                            "name": "Belabo",
+                            "police_stations": ["Belabo"]
+                        },
+                        {
+                            "name": "Monohardi",
+                            "police_stations": ["Monohardi"]
+                        },
+                        {
+                            "name": "Narsingdi Sadar",
+                            "police_stations": ["Narsingdi"]
+                        },
+                        {
+                            "name": "Palash",
+                            "police_stations": ["Palash"]
+                        },
+                        {
+                            "name": "Raipura",
+                            "police_stations": ["Raipura"]
+                        },
+                        {
+                            "name": "Shibpur",
+                            "police_stations": ["Shibpur"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Netrokona",
+                    "upazilas": [
+                        {
+                            "name": "Atpara",
+                            "police_stations": ["Atpara"]
+                        },
+                        {
+                            "name": "Barhatta",
+                            "police_stations": ["Barhatta"]
+                        },
+                        {
+                            "name": "Durgapur",
+                            "police_stations": ["Durgapur"]
+                        },
+                        {
+                            "name": "Kalmakanda",
+                            "police_stations": ["Kalmakanda"]
+                        },
+                        {
+                            "name": "Kendua",
+                            "police_stations": ["Kendua"]
+                        },
+                        {
+                            "name": "Khaliajuri",
+                            "police_stations": ["Khaliajuri"]
+                        },
+                        {
+                            "name": "Madan",
+                            "police_stations": ["Madan"]
+                        },
+                        {
+                            "name": "Mohanganj",
+                            "police_stations": ["Mohanganj"]
+                        },
+                        {
+                            "name": "Netrokona Sadar",
+                            "police_stations": ["Netrokona"]
+                        },
+                        {
+                            "name": "Purbadhala",
+                            "police_stations": ["Purbadhala"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Rajbari",
+                    "upazilas": [
+                        {
+                            "name": "Baliakandi",
+                            "police_stations": ["Baliakandi"]
+                        },
+                        {
+                            "name": "Goalanda",
+                            "police_stations": ["Goalanda"]
+                        },
+                        {
+                            "name": "Kalukhali",
+                            "police_stations": ["Kalukhali"]
+                        },
+                        {
+                            "name": "Pangsha",
+                            "police_stations": ["Pangsha"]
+                        },
+                        {
+                            "name": "Rajbari Sadar",
+                            "police_stations": ["Rajbari"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Shariatpur",
+                    "upazilas": [
+                        {
+                            "name": "Bhedarganj",
+                            "police_stations": ["Bhedarganj"]
+                        },
+                        {
+                            "name": "Damudya",
+                            "police_stations": ["Damudya"]
+                        },
+                        {
+                            "name": "Gosairhat",
+                            "police_stations": ["Gosairhat"]
+                        },
+                        {
+                            "name": "Naria",
+                            "police_stations": ["Naria"]
+                        },
+                        {
+                            "name": "Shariatpur Sadar",
+                            "police_stations": ["Palong"]
+                        },
+                        {
+                            "name": "Zajira",
+                            "police_stations": ["Zajira"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Sherpur",
+                    "upazilas": [
+                        {
+                            "name": "Jhenaigati",
+                            "police_stations": ["Jhenaigati"]
+                        },
+                        {
+                            "name": "Nakla",
+                            "police_stations": ["Nakla"]
+                        },
+                        {
+                            "name": "Nalitabari",
+                            "police_stations": ["Nalitabari"]
+                        },
+                        {
+                            "name": "Sherpur Sadar",
+                            "police_stations": ["Sherpur"]
+                        },
+                        {
+                            "name": "Sreebardi",
+                            "police_stations": ["Sreebardi"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Tangail",
+                    "upazilas": [
+                        {
+                            "name": "Basail",
+                            "police_stations": ["Basail"]
+                        },
+                        {
+                            "name": "Bhuapur",
+                            "police_stations": ["Bhuapur"]
+                        },
+                        {
+                            "name": "Delduar",
+                            "police_stations": ["Delduar"]
+                        },
+                        {
+                            "name": "Dhanbari",
+                            "police_stations": ["Dhanbari"]
+                        },
+                        {
+                            "name": "Ghatail",
+                            "police_stations": ["Ghatail"]
+                        },
+                        {
+                            "name": "Gopalpur",
+                            "police_stations": ["Gopalpur"]
+                        },
+                        {
+                            "name": "Kalihati",
+                            "police_stations": ["Kalihati"]
+                        },
+                        {
+                            "name": "Madhupur",
+                            "police_stations": ["Madhupur"]
+                        },
+                        {
+                            "name": "Mirzapur",
+                            "police_stations": ["Mirzapur"]
+                        },
+                        {
+                            "name": "Nagarpur",
+                            "police_stations": ["Nagarpur"]
+                        },
+                        {
+                            "name": "Sakhipur",
+                            "police_stations": ["Sakhipur"]
+                        },
+                        {
+                            "name": "Tangail Sadar",
+                            "police_stations": ["Tangail"]
+                        }
                     ]
                 }
             ]
@@ -130,69 +676,303 @@
             "label": "Rajshahi",
             "districts": [
                 {
-                    "label": "Rajshahi",
+                    "label": "Bogra",
                     "upazilas": [
-                        "Rajshahi",
-                        "Bogra",
-                        "Pabna",
-                        "Sirajganj"
-                    ]
-                },
-                {
-                    "label": "Natore",
-                    "upazilas": [
-                        "Natore",
-                        "Naogaon",
-                        "Joypurhat",
-                        "Chapainawabganj"
+                        {
+                            "name": "Adamdighi",
+                            "police_stations": ["Adamdighi"]
+                        },
+                        {
+                            "name": "Bogra Sadar",
+                            "police_stations": ["Bogra"]
+                        },
+                        {
+                            "name": "Dhupchanchia",
+                            "police_stations": ["Dhupchanchia"]
+                        },
+                        {
+                            "name": "Gabtali",
+                            "police_stations": ["Gabtali"]
+                        },
+                        {
+                            "name": "Kahaloo",
+                            "police_stations": ["Kahaloo"]
+                        },
+                        {
+                            "name": "Nandigram",
+                            "police_stations": ["Nandigram"]
+                        },
+                        {
+                            "name": "Sariakandi",
+                            "police_stations": ["Sariakandi"]
+                        },
+                        {
+                            "name": "Sherpur",
+                            "police_stations": ["Sherpur"]
+                        },
+                        {
+                            "name": "Shibganj",
+                            "police_stations": ["Shibganj"]
+                        },
+                        {
+                            "name": "Sonatala",
+                            "police_stations": ["Sonatala"]
+                        }
                     ]
                 },
                 {
                     "label": "Chapainawabganj",
                     "upazilas": [
-                        "Chapainawabganj",
-                        "Nachole",
-                        "Bholahat"
+                        {
+                            "name": "Bholahat",
+                            "police_stations": ["Bholahat"]
+                        },
+                        {
+                            "name": "Gomastapur",
+                            "police_stations": ["Gomastapur"]
+                        },
+                        {
+                            "name": "Nachole",
+                            "police_stations": ["Nachole"]
+                        },
+                        {
+                            "name": "Nawabganj Sadar",
+                            "police_stations": ["Nawabganj"]
+                        },
+                        {
+                            "name": "Shibganj",
+                            "police_stations": ["Shibganj"]
+                        }
                     ]
                 },
                 {
                     "label": "Joypurhat",
                     "upazilas": [
-                        "Joypurhat",
-                        "Kalai",
-                        "Khetlal"
+                        {
+                            "name": "Akkelpur",
+                            "police_stations": ["Akkelpur"]
+                        },
+                        {
+                            "name": "Joypurhat Sadar",
+                            "police_stations": ["Joypurhat"]
+                        },
+                        {
+                            "name": "Kalai",
+                            "police_stations": ["Kalai"]
+                        },
+                        {
+                            "name": "Khetlal",
+                            "police_stations": ["Khetlal"]
+                        },
+                        {
+                            "name": "Panchbibi",
+                            "police_stations": ["Panchbibi"]
+                        }
                     ]
                 },
                 {
                     "label": "Naogaon",
                     "upazilas": [
-                        "Naogaon",
-                        "Atrai",
-                        "Badalgachhi"
+                        {
+                            "name": "Atrai",
+                            "police_stations": ["Atrai"]
+                        },
+                        {
+                            "name": "Badalgachhi",
+                            "police_stations": ["Badalgachhi"]
+                        },
+                        {
+                            "name": "Dhamoirhat",
+                            "police_stations": ["Dhamoirhat"]
+                        },
+                        {
+                            "name": "Mahadebpur",
+                            "police_stations": ["Mahadebpur"]
+                        },
+                        {
+                            "name": "Manda",
+                            "police_stations": ["Manda"]
+                        },
+                        {
+                            "name": "Naogaon Sadar",
+                            "police_stations": ["Naogaon"]
+                        },
+                        {
+                            "name": "Niamatpur",
+                            "police_stations": ["Niamatpur"]
+                        },
+                        {
+                            "name": "Patnitala",
+                            "police_stations": ["Patnitala"]
+                        },
+                        {
+                            "name": "Porsha",
+                            "police_stations": ["Porsha"]
+                        },
+                        {
+                            "name": "Raninagar",
+                            "police_stations": ["Raninagar"]
+                        },
+                        {
+                            "name": "Sapahar",
+                            "police_stations": ["Sapahar"]
+                        }
                     ]
                 },
                 {
-                    "label": "Bogra",
+                    "label": "Natore",
                     "upazilas": [
-                        "Bogra",
-                        "Adamdighi",
-                        "Sherpur"
+                        {
+                            "name": "Bagatipara",
+                            "police_stations": ["Bagatipara"]
+                        },
+                        {
+                            "name": "Baraigram",
+                            "police_stations": ["Baraigram"]
+                        },
+                        {
+                            "name": "Gurudaspur",
+                            "police_stations": ["Gurudaspur"]
+                        },
+                        {
+                            "name": "Lalpur",
+                            "police_stations": ["Lalpur"]
+                        },
+                        {
+                            "name": "Natore Sadar",
+                            "police_stations": ["Natore"]
+                        },
+                        {
+                            "name": "Singra",
+                            "police_stations": ["Singra"]
+                        }
                     ]
                 },
                 {
                     "label": "Pabna",
                     "upazilas": [
-                        "Pabna",
-                        "Ishwardi",
-                        "Chatmohar"
+                        {
+                            "name": "Atgharia",
+                            "police_stations": ["Atgharia"]
+                        },
+                        {
+                            "name": "Bera",
+                            "police_stations": ["Bera"]
+                        },
+                        {
+                            "name": "Bhangura",
+                            "police_stations": ["Bhangura"]
+                        },
+                        {
+                            "name": "Chatmohar",
+                            "police_stations": ["Chatmohar"]
+                        },
+                        {
+                            "name": "Faridpur",
+                            "police_stations": ["Faridpur"]
+                        },
+                        {
+                            "name": "Ishwardi",
+                            "police_stations": ["Ishwardi"]
+                        },
+                        {
+                            "name": "Pabna Sadar",
+                            "police_stations": ["Pabna"]
+                        },
+                        {
+                            "name": "Santhia",
+                            "police_stations": ["Santhia"]
+                        },
+                        {
+                            "name": "Sujanagar",
+                            "police_stations": ["Sujanagar"]
+                        }
+                    ]
+                },
+                {
+                    "label": "Rajshahi",
+                    "upazilas": [
+                        {
+                            "name": "Bagha",
+                            "police_stations": ["Bagha"]
+                        },
+                        {
+                            "name": "Bagmara",
+                            "police_stations": ["Bagmara"]
+                        },
+                        {
+                            "name": "Charghat",
+                            "police_stations": ["Charghat"]
+                        },
+                        {
+                            "name": "Durgapur",
+                            "police_stations": ["Durgapur"]
+                        },
+                        {
+                            "name": "Godagari",
+                            "police_stations": ["Godagari"]
+                        },
+                        {
+                            "name": "Mohanpur",
+                            "police_stations": ["Mohanpur"]
+                        },
+                        {
+                            "name": "Paba",
+                            "police_stations": ["Paba"]
+                        },
+                        {
+                            "name": "Puthia",
+                            "police_stations": ["Puthia"]
+                        },
+                        {
+                            "name": "Rajshahi Sadar",
+                            "police_stations": ["Rajshahi"]
+                        },
+                        {
+                            "name": "Tanore",
+                            "police_stations": ["Tanore"]
+                        }
                     ]
                 },
                 {
                     "label": "Sirajganj",
                     "upazilas": [
-                        "Sirajganj",
-                        "Belkuchi",
-                        "Shahjadpur"
+                        {
+                            "name": "Belkuchi",
+                            "police_stations": ["Belkuchi"]
+                        },
+                        {
+                            "name": "Chauhali",
+                            "police_stations": ["Chauhali"]
+                        },
+                        {
+                            "name": "Kamarkhanda",
+                            "police_stations": ["Kamarkhanda"]
+                        },
+                        {
+                            "name": "Kazipur",
+                            "police_stations": ["Kazipur"]
+                        },
+                        {
+                            "name": "Raiganj",
+                            "police_stations": ["Raiganj"]
+                        },
+                        {
+                            "name": "Shahjadpur",
+                            "police_stations": ["Shahjadpur"]
+                        },
+                        {
+                            "name": "Sirajganj Sadar",
+                            "police_stations": ["Sirajganj"]
+                        },
+                        {
+                            "name": "Tarash",
+                            "police_stations": ["Tarash"]
+                        },
+                        {
+                            "name": "Ullahpara",
+                            "police_stations": ["Ullahpara"]
+                        }
                     ]
                 }
             ]

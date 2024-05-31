@@ -4,7 +4,7 @@ import useAuth from '../../Hooks/UseAuth';
 import { useQuery } from '@tanstack/react-query';
 import './Reviews.css';
 import { Rating } from '@smastrom/react-rating';
-import '@smastrom/react-rating/style.css'; // Ensure you import the default styles
+import '@smastrom/react-rating/style.css';
 
 const Reviews = () => {
     const { user } = useAuth();

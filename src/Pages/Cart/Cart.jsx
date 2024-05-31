@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../../Hooks/UseAuth";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import UseCart from "../../Hooks/UseCart";
-import UseBooks from "../../Hooks/UseBooks";
 import CustomLoader from "../../Components/CustomLoader/CustomLoader";
 import { FaTrashAlt } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
+import UseAllBooks from "../../Hooks/UseAllBooks";
 
 const Cart = () => {
     const { user } = useAuth();
@@ -16,7 +16,7 @@ const Cart = () => {
     const [selectedItems, setSelectedItems] = useState({});
     const [sortBy, setSortBy] = useState('');
     const { cart, cartRefetch } = UseCart(user?.email);
-    const { books } = UseBooks();
+    const { books } = UseAllBooks();
 
     useEffect(() => {
         if (cart.length > 0 && books.length > 0) {
@@ -83,6 +83,13 @@ const Cart = () => {
     };
 
     const handleCheckboxChange = (event, itemId) => {
+        const selectedCount = Object.values(selectedItems).filter(value => value).length;
+
+        if (event.target.checked && selectedCount >= 3) {
+            toast.error("You can only select up to 3 items.");
+            return;
+        }
+
         setSelectedItems(prevSelectedItems => ({
             ...prevSelectedItems,
             [itemId]: event.target.checked
@@ -166,7 +173,6 @@ const Cart = () => {
                                             <th>Name</th>
                                             <th>Price <br /> Qty
                                             </th>
-                                            {/* <th>Item Count</th> */}
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -177,7 +183,7 @@ const Cart = () => {
                                                     {item?.quantity > 0 ? (
                                                         <input
                                                             type="checkbox"
-                                                            checked={selectedItems[item._id]}
+                                                            checked={selectedItems[item._id] || false}
                                                             onChange={(event) => handleCheckboxChange(event, item._id)}
                                                         />
                                                     ) : (

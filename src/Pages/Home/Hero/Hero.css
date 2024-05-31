@@ -24,7 +24,7 @@ body {
 .scene {
     width: 260px;
     height: 200px;
-    perspective: 1000px;
+    perspective: 700px;
     position: relative;
 }
 .scene .carousel.keen-slider {
@@ -36,9 +36,9 @@ body {
     transform-style: preserve-3d;
 }
 .carousel__cell {
-    position: absolute;
-    width: 220px;
+    position: absolute; 
+    width: 216px;
     left: 10px;
-    height: 190px;
+    height: 310px;
     border: 1px solid rgba(0, 0, 0, 0.3);
 }

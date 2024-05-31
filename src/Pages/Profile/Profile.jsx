@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../Hooks/UseAuth";
-
 import locationsData from "../../../public/location.json";
 import toast, { Toaster } from "react-hot-toast";
-import Swal from "sweetalert2";
+import useAuth from "../../Hooks/UseAuth";
 
 const Profile = () => {
     const [axiosSecure] = UseAxiosSecure();
     const [selectedDivision, setSelectedDivision] = useState("");
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const [selectedUpazila, setSelectedUpazila] = useState("");
+    const [selectedPoliceStation, setSelectedPoliceStation] = useState("");
     const { user } = useAuth();
     const [thisUser, setThisUser] = useState(null);
 
@@ -30,25 +27,27 @@ const Profile = () => {
         }
     }, [user, axiosSecure]);
 
-    useEffect(() => {
-        if (thisUser) {
-        }
-    }, [thisUser]);
-
     const handleDivisionChange = (e) => {
         const division = e.target.value;
         setSelectedDivision(division);
         setSelectedDistrict(""); // Reset district when changing division
         setSelectedUpazila(""); // Reset upazila when changing division
+        setSelectedPoliceStation(""); // Reset police station when changing division
     };
 
     const handleDistrictChange = (e) => {
         setSelectedDistrict(e.target.value);
         setSelectedUpazila(""); // Reset upazila when changing district
+        setSelectedPoliceStation(""); // Reset police station when changing district
     };
 
     const handleUpazilaChange = (e) => {
         setSelectedUpazila(e.target.value);
+        setSelectedPoliceStation(""); // Reset police station when changing upazila
+    };
+
+    const handlePoliceStationChange = (e) => {
+        setSelectedPoliceStation(e.target.value);
     };
 
     const handleSubmit = (e) => {
@@ -65,11 +64,11 @@ const Profile = () => {
                 division: selectedDivision,
                 district: selectedDistrict,
                 upazila: selectedUpazila,
+                policeStation: selectedPoliceStation,
                 street,
                 postCode
             },
         };
-
 
         axiosSecure.put(`/users/${user?.email}`, usersInfo)
             .then((response) => {
@@ -84,8 +83,6 @@ const Profile = () => {
             .catch((error) => {
                 toast.error("An error occurred while updating the user's information.");
             });
-
-
     };
 
     useEffect(() => {
@@ -122,7 +119,7 @@ const Profile = () => {
                     </p>
                     <p>
                         <span className="text-gray-400">Address:</span>{" "}
-                        {thisUser?.address?.district}
+                        {thisUser?.address?.upazila}
                     </p>
                     <p>
                         <span className="text-gray-400">Street/postCode:</span>{" "}
@@ -239,10 +236,49 @@ const Profile = () => {
                                             )
                                             ?.upazilas.map((upazila) => (
                                                 <option
-                                                    key={upazila}
-                                                    value={upazila}
+                                                    key={upazila.name}
+                                                    value={upazila.name}
                                                 >
-                                                    {upazila}
+                                                    {upazila.name}
+                                                </option>
+                                            ))}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-600">
+                                    Police Station:
+                                </label>
+                                <select
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                                    value={selectedPoliceStation}
+                                    onChange={handlePoliceStationChange}
+                                    required
+                                    disabled={!selectedUpazila}
+                                >
+                                    <option value="">Select Police Station</option>
+                                    {selectedUpazila &&
+                                        locationsData.divisions
+                                            .find(
+                                                (division) =>
+                                                    division.label ===
+                                                    selectedDivision
+                                            )
+                                            ?.districts.find(
+                                                (district) =>
+                                                    district.label ===
+                                                    selectedDistrict
+                                            )
+                                            ?.upazilas.find(
+                                                (upazila) =>
+                                                    upazila.name ===
+                                                    selectedUpazila
+                                            )
+                                            ?.police_stations.map((policeStation) => (
+                                                <option
+                                                    key={policeStation}
+                                                    value={policeStation}
+                                                >
+                                                    {policeStation}
                                                 </option>
                                             ))}
                                 </select>
@@ -256,19 +292,19 @@ const Profile = () => {
                                 type="text"
                                 name="postCode"
                                 defaultValue={thisUser?.address?.postCode}
-                                placeholder="House no,building,street,area"
+                                placeholder="House no, building, street, area"
                                 className="input rounded-lg  input-bordered input-success  focus:outline-none  w-full"
                             />
                         </div>
                         <div className="form-control w-full">
                             <label className="label">
-                                <span className="label-text">Street Area</span>
+                                <span className="label-text">Street/area</span>
                             </label>
                             <input
                                 type="text"
                                 name="street"
                                 defaultValue={thisUser?.address?.street}
-                                placeholder="House no,building,street,area"
+                                placeholder="House no, building, street, area"
                                 className="input rounded-lg  input-bordered input-success  focus:outline-none  w-full"
                             />
                         </div>

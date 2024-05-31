@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import Bookcard from "../../../Components/BookCard/Bookcard";
-import UseBooks from "../../../Hooks/UseBooks";
+import UseAllBooks from "../../../Hooks/UseAllBooks";
 
 const AllBooks = () => {
-    const { books } = UseBooks();
-    const slices = books.slice(0, 6);
+    const { books } = UseAllBooks();
+    const slices = books.slice(0, 12);
 
     return (
         <div>

@@ -5,7 +5,7 @@ import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Bookcard from "../../../Components/BookCard/Bookcard";
 import CustomLoader from "../../../Components/CustomLoader/CustomLoader";
-import UseBooks from "../../../Hooks/UseBooks";
+import UseAllBooks from "../../../Hooks/UseAllBooks";
 
 const BookByCategory = () => {
     const [axiosSecure] = UseAxiosSecure();
@@ -15,6 +15,8 @@ const BookByCategory = () => {
     const [filteredBooksByCat, setFilteredBooksByCat] = useState([]);
     const [selectedTab, setSelectedTab] = useState(0);
 
+    // Get books
+    const { books } = UseAllBooks()
     // Get categories
     const { data: cats = [], refetch: categoriesRefetch } = useQuery({
         queryKey: ["categories"],
@@ -24,10 +26,6 @@ const BookByCategory = () => {
             return res.data;
         },
     });
-
-
-    // Get books
-    const { books } = UseBooks();
 
     // Function to filter books based on the selected category
     const filterBooksByCategory = (category) => {

@@ -1,11 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import UseBooks from "../../Hooks/UseBooks";
 import Bookcard from "../../Components/BookCard/Bookcard";
+import UseAllBooks from "../../Hooks/UseAllBooks";
 
 const Publication = () => {
     const { publication } = useParams();
-    const { books } = UseBooks();
+    const { books } = UseAllBooks();
     const filteredBooks = books.filter(
         (book) => book.publications == publication
     );
