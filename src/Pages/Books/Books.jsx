@@ -3,21 +3,33 @@ import UseBooks from "../../Hooks/UseBooks";
 import Bookcard from "../../Components/BookCard/Bookcard";
 import Pagination from "../../Components/Pagination/Pagination";
 import CustomLoader from "../../Components/CustomLoader/CustomLoader";
+import { data } from "autoprefixer";
+import { settings } from "firebase/analytics";
 
 const Books = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const { books, totalPages, loading } = UseBooks(currentPage);
+    const [totalPages, setTotalPages] = useState(1);
+    const [loading, setLoading] = useState(true);
+    const [books, setBooks] = useState([]);
+
 
 
     const handlePageChange = (page) => {
-        useEffect(() => {
-            setCurrentPage(page);
-        }, [page])
+        setCurrentPage(page);
     };
 
+    useEffect(() => {
+        fetch(`https://bornomala-boighor-server.vercel.app/books?page=${currentPage}`).then(res => res.json()).then(data => {
+            setBooks(data.books)
+            setTotalPages(data.totalPages)
+            setLoading(false)
+        })
+    }, [currentPage])
+
     if (loading) {
-        return <CustomLoader />
+        return <CustomLoader />;
     }
+
     window.scrollTo({
         top: 0,
         left: 0,

@@ -3,7 +3,6 @@ import { FaArrowLeft } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-    console.log(currentPage);
 
     const handlePrevious = () => {
         if (currentPage > 1) {
