@@ -12,6 +12,7 @@ import { MdDashboardCustomize } from "react-icons/md";
 import CustomLoader from "../CustomLoader/CustomLoader";
 import Swal from "sweetalert2";
 import UseAllBooks from "../../Hooks/UseAllBooks";
+import { TfiWrite } from "react-icons/tfi";
 
 const NavigationBar = () => {
   const { user, loading, logout } = useContext(AuthContext);
@@ -162,6 +163,16 @@ const NavigationBar = () => {
                       <span className="text-sm"> Manage My Account</span>
                     </NavLink>
                   </li>
+
+                  <li>
+                    <NavLink
+                      to={`/add-blog`}
+                      className=""
+                    >
+                      <TfiWrite className=" text-2xl text-green-600"></TfiWrite>{" "}
+                      <span className="text-sm">Write a Blog</span>
+                    </NavLink>
+                  </li>
                   {
                     user && !admin &&
                     <>
@@ -199,7 +210,6 @@ const NavigationBar = () => {
             )}
           </div>
         </div>
-
         {/* Main menu */}
         <div className=" pb-2  w-full text-center  ">
           <NavLink
@@ -225,6 +235,12 @@ const NavigationBar = () => {
             to={"/publications"}
           >
             Publications
+          </NavLink>
+          <NavLink
+            className="font-medium px-3 py-2 rounded-lg hover:bg-slate-200 lg:text-[13px] text-xs text-success"
+            to={"/blogs"}
+          >
+            Blogs
           </NavLink>
         </div>
       </div>

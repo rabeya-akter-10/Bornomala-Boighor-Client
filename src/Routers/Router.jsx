@@ -30,6 +30,7 @@ import DelivaredOrders from "../Pages/Dashboard/DeliveredOrders/DelivaredOrders.
 import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails.jsx";
 import ShippingLevel from "../Pages/Dashboard/ShippingLevel/ShippingLevel.jsx";
 import ManageStocks from "../Pages/Dashboard/ManageStocks/ManageStocks.jsx";
+import AddBlog from "../Pages/AddBlog/AddBlog.jsx";
 
 const router = createBrowserRouter([
     {
@@ -103,6 +104,14 @@ const router = createBrowserRouter([
                 element: (
                     <PrivateRoute>
                         <Reviews />
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "/add-blog",
+                element: (
+                    <PrivateRoute>
+                        <AddBlog />
                     </PrivateRoute>
                 ),
             },
