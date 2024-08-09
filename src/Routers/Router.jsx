@@ -31,6 +31,7 @@ import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails.jsx";
 import ShippingLevel from "../Pages/Dashboard/ShippingLevel/ShippingLevel.jsx";
 import ManageStocks from "../Pages/Dashboard/ManageStocks/ManageStocks.jsx";
 import AddBlog from "../Pages/AddBlog/AddBlog.jsx";
+import SalesReport from "../Pages/Dashboard/AdminPage/SalesReport/SalesReport.jsx";
 
 const router = createBrowserRouter([
     {
@@ -115,6 +116,14 @@ const router = createBrowserRouter([
                     </PrivateRoute>
                 ),
             },
+            {
+                path: "/my-blogs",
+                element: (
+                    <PrivateRoute>
+                        <AddBlog />
+                    </PrivateRoute>
+                ),
+            },
         ],
     },
     {
@@ -189,9 +198,14 @@ const router = createBrowserRouter([
                     </AdminOnly>
                 ),
             },
-
-
-
+            {
+                path: "sells-report",
+                element: (
+                    <AdminOnly>
+                        <SalesReport />
+                    </AdminOnly>
+                ),
+            },
         ],
     },
     {

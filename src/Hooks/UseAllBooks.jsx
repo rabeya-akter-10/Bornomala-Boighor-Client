@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const UseAllBooks = () => {
     const [axiosSecure] = UseAxiosSecure();
-    // get Cart
+    // get books
     const { data: books = [], refetch: booksRefetch } = useQuery({
         queryKey: ["books"],
         queryFn: async () => {

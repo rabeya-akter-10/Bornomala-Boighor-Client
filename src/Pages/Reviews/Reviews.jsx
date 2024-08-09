@@ -24,7 +24,7 @@ const Reviews = () => {
     const { data: books = null, refetch: booksRefetch } = useQuery({
         queryKey: ["books"],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/books`);
+            const res = await axiosSecure.get(`/all-books`);
             return res.data;
         },
     });

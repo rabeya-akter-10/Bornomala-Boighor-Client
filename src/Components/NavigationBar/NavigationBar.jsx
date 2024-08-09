@@ -13,6 +13,7 @@ import CustomLoader from "../CustomLoader/CustomLoader";
 import Swal from "sweetalert2";
 import UseAllBooks from "../../Hooks/UseAllBooks";
 import { TfiWrite } from "react-icons/tfi";
+import { IoNewspaperOutline } from "react-icons/io5";
 
 const NavigationBar = () => {
   const { user, loading, logout } = useContext(AuthContext);
@@ -171,6 +172,15 @@ const NavigationBar = () => {
                     >
                       <TfiWrite className=" text-2xl text-green-600"></TfiWrite>{" "}
                       <span className="text-sm">Write a Blog</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to={`/my-blogs`}
+                      className=""
+                    >
+                      <IoNewspaperOutline className=" text-2xl text-green-600"></IoNewspaperOutline>{" "}
+                      <span className="text-sm">My Blogs</span>
                     </NavLink>
                   </li>
                   {

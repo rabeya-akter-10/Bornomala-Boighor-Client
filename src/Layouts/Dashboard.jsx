@@ -9,6 +9,7 @@ import {
     FaUsers,
     FaBookOpen,
     FaWallet,
+    FaSellsy,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -41,8 +42,12 @@ const Dashboard = () => {
                 </li>
                 <li>
                     <NavLink className={"w-64  mx-auto"} to={"manage-books"}>
-
                         <FaClipboardList></FaClipboardList> Manage Books
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className={"w-64  mx-auto mt-1"} to={"sells-report"}>
+                        <FaSellsy />Sells Report
                     </NavLink>
                 </li>
             </>

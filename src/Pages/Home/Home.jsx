@@ -6,6 +6,7 @@ import Publications from "./Publications/Publications";
 import Writers from "./Writers/Writers";
 import AllBooks from "./AllBooks/AllBooks";
 import BestSellerBook from "./BestSellerBook.jsx/BestSellerBook";
+import BlogsSlider from "../../Components/BlogsSlider/BlogsSlider";
 
 const Home = () => {
     return (
@@ -21,8 +22,8 @@ const Home = () => {
             <BookByCategory></BookByCategory>
             <BestSellerBook></BestSellerBook>
             <AllBooks></AllBooks>
-            {/* <Publications></Publications> */}
             <Writers></Writers>
+            <BlogsSlider></BlogsSlider>
         </div>
     );
 };
