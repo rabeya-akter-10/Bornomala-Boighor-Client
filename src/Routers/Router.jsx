@@ -30,8 +30,11 @@ import DelivaredOrders from "../Pages/Dashboard/DeliveredOrders/DelivaredOrders.
 import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails.jsx";
 import ShippingLevel from "../Pages/Dashboard/ShippingLevel/ShippingLevel.jsx";
 import ManageStocks from "../Pages/Dashboard/ManageStocks/ManageStocks.jsx";
-import AddBlog from "../Pages/AddBlog/AddBlog.jsx";
+import AddBlog from "../Pages/BlogsPages/AddBlog/AddBlog.jsx";
 import SalesReport from "../Pages/Dashboard/AdminPage/SalesReport/SalesReport.jsx";
+import MyBlogs from "../Pages/BlogsPages/MyBlogs/MyBlogs.jsx";
+import EditBlog from "../Pages/BlogsPages/EditBlog/EditBlog.jsx";
+import Blogs from "../Pages/BlogsPages/Blogs/Blogs.jsx";
 
 const router = createBrowserRouter([
     {
@@ -117,13 +120,25 @@ const router = createBrowserRouter([
                 ),
             },
             {
-                path: "/my-blogs",
+                path: "/edit-blog/:id",
                 element: (
                     <PrivateRoute>
-                        <AddBlog />
+                        <EditBlog />
                     </PrivateRoute>
                 ),
             },
+            {
+                path: "/my-blogs",
+                element: (
+                    <PrivateRoute>
+                        <MyBlogs />
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: '/blogs',
+                element: < Blogs />
+            }
         ],
     },
     {

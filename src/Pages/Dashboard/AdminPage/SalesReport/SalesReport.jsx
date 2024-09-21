@@ -11,7 +11,7 @@ const SalesReport = () => {
     const handleGenerateReport = async () => {
         if (startDate && endDate) {
             try {
-                const response = await fetch(`http://localhost:5000/sales-report?startDate=${startDate}&endDate=${endDate}`);
+                const response = await fetch(`https://bornomala-boighor-server.vercel.app/sales-report?startDate=${startDate}&endDate=${endDate}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import useAuth from '../../Hooks/UseAuth';
+import useAuth from '../../../Hooks/UseAuth';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
+import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const AddBlog = () => {
     const { user } = useAuth();
@@ -33,7 +33,7 @@ const AddBlog = () => {
                 });
 
                 form.reset();
-                navigate('/blogs');
+                navigate('/my-blogs');
             }
         });
     };
@@ -46,9 +46,9 @@ const AddBlog = () => {
     });
 
     return (
-        <div className='w-full max-w-3xl mx-auto min-h-[80vh] py-14 px-4'>
-            <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto flex flex-col gap-3 justify-center items-center py-10 rounded-lg px-10 shadow-md">
-                <h1 className='w-full text-center text-2xl font-semibold text-gray-500 p2-10'>Write a blog</h1>
+        <div className='w-full max-w-3xl mx-auto min-h-[80vh] flex items-center justify-center py-14 px-4'>
+            <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto flex flex-col gap-3 justify-center items-center p-4 md:p-10 rounded-lg  shadow-md">
+                <h1 className='w-full text-center text-2xl font-semibold text-gray-500 '>Write a blog</h1>
                 <div className="form-control w-full">
                     <label className="label">
                         <span className="label-text">Blog Title</span>
@@ -58,7 +58,7 @@ const AddBlog = () => {
                         placeholder="Blog title"
                         name="title"
                         required
-                        className="input input-bordered input-success focus:outline-none w-[300px] md:w-full"
+                        className="input input-bordered input-success focus:outline-none w-full"
                     />
                 </div>
                 <div className="form-control w-full">
@@ -69,7 +69,7 @@ const AddBlog = () => {
                         placeholder="Blog content"
                         name="body"
                         required
-                        className="textarea textarea-bordered textarea-success h-52 focus:outline-none w-[300px] md:w-full"
+                        className="textarea textarea-bordered textarea-success h-52 focus:outline-none w-full"
                     />
                 </div>
                 <input
