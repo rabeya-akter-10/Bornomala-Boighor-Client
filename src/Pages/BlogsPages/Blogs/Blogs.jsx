@@ -1,8 +1,41 @@
 import React from 'react';
 import UseBlogs from '../../../Hooks/UseBlogs';
+import CustomLoader from '../../../Components/CustomLoader/CustomLoader';
+import { FaTrashAlt } from 'react-icons/fa';
+import UseAdmin from '../../../Hooks/UseAdmin';
+import Swal from 'sweetalert2';
+import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const Blogs = () => {
-    const { blogs } = UseBlogs();
+    const [axiosSecure] = UseAxiosSecure();
+    const { blogs, blogsRefetch } = UseBlogs();
+    const { admin } = UseAdmin()
+
+    if (!blogs) {
+        return <CustomLoader />
+    }
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const response = await axiosSecure.delete(`/blogs/${id}`);
+                blogsRefetch();
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
+
+    }
 
     // Scroll to top
     window.scrollTo({
@@ -18,7 +51,8 @@ const Blogs = () => {
                     blogs?.map(b => <div key={b._id}>
                         <div className='w-full mx-auto p-4 border shadow-lg rounded-lg'>
                             <h1 className='text-md h-12 overflow-hidden font-semibold text-gray-600'>{b.title}</h1>
-                            <div className="mb-2 text-xs text-gray-500 w-full flex justify-end items-center lg:pr-20">
+                            <div className="mb-2 text-xs text-gray-500 w-full flex justify-between items-center lg:pr-20">
+                                <p>Author: {b.authorName}</p>
                                 <p>Published in: {new Date(b.postedIn).toLocaleDateString()}</p>
                             </div>
                             <div className={`relative h-24 overflow-hidden`}>
@@ -32,11 +66,18 @@ const Blogs = () => {
                                     Read More
                                 </button>
 
+
+                                {
+                                    admin && <button onClick={() => { handleDelete(`${b._id}`) }} className='text-white bg-red-500 p-2 rounded-full hover:bg-white hover:border hover:border-red-500 hover:text-red-500 border-white border'><FaTrashAlt className='text-lg' /></button>
+                                }
+
+
                             </div>
                             <dialog id="my_modal_3" className="modal">
                                 <div className="modal-box w-11/12 max-w-5xl px-4 py-10 md:p-10">
                                     <h1 className='text-md font-semibold text-gray-600'>{b.title}</h1>
-                                    <div className="mb-2 text-xs text-gray-500 w-full flex justify-end items-center lg:pr-20">
+                                    <div className="mb-2 text-xs text-gray-500 w-full flex justify-between items-center lg:pr-20">
+                                        <p>Author: {b.authorName}</p>
                                         <p>Published in: {new Date(b.postedIn).toLocaleDateString()}</p>
                                     </div>
                                     <div className={`relative  w-full pt-4`}>

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import CustomLoader from '../../../Components/CustomLoader/CustomLoader';
 import { FaPenClip, FaTrash } from 'react-icons/fa6';
 import { FaTrashAlt } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
 const MyBlogs = () => {
     const { user } = useAuth()
@@ -27,7 +28,25 @@ const MyBlogs = () => {
     }
 
     const handleDelete = (id) => {
-        console.log(id);
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const response = await axiosSecure.delete(`/blogs/${id}`);
+                userBlogsRefetch();
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
+
     }
 
     // Scroll to top

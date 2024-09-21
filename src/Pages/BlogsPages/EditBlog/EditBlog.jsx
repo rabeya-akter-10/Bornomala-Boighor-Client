@@ -46,14 +46,22 @@ const EditBlog = () => {
 
         try {
             const response = await axiosSecure.put(`/blogs/${id}`, updatedBlog);
-            if (response.data.acknowledged) {
+            if (response.data.modifiedCount > 0) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Blog Updated Successfully',
                     showConfirmButton: false,
                     timer: 1500,
                 });
-                navigate('/blogs');
+                navigate('/my-blogs');
+            }
+            else {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'There is Nothing to Update!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
             }
         } catch (error) {
             console.error('Failed to update blog:', error);
