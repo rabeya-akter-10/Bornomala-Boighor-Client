@@ -33,9 +33,12 @@ const NavigationBar = () => {
         showConfirmButton: false,
         timer: 3000,
       });
-      logout()
-        .then((result) => { })
-        .catch((error) => { });
+
+      setTimeout(() => {
+        logout()
+          .then((result) => { })
+          .catch((error) => { });
+      }, 3000);
     }
     cartRefetch();
     usersRefetch()
