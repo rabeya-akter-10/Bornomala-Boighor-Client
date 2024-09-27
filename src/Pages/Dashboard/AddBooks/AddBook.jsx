@@ -189,7 +189,8 @@ const AddBook = () => {
             discounts,
             quantity,
             descriptions,
-            bookName_en, keywords
+            bookName_en, keywords,
+            buyingPrice
           } = data;
           const addedBook = {
             bookName,
@@ -204,7 +205,8 @@ const AddBook = () => {
             publications,
             descriptions,
             bookName_en,
-            keywords
+            keywords,
+            buyingPrice
           };
 
 
@@ -261,6 +263,7 @@ const AddBook = () => {
               className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
             />
           </div>
+          {/* Book Name english */}
           <div className="form-control">
             <label className="label">
               <span className="text-xs text-[#757575dc] font-medium">
@@ -277,6 +280,9 @@ const AddBook = () => {
         </div>
 
         <div className="flex md:flex-row md:gap-4 flex-col">
+
+          {/* Category */}
+
           <div className="form-control">
             <label className="label">
               <span className="text-xs text-[#757575dc] font-medium">
@@ -312,6 +318,9 @@ const AddBook = () => {
               <span className="text-red-500">Category is required</span>
             )}
           </div>
+
+          {/* Writer Input */}
+
           <div className="form-control ">
             <label className="label">
               <span className="text-xs text-[#757575] font-medium ">
@@ -356,6 +365,8 @@ const AddBook = () => {
 
         <div className="flex md:flex-row md:gap-4 flex-col">
 
+          {/* Publication Name */}
+
           <div className="form-control ">
             <label className="label">
               <span className="text-xs text-[#757575] font-medium ">
@@ -396,6 +407,25 @@ const AddBook = () => {
               </span>
             )}
           </div>
+
+          {/* Image Input */}
+
+          <div className="form-control">
+            <label className="label">
+              <span className="text-xs text-[#757575] font-medium ">Photo</span>
+            </label>
+            <input
+              type="file"
+              {...register("image", { required: true })}
+              className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
+            />
+          </div>
+
+        </div>
+        <div className="flex md:flex-row md:gap-4 flex-col">
+
+          {/* Price input */}
+
           <div className="form-control">
             <label className="label">
               <span className="text-xs text-[#757575] font-medium ">Price</span>
@@ -407,8 +437,25 @@ const AddBook = () => {
               className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
             />
           </div>
+
+          {/* Buying price */}
+
+          <div className="form-control">
+            <label className="label">
+              <span className="text-xs text-[#757575] font-medium ">Buying Price</span>
+            </label>
+            <input
+              type="number"
+              placeholder="buying price"
+              {...register("buyingPrice")}
+              className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
+            />
+          </div>
         </div>
         <div className="flex md:flex-row md:gap-4 flex-col">
+
+          {/* Discount Input */}
+
           <div className="form-control">
             <label className="label">
               <span className="text-xs text-[#757575] font-medium ">
@@ -422,19 +469,8 @@ const AddBook = () => {
               className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
             />
           </div>
-          <div className="form-control">
-            <label className="label">
-              <span className="text-xs text-[#757575] font-medium ">Photo</span>
-            </label>
-            <input
-              type="file"
-              {...register("image", { required: true })}
-              className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
-            />
-          </div>
-        </div>
-        <div className="flex md:flex-row md:gap-4 flex-col">
 
+          {/* Quantity */}
           <div className="form-control">
             <label className="label">
               <span className="text-xs text-[#757575] font-medium ">
@@ -448,6 +484,9 @@ const AddBook = () => {
               className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
             />
           </div>
+
+        </div>
+        <div className="flex md:flex-row md:gap-4 flex-col">
           <div className="form-control">
             <label className="label">
               <span className="text-xs text-[#757575] font-medium ">
@@ -461,21 +500,22 @@ const AddBook = () => {
               className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
             />
           </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="text-xs text-[#757575] font-medium ">
+                Keywords
+              </span>
+            </label>
+            <textarea
+              type="text"
+              placeholder="keywords"
+              {...register("keywords")}
+              className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
+            />
+          </div>
         </div>
 
-        <div className="form-control">
-          <label className="label">
-            <span className="text-xs text-[#757575] font-medium ">
-              Keywords
-            </span>
-          </label>
-          <textarea
-            type="text"
-            placeholder="keywords"
-            {...register("keywords")}
-            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[300px]"
-          />
-        </div>
+
 
         <input
           type="submit"

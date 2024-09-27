@@ -97,7 +97,42 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
         handleSubmit,
         setValue,
         formState: { errors },
-    } = useForm();
+
+    } = useForm({
+        defaultValues: {
+            bookName: book?.bookName || "",
+            price: book?.price || "",
+            quantity: book?.quantity || "",
+            discounts: book?.discounts || "",
+            category: book?.category || "",
+            writerName: book?.writerName || "",
+            publications: book?.publications || "",
+            descriptions: book?.descriptions || "",
+            bookName_en: book?.bookName_en || "",
+            keywords: book?.keywords || "",
+            buyingPrice: book?.buyingPrice || "",
+        }
+    });
+
+
+    useEffect(() => {
+        if (book) {
+            reset({
+                bookName: book?.bookName || "",
+                price: book?.price || "",
+                quantity: book?.quantity || "",
+                discounts: book?.discounts || "",
+                category: book?.category || "",
+                writerName: book?.writerName || "",
+                publications: book?.publications || "",
+                descriptions: book?.descriptions || "",
+                bookName_en: book?.bookName_en || "",
+                keywords: book?.keywords || "",
+                buyingPrice: book?.buyingPrice || "",
+            });
+        }
+    }, [book, reset]);
+
 
     const onSubmit = (data, event) => {
         event.preventDefault(); // Prevent the default form submission behavior
@@ -112,7 +147,8 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
             quantity,
             descriptions,
             bookName_en,
-            keywords
+            keywords,
+            buyingPrice
         } = data;
 
         const editedBook = {
@@ -125,7 +161,8 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
             publications,
             descriptions,
             bookName_en,
-            keywords
+            keywords,
+            buyingPrice
         };
 
         // Update form data with the latest values from the input fields
@@ -161,9 +198,9 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="w-fit mx-auto rounded-lg shadow-md flex flex-col justify-center items-center p-8 mb-8 text-xs"
+                className="w-fit mx-auto rounded-lg md:p-10 flex flex-col justify-center items-center p- mb-8 text-xs"
             >
-                <div className="flex  md:gap-4 flex-col">
+                <div className="flex  md:gap-4 flex-col md:flex-row">
                     <div className="form-control">
                         <label className="label">
                             <span className="text-xs text-[#757575dc] font-medium">
@@ -173,9 +210,9 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                         <input
                             type="text"
                             placeholder="book name"
-                            defaultValue={book?.bookName}
+                            //  defaultValue={book?.bookName}
                             {...register("bookName", { required: true })}
-                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-80"
                         />
                     </div>
                     <div className="form-control">
@@ -187,12 +224,16 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                         <input
                             type="text"
                             placeholder="book name english"
-                            defaultValue={book?.bookName_en}
+                            //  defaultValue={book?.bookName_en}
                             {...register("bookName_en", { required: true })}
-                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-80"
                         />
                     </div>
 
+
+                </div>
+
+                <div className="flex  md:gap-4 flex-col md:flex-row">
                     <div className="form-control">
                         <label className="label">
                             <span className="text-xs text-[#757575dc] font-medium">
@@ -207,8 +248,8 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                                     {...register("category", {
                                         required: true,
                                     })}
-                                    defaultValue={book?.category}
-                                    className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                                    //  defaultValue={book?.category}
+                                    className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-80"
                                 >
                                     <option>Select a category</option>
                                     {cats.map((c) => (
@@ -221,9 +262,6 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                         )}
                         {errors.c && <span className="text-red-500"></span>}
                     </div>
-                </div>
-
-                <div className="flex  md:gap-4 flex-col">
                     <div className="form-control ">
                         <label className="label">
                             <span className="text-xs text-[#757575] font-medium ">
@@ -234,11 +272,11 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                             <input
                                 type="text"
                                 placeholder="Search Writer name"
-                                defaultValue={book?.writerName}
+                                //  defaultValue={book?.writerName}
                                 {...register("writerName", {
                                     required: true,
                                 })}
-                                className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                                className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-80"
                                 onChange={handleWriterSearch}
                             />
                         </div>
@@ -246,7 +284,7 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                         {showDropdown1 && (
                             <span>
                                 {searchResults.length > 0 && (
-                                    <div className="absolute z-10  lg:w-[350px] w-[280px] bg-white border border-gray-200 rounded-sm shadow-md">
+                                    <div className="absolute z-10  lg:w-[350px] w-80 bg-white border border-gray-200 rounded-sm shadow-md">
                                         {searchResults.map((result) => (
                                             <div
                                                 key={result._id}
@@ -266,6 +304,10 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                         )}
                     </div>
 
+
+                </div>
+
+                <div className="flex  md:gap-4 flex-col md:flex-row">
                     <div className="form-control ">
                         <label className="label">
                             <span className="text-xs text-[#757575] font-medium ">
@@ -276,11 +318,11 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                             <input
                                 type="text"
                                 placeholder="Search publication name"
-                                defaultValue={book?.publications}
+                                //  defaultValue={book?.publications}
                                 {...register("publications", {
                                     required: true,
                                 })}
-                                className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                                className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-80"
                                 onChange={handlePublicationSearch}
                             />
                         </div>
@@ -288,7 +330,7 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                         {showDropdown && (
                             <span>
                                 {searchResults.length > 0 && (
-                                    <div className="absolute z-10  lg:w-[350px] w-[280px] bg-white border border-gray-200 rounded-sm shadow-md">
+                                    <div className="absolute z-10  lg:w-[350px] w-80 bg-white border border-gray-200 rounded-sm shadow-md">
                                         {searchResults.map((result) => (
                                             <div
                                                 key={result._id}
@@ -307,9 +349,6 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                             </span>
                         )}
                     </div>
-                </div>
-
-                <div className="flex  md:gap-4 flex-col">
                     <div className="form-control">
                         <label className="label">
                             <span className="text-xs text-[#757575] font-medium ">
@@ -319,13 +358,16 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                         <input
                             type="number"
                             placeholder="price"
-                            defaultValue={book?.price}
+                            //  defaultValue={book?.price}
                             {...register("price", {
                                 required: true,
                             })}
-                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-80"
                         />
                     </div>
+
+                </div>
+                <div className="flex  md:gap-4 flex-col md:flex-row">
                     <div className="form-control">
                         <label className="label">
                             <span className="text-xs text-[#757575] font-medium ">
@@ -335,15 +377,31 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                         <input
                             type="number"
                             placeholder="discounts"
-                            defaultValue={book?.discounts}
+                            //  defaultValue={book?.discounts}
                             {...register("discounts", {
                                 required: true,
                             })}
-                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-80"
                         />
                     </div>
+
+                    {/* Buying price */}
+
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="text-xs text-[#757575] font-medium ">Buying Price</span>
+                        </label>
+                        <input
+                            type="number"
+                            placeholder="buying price"
+                            {...register("buyingPrice")}
+                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-80"
+                        />
+                    </div>
+
                 </div>
-                <div className="flex  md:gap-4 flex-col">
+
+                <div className="flex  md:gap-4 flex-col md:flex-row">
                     <div className="form-control">
                         <label className="label">
                             <span className="text-xs text-[#757575] font-medium ">
@@ -353,11 +411,11 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                         <textarea
                             type="text"
                             placeholder="descriptions"
-                            defaultValue={book?.descriptions}
+                            //  defaultValue={book?.descriptions}
                             {...register("descriptions", {
                                 required: true,
                             })}
-                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-80"
                         />
                     </div>
                     <div className="form-control">
@@ -369,30 +427,15 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
                         <textarea
                             type="text"
                             placeholder="keywords"
-                            defaultValue={book?.keywords}
+                            //  defaultValue={book?.keywords}
                             {...register("keywords", {
                                 required: true,
                             })}
-                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
+                            className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-80"
                         />
                     </div>
                 </div>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="text-xs text-[#757575] font-medium ">
-                            Quantity
-                        </span>
-                    </label>
-                    <input
-                        type="number"
-                        placeholder="quantity"
-                        defaultValue={book?.quantity}
-                        {...register("quantity", {
-                            required: true,
-                        })}
-                        className="border border-success rounded-sm p-1 focus:outline-none lg:w-[350px] w-[280px]"
-                    />
-                </div>
+
 
                 <input
                     // onClick={handleSubmit(onSubmit)}

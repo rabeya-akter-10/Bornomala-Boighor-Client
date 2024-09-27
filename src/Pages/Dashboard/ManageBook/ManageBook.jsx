@@ -155,7 +155,7 @@ const ManageBook = () => {
             </div>
             {showModal && (
                 <div className="fixed z-10 inset-0 flex items-center justify-center h-screen bg-gray-500 bg-opacity-40 ">
-                    <div className="modal-box ">
+                    <div className="modal-box md:w-11/12 w-full max-w-5xl">
                         <form method="dialog">
                             {/* Close button */}
                             <button
