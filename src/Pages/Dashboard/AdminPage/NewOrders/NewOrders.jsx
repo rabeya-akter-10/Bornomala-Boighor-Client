@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import UseOrderByStatus from '../../../Hooks/UseOrderByStatus';
+import UseOrderByStatus from '../../../../Hooks/UseOrderByStatus';
 import { Link } from 'react-router-dom';
 import { PiPackageFill } from 'react-icons/pi';
 import { RiNewspaperLine } from 'react-icons/ri';
 import { TbFileBarcode } from 'react-icons/tb';
 import Swal from 'sweetalert2';
-import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import UseAxiosSecure from '../../../../Hooks/UseAxiosSecure';
 
 const NewOrders = () => {
     const { orders, ordersRefetch } = UseOrderByStatus("processing");

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import EditBook from "../../../Components/CustomLoader/EditBook/EditBook";
-import UseAllBooks from "../../../Hooks/UseAllBooks";
+import UseAxiosSecure from "../../../../Hooks/UseAxiosSecure";
+import UseAllBooks from "../../../../Hooks/UseAllBooks";
+import EditBook from "../../../../Components/CustomLoader/EditBook/EditBook";
 
 const ManageBook = () => {
     const [axiosSecure] = UseAxiosSecure();

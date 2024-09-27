@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { FaBox, FaCarAlt, FaCarBattery, FaPlus, FaTruck } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
 import { LuClipboardList } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
-import Greeting from '../../../Components/Greetings/Greetings';
 import { MdOutlineManageHistory } from 'react-icons/md';
 import { PiEmptyBold } from 'react-icons/pi';
+import UseAxiosSecure from '../../../../Hooks/UseAxiosSecure';
+import Greeting from '../../../../Components/Greetings/Greetings';
 
 const AdminDashBoard = () => {
     const [pending, setPending] = useState([])

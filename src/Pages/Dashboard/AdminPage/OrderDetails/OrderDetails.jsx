@@ -1,13 +1,10 @@
 import React, { useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import paid from '../../../assets/paid.png'
-import logo from '../../../assets/logo.png'
+import paid from '../../../../assets/paid.png'
 import { FaAddressCard, FaDownload, FaGlobe, FaMapLocationDot, FaMobile } from 'react-icons/fa6';
 import { FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa';
-import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import UseAxiosSecure from '../../../../Hooks/UseAxiosSecure';
 const OrderDetails = () => {
     const params = useParams();
     const transactionId = params.transactionId;

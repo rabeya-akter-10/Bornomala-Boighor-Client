@@ -2,10 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layouts/Main";
 import Login from "../Pages/Login&Register/Login";
 import Register from "../Pages/Login&Register/Register";
-import AddBook from "../Pages/Dashboard/AddBooks/AddBook.jsx";
 import Home from "../Pages/Home/Home";
 import BookDetails from "../Pages/BookDetails/BookDetails";
-import ManageBook from "../Pages/Dashboard/ManageBook/ManageBook.jsx";
 import Books from "../Pages/Books/Books";
 import CategoryBooks from "../Pages/CategoryBooks/CategoryBooks";
 import Writers from "../Pages/Writers/Writers";
@@ -23,18 +21,21 @@ import OrderHistory from "../Pages/OrderHistory/OrderHistory.jsx";
 import GiveAReview from "../Pages/GiveAReview/GiveAReview.jsx";
 import Invoice from "../Pages/OrderHistory/Invoice.jsx";
 import Reviews from "../Pages/Reviews/Reviews.jsx";
-import AdminDashBoard from "../Pages/Dashboard/AdminPage/AdminDashBoard.jsx";
-import NewOrders from "../Pages/Dashboard/NewOrders/NewOrders.jsx";
-import ToShipped from "../Pages/Dashboard/ToShipped/ToShipped.jsx";
-import DelivaredOrders from "../Pages/Dashboard/DeliveredOrders/DelivaredOrders.jsx";
-import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails.jsx";
-import ShippingLevel from "../Pages/Dashboard/ShippingLevel/ShippingLevel.jsx";
-import ManageStocks from "../Pages/Dashboard/ManageStocks/ManageStocks.jsx";
 import AddBlog from "../Pages/BlogsPages/AddBlog/AddBlog.jsx";
 import SalesReport from "../Pages/Dashboard/AdminPage/SalesReport/SalesReport.jsx";
 import MyBlogs from "../Pages/BlogsPages/MyBlogs/MyBlogs.jsx";
 import EditBlog from "../Pages/BlogsPages/EditBlog/EditBlog.jsx";
 import Blogs from "../Pages/BlogsPages/Blogs/Blogs.jsx";
+import ShippingLevel from "../Pages/Dashboard/ShippingLevel/ShippingLevel.jsx";
+import AdminDashBoard from "../Pages/Dashboard/AdminPage/AdminDashBoard/AdminDashBoard.jsx";
+import AddBook from "../Pages/Dashboard/AdminPage/AddBooks/AddBook.jsx";
+import ManageBook from "../Pages/Dashboard/AdminPage/ManageBook/ManageBook.jsx";
+import NewOrders from "../Pages/Dashboard/AdminPage/NewOrders/NewOrders.jsx";
+import ToShipped from "../Pages/Dashboard/ToShipped/ToShipped.jsx";
+import DeliveredOrders from "../Pages/Dashboard/AdminPage/DeliveredOrders/DelivaredOrders.jsx";
+import OrderDetails from "../Pages/Dashboard/AdminPage/OrderDetails/OrderDetails.jsx";
+import ManageStocks from "../Pages/Dashboard/AdminPage/ManageStocks/ManageStocks.jsx";
+
 
 const router = createBrowserRouter([
     {
@@ -193,7 +194,7 @@ const router = createBrowserRouter([
                 path: "delivered",
                 element: (
                     <AdminOnly>
-                        <DelivaredOrders />
+                        <DeliveredOrders />
                     </AdminOnly>
                 ),
             },

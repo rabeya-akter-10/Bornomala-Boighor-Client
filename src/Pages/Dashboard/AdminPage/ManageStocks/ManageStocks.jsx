@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import UseAllBooks from '../../../Hooks/UseAllBooks';
+import UseAllBooks from '../../../../Hooks/UseAllBooks';
 import Swal from 'sweetalert2';
-import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import UseAxiosSecure from '../../../../Hooks/UseAxiosSecure';
 
 const ManageStocks = () => {
     const [axiosSecure] = UseAxiosSecure();

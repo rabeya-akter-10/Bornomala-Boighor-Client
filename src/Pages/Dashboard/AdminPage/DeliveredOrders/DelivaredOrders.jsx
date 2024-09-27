@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
-import UseOrderByStatus from '../../../Hooks/UseOrderByStatus';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import { RiNewspaperLine } from 'react-icons/ri';
+import UseOrderByStatus from '../../../../Hooks/UseOrderByStatus';
 
 const DeliveredOrders = () => {
     const { orders, ordersRefetch } = UseOrderByStatus("Delivered");

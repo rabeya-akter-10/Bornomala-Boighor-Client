@@ -11,15 +11,21 @@ const SalesReport = () => {
     const handleGenerateReport = async () => {
         if (startDate && endDate) {
             try {
-                const response = await fetch(`https://bornomala-boighor-server.vercel.app/sales-report?startDate=${startDate}&endDate=${endDate}`);
+                const adjustedEndDate = new Date(endDate);
+                adjustedEndDate.setDate(adjustedEndDate.getDate() + 1);
+                const adjustedEndDateString = adjustedEndDate
+                    .toISOString()
+                    .split("T")[0];
+
+                const response = await fetch(`https://bornomala-boighor-server.vercel.app/sales-report?startDate=${startDate}&endDate=${adjustedEndDateString}`);
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error("Network response was not ok");
                 }
                 const data = await response.json();
                 setSalesData(data);
             } catch (error) {
                 setError(error.message);
-                console.error('Error fetching sales data:', error);
+                console.error("Error fetching sales data:", error);
             }
         }
     };
