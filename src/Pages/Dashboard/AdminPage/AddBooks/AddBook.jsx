@@ -54,10 +54,12 @@ const AddBook = () => {
   const handleAddNewWriter = (event) => {
     event.preventDefault();
     const newWriterValue = event.target.newWriter.value;
+    const token = localStorage.getItem("access-token");
     fetch("https://bornomala-boighor-server.vercel.app/writers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
       },
       body: JSON.stringify({ writerName: newWriterValue }), // Corrected the object key here
     })
@@ -77,11 +79,13 @@ const AddBook = () => {
     event.preventDefault();
 
     const newCategoryValue = event.target.newCategory.value;
+    const token = localStorage.getItem("access-token");
 
     fetch("https://bornomala-boighor-server.vercel.app/categories", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
       },
       body: JSON.stringify({ cat: newCategoryValue }), // Corrected the object key here
     })
@@ -101,11 +105,13 @@ const AddBook = () => {
     event.preventDefault();
 
     const newPublicatonValue = event.target.newPublication.value;
+    const token = localStorage.getItem("access-token");
 
     fetch("https://bornomala-boighor-server.vercel.app/publications", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
       },
       body: JSON.stringify({ pub: newPublicatonValue }), // Corrected the object key here
     })

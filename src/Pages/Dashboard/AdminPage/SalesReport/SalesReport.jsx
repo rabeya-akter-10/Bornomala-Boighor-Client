@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import UseAxiosSecure from '../../../../Hooks/UseAxiosSecure';
 
 const SalesReport = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [salesData, setSalesData] = useState({ salesItem: [] }); // Initialize salesData with empty array
+    const [salesData, setSalesData] = useState({ salesItem: [] });
     const [error, setError] = useState(null);
-    const [sortOrder, setSortOrder] = useState('asc'); // State to manage sort order
+    const [sortOrder, setSortOrder] = useState('asc');
+    const [axiosSecure] = UseAxiosSecure(); // No destructuring needed here
 
     const handleGenerateReport = async () => {
         if (startDate && endDate) {
@@ -17,20 +19,16 @@ const SalesReport = () => {
                     .toISOString()
                     .split("T")[0];
 
-                const response = await fetch(`https://bornomala-boighor-server.vercel.app/sales-report?startDate=${startDate}&endDate=${adjustedEndDateString}`);
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                const data = await response.json();
-                setSalesData(data);
+                const res = await axiosSecure.get(`/sales-report?startDate=${startDate}&endDate=${adjustedEndDateString}`);
+                setSalesData(res.data);
             } catch (error) {
-                setError(error.message);
-                console.error("Error fetching sales data:", error);
+                const errorMessage = error.response ? error.response.data.message : error.message;
+                setError(errorMessage);
+                console.error("Error fetching sales data:", errorMessage);
             }
         }
     };
 
-    // Effect to handle sorting by orderCreationDate whenever sortOrder changes
     useEffect(() => {
         const handleSort = () => {
             if (salesData.salesItem && salesData.salesItem.length > 0) {
@@ -48,7 +46,6 @@ const SalesReport = () => {
 
     return (
         <div className="p-6 pt-12 bg-gray-50 min-h-screen">
-
             <Helmet>
                 <title>Bornomala | Sales Reports</title>
             </Helmet>
@@ -86,7 +83,7 @@ const SalesReport = () => {
                 <div className="mt-6 overflow-x-auto">
                     <h3 className="text-xl font-semibold mb-2">Report from {startDate} to {endDate}</h3>
                     <div className='flex justify-between mb-4'>
-                        <p className="">Total Sales: {salesData.totalSales}tk</p>
+                        <p>Total Sales: {salesData.totalSales}tk</p>
                         <select
                             value={sortOrder}
                             onChange={(e) => setSortOrder(e.target.value)}

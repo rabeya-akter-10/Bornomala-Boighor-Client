@@ -35,6 +35,8 @@ import ToShipped from "../Pages/Dashboard/ToShipped/ToShipped.jsx";
 import DeliveredOrders from "../Pages/Dashboard/AdminPage/DeliveredOrders/DelivaredOrders.jsx";
 import OrderDetails from "../Pages/Dashboard/AdminPage/OrderDetails/OrderDetails.jsx";
 import ManageStocks from "../Pages/Dashboard/AdminPage/ManageStocks/ManageStocks.jsx";
+import ManageUsers from "../Pages/Dashboard/AdminPage/ManageUsers/ManageUsers.jsx";
+import UserDetails from "../Pages/Dashboard/AdminPage/UserDetails/UserDetails.jsx";
 
 
 const router = createBrowserRouter([
@@ -219,6 +221,22 @@ const router = createBrowserRouter([
                 element: (
                     <AdminOnly>
                         <SalesReport />
+                    </AdminOnly>
+                ),
+            },
+            {
+                path: "manage-users",
+                element: (
+                    <AdminOnly>
+                        <ManageUsers />
+                    </AdminOnly>
+                ),
+            },
+            {
+                path: "user-details/:email",
+                element: (
+                    <AdminOnly>
+                        <UserDetails />
                     </AdminOnly>
                 ),
             },

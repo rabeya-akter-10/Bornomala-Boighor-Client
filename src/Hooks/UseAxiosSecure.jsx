@@ -6,9 +6,10 @@ import useAuth from "./UseAuth";
 const UseAxiosSecure = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();
+
     const axiosSecure = axios.create({
-        baseURL: "https://bornomala-boighor-server.vercel.app/",
-        // baseURL: "http://localhost:5000/",
+        baseURL: "https://bornomala-boighor-server.vercel.app",
+        // baseURL: "http://localhost:5000",
     });
 
     useEffect(() => {
@@ -29,8 +30,8 @@ const UseAxiosSecure = () => {
                     (error.response.status === 401 ||
                         error.response.status === 403)
                 ) {
-                    await logout();
-                    navigate("/login");
+                    // await logout();
+                    // navigate("/login");
                 }
                 return Promise.reject(error);
             }

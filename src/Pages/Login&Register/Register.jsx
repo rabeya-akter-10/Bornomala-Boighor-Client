@@ -18,76 +18,6 @@ const Register = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    // const onSubmit = async (data) => {
-    //     setError("");
-    //     const { name, email, password, gender, phone } = data;
-    //     setCreating(true);
-    //     const formData = new FormData();
-    //     formData.append("image", data.image[0]);
-
-    //     try {
-    //         const res = await fetch(imageHostingUrl, {
-    //             method: "POST",
-    //             body: formData,
-    //         });
-    //         const imgResponse = await res.json();
-    //         if (imgResponse.success) {
-    //             const imgUrl = imgResponse.data.display_url;
-    //             const savedUser = {
-    //                 name,
-    //                 email,
-    //                 photoURL: imgUrl,
-    //                 gender,
-    //                 phone,
-    //                 password,
-    //                 role: "buyer",
-    //             };
-
-
-
-    //             try {
-    //                 const result = await createUser(email, password);
-    //                 const loggedUser = result.user;
-
-
-
-    //                 // Check if user is authenticated
-    //                 if (loggedUser) {
-    //                     await updateUser(name, imgUrl);
-    //                     await verification(loggedUser);
-    //                       // Send savedUser to your server
-    //                 const response = await fetch("https://bornomala-boighor-server.vercel.app/users", {
-    //                     method: "POST",
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                     },
-    //                     body: JSON.stringify(savedUser),
-    //                 });
-    //                     Swal.fire({
-    //                         icon: "success",
-    //                         title: "User Created Successfully. Please check your email to verify your account.",
-    //                         showConfirmButton: false,
-    //                         timer: 3000,
-    //                     });
-    //                     await logout();
-    //                     navigate("/login");
-    //                 } else {
-    //                     throw new Error("User is not authenticated.");
-    //                 }
-    //             } catch (verificationError) {
-    //                 console.error("Verification email failed to send:", verificationError);
-    //                 setError("Verification email failed to send.");
-    //             }
-    //         } else {
-    //             throw new Error("Image upload failed");
-    //         }
-    //     } catch (error) {
-    //         console.error("Error:", error.message);
-    //         setError(error.message);
-    //     } finally {
-    //         setCreating(false);
-    //     }
-    // };
 
     const onSubmit = async (data) => {
         setError("");
@@ -117,6 +47,8 @@ const Register = () => {
                     const result = await createUser(email, password);
                     const loggedUser = result.user;
 
+                    const token = localStorage.getItem("access-token");
+
                     // Check if user is authenticated
                     if (loggedUser) {
                         await updateUser(name, imgUrl);
@@ -127,6 +59,7 @@ const Register = () => {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
+                                Authorization: token ? `Bearer ${token}` : "",
                             },
                             body: JSON.stringify(savedUser),
                         });

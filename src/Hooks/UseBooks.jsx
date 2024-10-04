@@ -21,6 +21,8 @@ const UseBooks = (page) => {
         },
     });
 
+    console.log(books);
+
     useEffect(() => {
         if (objects && objects.totalPages !== undefined && objects.books !== undefined) {
             setTotalPages(objects.totalPages);

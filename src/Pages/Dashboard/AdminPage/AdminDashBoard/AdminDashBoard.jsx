@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { FaBox, FaCarAlt, FaCarBattery, FaPlus, FaTruck } from 'react-icons/fa';
+import { FaBox, FaCarAlt, FaCarBattery, FaPlus, FaTruck, FaUsers } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
 import { LuClipboardList } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
@@ -130,7 +130,7 @@ const AdminDashBoard = () => {
                         </p>
                     </Link>
 
-                    <Link to={"/dashboard/manage-stocks"} className='bg-white hover:shadow-lg hover:scale-90 duration-300 text-yellow-400 w-[184px] md:h-32 h-28 md:w-52 rounded-xl flex flex-col items-center gap-2 justify-center border-b-4  border-r-4 shadow-md  border-red-400'>
+                    <Link to={"/dashboard/manage-stocks"} className='bg-white hover:shadow-lg hover:scale-90 duration-300 text-red-400 w-[184px] md:h-32 h-28 md:w-52 rounded-xl flex flex-col items-center gap-2 justify-center border-b-4  border-r-4 shadow-md  border-red-400'>
                         <div className='flex items-center justify-center gap-3'>
                             <div className=' bg-red-200  w-8 h-8  p-2 rounded-full flex items-center justify-center'>
                                 <PiEmptyBold className='text-red-400' />
@@ -141,7 +141,17 @@ const AdminDashBoard = () => {
                             Stock Out Books
                         </p>
                     </Link>
+                    <Link to={"/dashboard/manage-users"} className='bg-white hover:shadow-lg hover:scale-90 duration-300 text-purple-400 w-[184px] md:h-32 h-28 md:w-52 rounded-xl flex flex-col items-center gap-2 justify-center border-b-4  border-r-4 shadow-md  border-purple-400'>
+                        <div className='flex items-center justify-center gap-3'>
+                            <div className=' bg-purple-200  w-8 h-8  p-2 rounded-full flex items-center justify-center'>
+                                <FaUsers className='text-purple-400' />
+                            </div>
 
+                        </div>
+                        <p className='text-xl font-medium  text-center'>
+                            Manage Users
+                        </p>
+                    </Link>
                 </div>
             </div>
 
