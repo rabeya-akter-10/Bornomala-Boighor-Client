@@ -15,7 +15,7 @@ const EditBook = ({ id, booksRefetch, setShowModal }) => {
 
     useEffect(() => {
         fetch(`https://bornomala-boighor-server.vercel.app/books/${id}`)
-            .then((res) => res.json()) // Parse the JSON response
+            .then((res) => res.json())
             .then((data) => {
                 setBook(data); // Update the state with the fetched data
             });

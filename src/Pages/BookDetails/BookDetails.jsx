@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import CustomLoader from "../../Components/CustomLoader/CustomLoader";
 import Bookcard from "../../Components/BookCard/Bookcard";
+import ReviewCard from "../../Components/ReviewCard/RevirewCard"; // Ensure this matches the file name
 import UseHandleAddCart from "../../Hooks/UseHandleAddCart";
-import RevirewCard from "../../Components/ReviewCard/RevirewCard";
-import { data } from "autoprefixer";
+import { FaEye } from "react-icons/fa";
 
 const BookDetails = () => {
     const [loading, setLoading] = useState(true);
     const [book, setBook] = useState({});
     const [reviews, setReviews] = useState([]);
     const [books, setBooks] = useState([]);
-    const { handleAddCart } = UseHandleAddCart(book);
+    const [viewCount, setViewCount] = useState(0);
+    const [error, setError] = useState(null); // Error state for handling fetch errors
     const loadedBook = useLoaderData();
-    const axiosSecure = UseAxiosSecure(); // Destructure if needed
+    const { handleAddCart } = UseHandleAddCart(book);
+    const [ip, setIp] = useState('')
 
-    // Fetch book details
+    // Fetch book details and set it to state
     useEffect(() => {
         if (loadedBook) {
             setBook(loadedBook);
@@ -25,40 +25,84 @@ const BookDetails = () => {
         }
     }, [loadedBook]);
 
-    // Fetch reviews
+    // Fetch reviews for the book
     useEffect(() => {
-        fetch(`https://bornomala-boighor-server.vercel.app/reviews/books/${loadedBook?._id}`)
-            .then((res) => res.json()).then(data => {
-                setReviews(data)
-            })
+        if (loadedBook?._id) {
+            fetch(`https://bornomala-boighor-server.vercel.app/reviews/books/${loadedBook._id}`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Failed to fetch reviews.');
+                    }
+                    return res.json();
+                })
+                .then(data => setReviews(data))
+                .catch(err => {
+                    console.error(err);
+                    setError('Failed to fetch reviews.');
+                });
+        }
     }, [loadedBook]);
 
     // Fetch related books based on category
     useEffect(() => {
         if (book.category) {
             fetch(`https://bornomala-boighor-server.vercel.app/all-books`)
-                .then((res) => res.json())
-                .then((data) => {
-                    const filtered = data?.filter(
-                        (book) => book?.category === category
-                    );
-                    const slices = filtered.slice(0, 4);
-                    setBooks(slices);
-                    setLoading(false);
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Failed to fetch related books.');
+                    }
+                    return res.json();
                 })
-                .catch((error) => {
-                    console.error("Error fetching related books:", error);
-                    setLoading(false);
+                .then(data => {
+                    const filteredBooks = data.filter(b => b.category === book.category);
+                    setBooks(filteredBooks.slice(0, 4)); // Fetch 4 related books
+                })
+                .catch(err => {
+                    console.error(err);
+                    setError('Failed to fetch related books.');
                 });
         }
     }, [book.category]);
 
-    const { bookName, image, sold, writerName, price, discounts, _id, descriptions, category } = book;
+    // Increment the view count on page load
+    useEffect(() => {
+        const fetchIpAndTrackView = async () => {
+            try {
+                const ipRes = await fetch('https://api.ipify.org/?format=json');
+                const ipData = await ipRes.json();
+                setIp(ipData.ip);
+
+                if (loadedBook?._id) {
+                    const viewRes = await fetch('https://bornomala-boighor-server.vercel.app/book/view', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ bookId: loadedBook._id, ipAddress: ipData.ip }), // Use fetched IP address here
+                    });
+                    const viewData = await viewRes.json();
+                    if (viewData?.viewCount) {
+                        setViewCount(viewData?.viewCount); // Update view count state
+                    }
+                }
+            } catch (error) {
+                console.error('Error tracking views:', error);
+            }
+        };
+
+        fetchIpAndTrackView();
+    }, [loadedBook]);
+
+    const { bookName, image, sold, writerName, price, discounts, descriptions, category } = book;
     const discountPrice = price - price * (discounts / 100);
     const roundPrice = Math.ceil(discountPrice);
 
     if (loading || !book) {
         return <CustomLoader />;
+    }
+
+    if (error) {
+        return <div className="text-red-500">{error}</div>; // Display error message
     }
 
     // Scroll to top
@@ -67,20 +111,21 @@ const BookDetails = () => {
         left: 0,
         behavior: "smooth",
     });
+
     return (
         <div className="w-full flex lg:flex-row flex-col py-4 relative min-h-[101vh]">
             <div className="lg:w-4/6 mx-auto flex flex-col">
                 {/* Book details section */}
-                <div className=" mx-auto flex flex-col md:flex-row">
+                <div className="mx-auto flex flex-col md:flex-row">
                     {/* Book image */}
                     <div className="w-96 h-fit md:w-full mx-auto relative">
                         <img className="max-w-sm w-72 h-[420px] mx-auto" src={image} alt={bookName} />
                         {book?.discounts > 0 && (
-                            <div className="absolute z-10 bg-green-600 w-20 h-20 rounded-es-badge flex items-center justify-center -bottom-0 -right-0 text-white  text-2xl font-bold">
+                            <div className="absolute z-10 bg-green-600 w-20 h-20 rounded-es-badge flex items-center justify-center -bottom-0 -right-0 text-white text-2xl font-bold">
                                 <p className="leading-none">
                                     <span className="m-0 leading-none">{book?.discounts}%</span>
                                     <br />
-                                    <span className=" leading-none">Off</span>
+                                    <span className="leading-none">Off</span>
                                 </p>
                             </div>
                         )}
@@ -88,30 +133,15 @@ const BookDetails = () => {
                     {/* Book details */}
                     <div className="lg:pt-20 w-full p-4">
                         <p className="text-2xl font-medium text-[#757575]">{bookName}</p>
-                        <p>
-                            By:{" "}
-                            <Link to={`/writers/${writerName}`} className="text-blue-500 cursor-pointer hover:underline">
-                                {writerName}
-                            </Link>
-                        </p>
-                        <p>
-                            Publication:{" "}
-                            <Link to={`/publications/${book.publications}`} className="cursor-pointer hover:underline text-xl text-green-700">
-                                {book?.publications}
-                            </Link>
-                        </p>
-                        <p>
-                            Category:{" "}
-                            <Link to={`/categories/${category}`} className="cursor-pointer hover:underline">
-                                {category}
-                            </Link>
-                        </p>
+                        <p>By: <Link to={`/writers/${writerName}`} className="text-blue-500 cursor-pointer hover:underline">{writerName}</Link></p>
+                        <p>Category: <Link to={`/categories/${category}`} className="cursor-pointer hover:underline">{category}</Link></p>
                         <div className="flex gap-2 text-xl font-medium items-center">
                             {book?.discounts > 0 && <p className="line-through text-red-500">TK.{book?.price}</p>}
                             <p className="text-green-500">TK.{roundPrice}</p>
                             {discounts > 0 && <p className="text-xs">You save {discounts}%</p>}
                         </div>
                         {sold > 0 && <p className="text-xs text-warning font-medium">Sold: {sold}</p>}
+                        {viewCount > 0 && <p className="text-xs text-gray-500 flex items-center gap-2 pt-2 font-medium"><FaEye></FaEye> {viewCount}</p>}
                         <div>
                             {book.quantity > 0 ? (
                                 <button
@@ -127,22 +157,22 @@ const BookDetails = () => {
                         <p className="text-xs py-8 text-[#757575]">{descriptions}</p>
                     </div>
                 </div>
+
                 {/* Reviews section */}
                 <div>
-                    <p className="px-4 text-xl text-warning py-5 font-medium underline">Reviews: {reviews?.length}</p>
-                    {reviews.map(r => <RevirewCard key={r._id} review={r}></RevirewCard>)}
+                    <p className="px-4 text-xl text-warning py-5 font-medium underline">Reviews: {reviews.length}</p>
+                    {reviews.map(r => <ReviewCard key={r._id} review={r} />)}
                 </div>
             </div>
 
             <hr className="m-4 lg:hidden" />
 
-
             {/* Related books section */}
             <div className="lg:w-2/6 w-full">
                 <h1 className="text-center text-green-600 py-4">From Same Category</h1>
                 <div className="grid lg:absolute bg-white top-12 md:grid-cols-4 lg:border-l grid-cols-2 md:gap-6 lg:grid-cols-2 gap-4 py-6 px-4 mx-auto w-fit">
-                    {books?.map((b) => (
-                        <Bookcard book={b} key={b._id}></Bookcard>
+                    {books.map(b => (
+                        <Bookcard book={b} key={b._id} />
                     ))}
                 </div>
             </div>

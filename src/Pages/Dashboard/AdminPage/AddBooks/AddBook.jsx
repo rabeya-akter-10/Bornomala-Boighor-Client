@@ -206,6 +206,7 @@ const AddBook = () => {
             discounts,
             addedBy: user.displayName,
             sold: 0,
+            viewCount: 0,
             category,
             writerName,
             publications,

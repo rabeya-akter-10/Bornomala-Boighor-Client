@@ -7,11 +7,12 @@ import toast, { Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import UseCart from "../../Hooks/UseCart";
 import UseHandleAddCart from "../../Hooks/UseHandleAddCart";
+import { FaEye } from "react-icons/fa";
 
 const Bookcard = ({ book }) => {
   const { user } = useAuth();
   const [show, setShow] = useState(false);
-  const { bookName, image, sold, writerName, price, discounts, _id } = book;
+  const { bookName, image, sold, writerName, price, discounts, _id, viewCount } = book;
   const discountPrice = price - price * (discounts / 100);
   const roundPrice = Math.ceil(discountPrice);
   const { cart, cartRefetch } = UseCart(user?.email);
@@ -31,7 +32,7 @@ const Bookcard = ({ book }) => {
       <div className="flex flex-col justify-center items-center h-72 w-44 border border-b-green-600 border-r-green-600  hover:shadow-xl shadow-sm rounded-sm p-2">
         <img className="w-[120px] h-44 mb-2" src={image} alt={bookName} />
         <h1 className="text-[13px] font-bold">{bookName}</h1>
-        <p className="text-[11px]">{writerName}</p>
+        <p className="text-[11px] line-clamp-1">{writerName}</p>
         <div className="flex gap-2 text-xs font-medium">
           {discounts > 0 && (
             <p className="line-through text-red-500">TK.{price}</p>
@@ -39,11 +40,14 @@ const Bookcard = ({ book }) => {
           <p className="text-green-500">TK.{roundPrice}</p>
         </div>
 
-        {sold > 0 && (
-          <p className="text-xs font-medium text-warning absolute left-1 bottom-1">
-            Sold: {sold}
+        <div className=" w-full">
+          <p className="absolute bottom-1 z-30 flex gap-5">
+            {sold > 0 && <span className="text-xs text-yellow-500">Sold:{sold}</span>}
+            {
+              viewCount > 0 && <span className="flex gap-1 w-fit items-center text-xs h-fit text-gray-400"><FaEye /> {viewCount}</span>
+            }
           </p>
-        )}
+        </div>
 
         {discounts > 0 && (
           <div className="absolute z-10 bg-green-600 w-12 h-10 rounded-ss-badge flex items-center justify-center -bottom-0 -right-0 text-white font-semibold text-xs ">

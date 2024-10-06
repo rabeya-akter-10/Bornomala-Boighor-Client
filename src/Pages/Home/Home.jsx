@@ -7,6 +7,7 @@ import Writers from "./Writers/Writers";
 import AllBooks from "./AllBooks/AllBooks";
 import BestSellerBook from "./BestSellerBook.jsx/BestSellerBook";
 import BlogsSlider from "../../Components/BlogsSlider/BlogsSlider";
+import MostViewed from "./MostViewed/MostViewed";
 
 const Home = () => {
     return (
@@ -21,7 +22,8 @@ const Home = () => {
             </h1>
             <BookByCategory></BookByCategory>
             <BestSellerBook></BestSellerBook>
-            <AllBooks></AllBooks>
+            {/* <AllBooks></AllBooks> */}
+            <MostViewed></MostViewed>
             <Writers></Writers>
             <BlogsSlider></BlogsSlider>
         </div>

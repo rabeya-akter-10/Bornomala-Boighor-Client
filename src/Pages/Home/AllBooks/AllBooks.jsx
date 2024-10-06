@@ -19,7 +19,6 @@ const AllBooks = () => {
             </div>
 
             <div className="w-fit mx-auto pb-8 text-warning hover:underline cursor-pointer font-medium text-xs">
-                {" "}
                 <Link to="/books">See More</Link>
             </div>
         </div>

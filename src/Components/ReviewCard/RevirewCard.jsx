@@ -3,7 +3,6 @@ import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 
 const RevirewCard = ({ review }) => {
-    console.log(review);
     return (
         <div className='px-6'>
             <div className='flex items-center gap-5 pb-3'>
