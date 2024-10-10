@@ -10,6 +10,7 @@ import {
     FaBookOpen,
     FaWallet,
     FaSellsy,
+    FaChartBar,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -31,23 +32,28 @@ const Dashboard = () => {
         navOptions = (
             <>
                 <li>
-                    <Link className={"w-64  mx-auto mb-1"} to={"/dashboard"}>
+                    <Link className={"w-64 hover:text-blue-400 mx-auto mb-1"} to={"/dashboard"}>
                         <FaHome></FaHome> Dashboard
                     </Link>
                 </li>
                 <li>
-                    <NavLink className={"w-64  mx-auto mb-1"} to={"add-book"}>
+                    <NavLink className={"w-64 hover:text-blue-400 mx-auto mb-1"} to={"add-book"}>
                         <BiSolidBookAdd></BiSolidBookAdd> Add Book
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink className={"w-64  mx-auto"} to={"manage-books"}>
+                    <NavLink className={"w-64 hover:text-blue-400 mx-auto"} to={"manage-books"}>
                         <FaClipboardList></FaClipboardList> Manage Books
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink className={"w-64  mx-auto mt-1"} to={"sells-report"}>
+                    <NavLink className={"w-64 hover:text-blue-400 mx-auto mt-1"} to={"sells-report"}>
                         <FaSellsy />Sells Report
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className={"w-64 hover:text-blue-400 mx-auto mt-1"} to={"view-analysis"}>
+                        <FaChartBar />Views Analysis
                     </NavLink>
                 </li>
             </>

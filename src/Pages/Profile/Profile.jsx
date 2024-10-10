@@ -289,10 +289,10 @@ const Profile = () => {
                                 <span className="label-text">Post Code</span>
                             </label>
                             <input
-                                type="text"
+                                type="number"
                                 name="postCode"
                                 defaultValue={thisUser?.address?.postCode}
-                                placeholder="House no, building, street, area"
+                                placeholder="Post code"
                                 className="input rounded-lg  input-bordered input-success  focus:outline-none  w-full"
                             />
                         </div>

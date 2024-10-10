@@ -78,7 +78,7 @@ const BookDetails = () => {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ bookId: loadedBook._id, ipAddress: ipData.ip }), // Use fetched IP address here
+                        body: JSON.stringify({ bookId: loadedBook._id, ipAddress: ipData.ip, bookName: loadedBook.bookName }), // Use fetched IP address here
                     });
                     const viewData = await viewRes.json();
                     if (viewData?.viewCount) {
@@ -92,6 +92,45 @@ const BookDetails = () => {
 
         fetchIpAndTrackView();
     }, [loadedBook]);
+
+    // Handle recent books in localStorage
+    useEffect(() => {
+        const handleRecentBooks = () => {
+            const recentViewed = JSON.parse(localStorage.getItem('recentViewed')) || [];
+
+            const bookData = {
+                _id: book?._id,
+                bookName: book?.bookName,
+                image: book?.image,
+                sold: book?.sold,
+                writerName: book?.writerName,
+                price: book?.price,
+                discounts: book?.discounts,
+                viewCount: book?.viewCount,
+                viewedIn: Date.now()
+            };
+
+            // Check if the book is already in the recentBooks array
+            const isBookInRecent = recentViewed.some(b => b._id === book._id);
+
+            if (!isBookInRecent) {
+                // If the array has 6 books, remove the first book
+                if (recentViewed.length === 6) {
+                    recentViewed.shift();
+                }
+
+                // Add the new book to the array
+                recentViewed.push(bookData);
+
+                // Save the updated array to localStorage
+                localStorage.setItem('recentViewed', JSON.stringify(recentViewed));
+            }
+        };
+
+        if (book._id) {
+            handleRecentBooks();
+        }
+    }, [book]);
 
     const { bookName, image, sold, writerName, price, discounts, descriptions, category } = book;
     const discountPrice = price - price * (discounts / 100);

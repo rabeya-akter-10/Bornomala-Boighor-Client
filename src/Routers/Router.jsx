@@ -37,6 +37,7 @@ import OrderDetails from "../Pages/Dashboard/AdminPage/OrderDetails/OrderDetails
 import ManageStocks from "../Pages/Dashboard/AdminPage/ManageStocks/ManageStocks.jsx";
 import ManageUsers from "../Pages/Dashboard/AdminPage/ManageUsers/ManageUsers.jsx";
 import UserDetails from "../Pages/Dashboard/AdminPage/UserDetails/UserDetails.jsx";
+import ViewAnalysis from "../Pages/Dashboard/AdminPage/ViewAnalysis/ViewAnalysis.jsx";
 
 
 const router = createBrowserRouter([
@@ -237,6 +238,14 @@ const router = createBrowserRouter([
                 element: (
                     <AdminOnly>
                         <UserDetails />
+                    </AdminOnly>
+                ),
+            },
+            {
+                path: "view-analysis",
+                element: (
+                    <AdminOnly>
+                        <ViewAnalysis />
                     </AdminOnly>
                 ),
             },
